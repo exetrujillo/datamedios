@@ -1,0 +1,12 @@
+Package: datamedios
+Type: Package
+Title: Scraping de medios chilenos
+Version: 0.1.0
+Author: Exequiel Trujillo e Ismael Aguayo
+Maintainer: Exequiel Trujillo <exequiel.trujillo@ug.uchile.cl> e Ismael Aguayo <ismael.aguayo@ug.uchile.cl>
+Description: La función principal es crear un data frame de noticias a partir de parámetros como, por ejemplo, una frase de búsqueda y un intervalo de fechas 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 4.0.0)
+Imports: pacman, dplyr, httr, jsonlite, utils, tidyverse
