@@ -64,7 +64,7 @@ noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01", "202
 
 ------------------------------------------------------------------------
 
-### Función secundaria: `extraer_noticias_fecha`
+### Función secundaria: `extraer_noticias`
 
 Esta función permite obtener noticias desde la API de BíoBío.cl utilizando una frase de búsqueda. Además, puedes limitar el número de resultados a extraer.
 
