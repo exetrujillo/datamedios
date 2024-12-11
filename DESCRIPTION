@@ -9,4 +9,4 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 4.0.0)
-Imports: pacman, dplyr, httr, jsonlite, utils, tidyverse
+Imports: dplyr, httr, jsonlite, utils, tidyverse

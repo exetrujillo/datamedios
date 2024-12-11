@@ -1,131 +1,123 @@
 # Paquete `datamedios` (Versión 0.1.1)
 
-`datamedios` es un paquete de R que facilita la extracción automatizada de noticias desde los medios de comunicación chilenos, en particular desde la API de BíoBío.cl. A través de sus funciones, puedes obtener noticias a partir de frases de búsqueda y filtrar los resultados por fechas específicas.
+`datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, particularmente desde la API de BíoBío.cl por el momento. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis.
 
-## Instalación
+------------------------------------------------------------------------
 
-Para instalar el paquete desde GitHub, primero necesitas instalar el paquete `devtools` si no lo tienes. Luego, puedes instalar `datamedios` con el siguiente código:
-```         
-r
-# Instalar devtools si no lo tienes
-install.packages("devtools")
+## 🔧 Instalación
+
+Para instalar el paquete desde GitHub, sigue los siguientes pasos:
+
+1.  Asegúrate de tener instalado el paquete `devtools`. Si no lo tienes, instálalo ejecutando:
+
+    ``` r
+    install.packages("devtools")
+    ```
+
+2.  Instala `datamedios` desde el repositorio de GitHub:
+
+    ``` r
+    devtools::install_github("exetrujillo/datamedios")
+    ```
+
+------------------------------------------------------------------------
+
+## 🔄 Uso
+
+### Función principal: `extraer_noticias_fecha`
+
+Esta función permite filtrar noticias por un rango de fechas específico, además de aplicar una frase de búsqueda.
+
+#### **Parámetros:**
+
+-   **`search_query`**: Frase de búsqueda (obligatorio).
+-   **`fecha_inicio`**: Fecha de inicio en formato `"YYYY-MM-DD"` (obligatorio).
+-   **`fecha_fin`**: Fecha de fin en formato `"YYYY-MM-DD"` (obligatorio).
+
+#### **Valor devuelto:**
+
+Un `data.frame` con las siguientes columnas:
+
+-   **`ID`**: Identificador de la noticia.
+-   **`post_title`**: Título de la noticia.
+-   **`post_content`**: Contenido completo.
+-   **`post_excerpt`**: Resumen o extracto.
+-   **`post_URL`**: Enlace a la noticia.
+-   **`post_categories`**: Categorías asociadas.
+-   **`post_tags`**: Etiquetas relacionadas.
+-   **`year, month, day`**: Fecha de publicación (año, mes y día).
+-   **`post_category_primary.name`**: Categoría principal.
+-   **`post_category_secondary.name`**: Categoría secundaria.
+-   **`post_image.URL`**: URL de la imagen asociada.
+-   **`post_image.alt`**: Texto alternativo de la imagen.
+-   **`post_image.caption`**: Leyenda de la imagen.
+-   **`author.display_name`**: Nombre del autor.
+-   **`raw_post_date`**: Fecha cruda de publicación.
+-   **`resumen_de_ia`**: Resumen generado por IA (si está disponible).
+
+#### **Ejemplo de uso:**
+
+``` r
+# Buscar noticias entre el 1 de enero y el 31 de diciembre de 2023
+noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01", "2023-12-31")
 ```
 
-# Instalar el paquete desde GitHub
+------------------------------------------------------------------------
 
-devtools::install_github("exetrujillo/datamedios")
+### Función secundaria: `extraer_noticias_fecha`
 
-## Uso
+Esta función permite obtener noticias desde la API de BíoBío.cl utilizando una frase de búsqueda. Además, puedes limitar el número de resultados a extraer.
 
-### `extraer_noticias`
+#### **Parámetros:**
 
-Esta función permite realizar una extracción de noticias utilizando una frase de búsqueda y un número máximo de resultados a extraer.
+-   **`search_query`**: Frase de búsqueda (obligatorio).
+-   **`max_results`**: Máximo número de resultados a extraer (opcional).
 
-#### Parámetros:
+#### **Valor devuelto:**
 
--   `search_query`: Una frase de búsqueda que será utilizada para consultar las noticias (obligatorio).
+Un `data.frame` similar al de `extraer_noticias_fecha`, pero filtrado por `max_results`.
 
--   `max_results`: Número máximo de resultados a extraer. Si no se especifica, se extraen todos los resultados disponibles (opcional).
+#### **Ejemplo de uso:**
 
-#### Valor:
-
-La función devuelve un dataframe con las noticias extraídas, que incluye:
-
--   `ID`: ID de la noticia.
-
--   `post_title`: Título de la noticia.
-
--   `post_content`: Contenido completo de la noticia.
-
--   `post_excerpt`: Resumen o extracto de la noticia.
-
--   `post_URL`: Enlace a la noticia en el sitio web.
-
--   `post_categories`: Categorías de la noticia.
-
--   `post_tags`: Etiquetas de la noticia.
-
--   `year, month, day`: Fecha de la noticia en formato año, mes y día.
-
--   `post_category_primary.name`: Categoría principal de la noticia.
-
--   `post_category_secondary.name`: Categoría secundaria de la noticia.
-
--   `post_image.URL`: URL de la imagen asociada a la noticia.
-
--   `post_image.alt`: Texto alternativo de la imagen.
-
--   `post_image.caption`: Leyenda de la imagen.
-
--   `author.display_name`: Nombre del autor.
-
--   `raw_post_date`: Fecha de publicación de la noticia.
-
--   `resumen_de_ia`: Resumen generado por inteligencia artificial, si está disponible.
-
-#### Ejemplo:
-
-```         
-r
+``` r
 # Buscar noticias relacionadas con "inteligencia artificial"
-noticias <- extraer_noticias("inteligencia artificial", max_results = 100) 
+noticias <- extraer_noticias("inteligencia artificial", max_results = 100)
 ```
 
-### `extraer_noticias_fecha`
+------------------------------------------------------------------------
 
-Esta función permite realizar una extracción de noticias desde la API de BíoBío.cl, filtrando los resultados por un rango de fechas especificado.
+## 🔖 Documentación
 
-#### Parámetros:
+Para acceder a la documentación completa de las funciones, usa el siguiente comando:
 
--   `search_query`: Una frase de búsqueda que se usará para filtrar las noticias (obligatorio).
-
--   `fecha_inicio`: Fecha de inicio del rango de búsqueda en formato "YYYY-MM-DD" (obligatorio).
-
--   `fecha_fin`: Fecha de fin del rango de búsqueda en formato "YYYY-MM-DD" (obligatorio).
-
-#### Valor:
-
-La función devuelve un dataframe con las noticias extraídas dentro del rango de fechas especificado. Las columnas devueltas son las mismas que para `extraer_noticias`, pero las noticias estarán filtradas por las fechas de publicación.
-
-#### Ejemplo:
-
-```         
-r
-# Buscar noticias relacionadas con "inteligencia artificial" entre el 1 de enero y el 31 de diciembre de 2023
-noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01", "2023-12-31") 
-```
-
-## Documentación
-
-La documentación completa de las funciones está disponible en el paquete. Para acceder a ella, puedes usar `help()`:
-
-```         
-r
+``` r
 help(package = "datamedios")
 ```
 
-## Dependencias
+------------------------------------------------------------------------
 
-Este paquete requiere los siguientes paquetes:
+## 📊 Dependencias
 
--   `httr`: Para realizar solicitudes HTTP.
+Este paquete utiliza los siguientes paquetes de R:
 
--   `jsonlite`: Para procesar datos en formato JSON.
+-   `httr`: Realización de solicitudes HTTP.
+-   `jsonlite`: Procesamiento de datos JSON.
+-   `lubridate`: Manejo de fechas.
+-   `dplyr`, `tidyverse`: Manipulación y análisis de datos.
 
--   `lubridate`: Para manejar fechas.
+------------------------------------------------------------------------
 
--   `dplyr`, `tidyverse`: Para el manejo de datos.
+## 🗂️ Licencia
 
-## Licencia
+`datamedios` está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
 
-Este paquete está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+------------------------------------------------------------------------
 
-## Autoría
+## 👤 Autoría
 
 Este paquete fue desarrollado por:
 
--   Exequiel Trujillo e Ismael Aguayo
+-   **Ismael Aguayo**
+-   **Exequiel Trujillo**
 
-## Agradecimientos
-
-Este paquete utiliza varias librerías de R de código abierto, como `httr`, `jsonlite`, y `dplyr`, para realizar las tareas de scraping y manipulación de datos.
+------------------------------------------------------------------------
