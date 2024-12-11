@@ -5,8 +5,11 @@
 ## Instalación
 
 Para instalar el paquete desde GitHub, primero necesitas instalar el paquete `devtools` si no lo tienes. Luego, puedes instalar `datamedios` con el siguiente código:
-
-\`\`\`r \# Instalar devtools si no lo tienes install.packages("devtools")
+```         
+r
+# Instalar devtools si no lo tienes
+install.packages("devtools")
+```
 
 # Instalar el paquete desde GitHub
 
