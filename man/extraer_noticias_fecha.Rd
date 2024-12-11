@@ -1,15 +1,19 @@
-\name{extraer_noticias}
-\alias{extraer_noticias}
-\title{Extracción de noticias desde la API de BíoBío.cl}
+\name{extraer_noticias_fecha}
+\alias{extraer_noticias_fecha}
+\title{Extracción de noticias desde la API de BíoBío.cl por rango de fechas}
 \description{
-  Esta función permite realizar una extracción automatizada de noticias desde la API de BíoBío.cl. Los usuarios pueden especificar una frase de búsqueda y un número máximo de resultados a extraer.
+  Esta función permite realizar una extracción automatizada de noticias desde la API de BíoBío.cl utilizando un rango de fechas.
+  Las noticias extraídas corresponden a un término de búsqueda específico y son filtradas por las fechas de publicación.
 }
 \usage{
-  extraer_noticias(search_query, max_results = NULL)
+  extraer_noticias_fecha(search_query, fecha_inicio, fecha_fin)
 }
 \arguments{
-  \item{search_query}{Una frase de búsqueda que será utilizada para consultar las noticias. Este parámetro es obligatorio y debe ser un texto (carácter).}
-  \item{max_results}{Número máximo de resultados a extraer. Es un parámetro opcional; por defecto se extraen todos los resultados disponibles.}
+  \item{search_query}{Una frase de búsqueda que se usará para filtrar las noticias (obligatorio). Debe ser una cadena de caracteres.}
+
+  \item{fecha_inicio}{Fecha de inicio del rango de búsqueda en formato "YYYY-MM-DD" (obligatorio).}
+
+  \item{fecha_fin}{Fecha de fin del rango de búsqueda en formato "YYYY-MM-DD" (obligatorio).}
 }
 \value{
   Un dataframe con las noticias extraídas, que incluye:
@@ -34,12 +38,15 @@
 }
 \examples{
   # Ejemplo de uso de la función
-  noticias <- extraer_noticias("inteligencia artificial", max_results = 100)
+  noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01", "2023-12-31")
+  # El dataframe 'noticias' contiene las noticias dentro del rango de fechas especificado
 }
 \author{
   Autores del paquete: Exequiel Trujillo e Ismael Aguayo
 }
 \seealso{
-  \code{\link{httr}}, \code{\link{jsonlite}}, \code{\link{dplyr}}
+  \code{\link{extraer_noticias}}: Función que extrae noticias sin restricciones de fechas, sólo con un máximo de resultados (opcional).
 }
 \keyword{data}
+\keyword{news}
+\keyword{API}

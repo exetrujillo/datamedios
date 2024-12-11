@@ -34,6 +34,7 @@ extraer_noticias <- function(search_query, max_results = NULL) {
     post_image.alt = character(), # descripción alt de la imagen
     post_image.caption = character(), # pie de foto de la imagen.
     author.display_name = character(), # nombre del autor de la nota.
+    raw_post_date = as.Date(character()), # fecha raw, en formato ("YYYY-MM-DD")
     resumen_de_ia = character(), # resumen de la nota hecha por ia, si es que aplica
     stringsAsFactors = FALSE
   )
@@ -97,26 +98,26 @@ extraer_noticias <- function(search_query, max_results = NULL) {
       jsonlite::fromJSON(flatten = TRUE)
 
     if (!is.null(response_data$notas)) {
-        notas <- response_data$notas
+      notas <- response_data$notas
 
-        # Transformar las columnas de notas para que coincidan con las deseadas
-        for (col in names(columnas_deseadas)) {
-          if (!col %in% names(notas)) {
-            # Si la columna no está en las notas, añadirla como NA
-            notas[[col]] <- NA
-          }
-          # Forzar el tipo de la columna según lo especificado en columnas_deseadas
-          notas[[col]] <- as(notas[[col]], class(columnas_deseadas[[col]]))
+      # Transformamos las columnas de notas para que coincidan con las deseadas
+      for (col in names(columnas_deseadas)) {
+        if (!col %in% names(notas)) {
+          # Si la columna no está en las notas, la añadimos como NA
+          notas[[col]] <- NA
         }
-
-        # Asegurarse de que el orden de las columnas sea consistente
-        notas <- notas[names(columnas_deseadas)]
-
-        # Combinar con los datos acumulados
-        all_data <- dplyr::bind_rows(all_data, notas)
+        # Forzamos el tipo de la columna según lo especificado en columnas_deseadas
+        notas[[col]] <- as(notas[[col]], class(columnas_deseadas[[col]]))
       }
+
+      # Nos aseguramos de que el orden de las columnas sea consistente
+      notas <- notas[names(columnas_deseadas)]
+
+      # Combinamos con los datos acumulados
+      all_data <- dplyr::bind_rows(all_data, notas)
+    }
   }
 
-  # Retornar los datos procesados
+  # Retornamos los datos procesados
   return(all_data)
 }
