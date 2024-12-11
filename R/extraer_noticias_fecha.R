@@ -114,18 +114,22 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin) {
 
     # Verificamos si hay noticias filtradas
     if (nrow(noticias_filtradas) > 0) {
-      # Aseguramos la compatibilidad de columnas
-      columnas_faltantes <- setdiff(names(all_data), names(noticias_filtradas))
+      # Aseguramos que solo las columnas necesarias estén presentes
+      # Seleccionamos solo las columnas que existen en all_data
+      noticias_filtradas <- noticias_filtradas[, intersect(names(noticias_filtradas), names(all_data))]
 
-      # Solo agregamos columnas faltantes si existen
+      # Si hay columnas faltantes en noticias_filtradas, las agregamos como NA
+      columnas_faltantes <- setdiff(names(all_data), names(noticias_filtradas))
       if (length(columnas_faltantes) > 0) {
         for (col in columnas_faltantes) {
           noticias_filtradas[[col]] <- NA  # Agregamos columnas faltantes como NA
         }
-        noticias_filtradas <- noticias_filtradas[names(all_data)]  # Ordenamos las columnas
       }
 
-      # Agregamos noticias filtradas al dataframe
+      # Reordenamos las columnas de noticias_filtradas para que coincidan con el orden de all_data
+      noticias_filtradas <- noticias_filtradas[names(all_data)]
+
+      # Agregamos noticias filtradas al dataframe all_data
       all_data <- rbind(all_data, noticias_filtradas)
 
     } else {
