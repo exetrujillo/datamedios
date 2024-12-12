@@ -166,3 +166,21 @@ Este paquete fue desarrollado por:
 
 -   **Ismael Aguayo**
 -   **Exequiel Trujillo**
+
+------------------------------------------------------------------------
+
+## 📝 To Do
+
+-   Crear funciones para limpiar datos extraídos de HTML.
+
+-   Crear funciones para interactuar con la base de datos (como optimizar inserciones y consultas).
+
+-   Incorporar soporte para otros medios de comunicación.
+
+-   Optimizar las consultas a la API para mejorar el rendimiento.
+
+-   Documentar ejemplos adicionales para las funciones de base de datos.
+
+-   Crear un pipeline automatizado para la actualización de la base de datos.
+
+-   Crear una tabla en la base de datos para almacenar búsquedas pendientes por realizar desde el json, para almacenarlas en la base de datos notas_biobio o en otras cuando se incluya el soporte a otros medios de comunicación.
