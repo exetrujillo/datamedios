@@ -173,6 +173,8 @@ Este paquete fue desarrollado por:
 
 -   Crear funciones para limpiar datos extraídos de HTML.
 
+-   Hacer que al agregar datos a la tabla, estos queden ordenados por fecha
+
 -   Crear funciones para interactuar con la base de datos (como optimizar inserciones y consultas).
 
 -   Incorporar soporte para otros medios de comunicación.
