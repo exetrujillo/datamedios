@@ -100,14 +100,23 @@ extraer_noticias <- function(search_query, max_results = NULL) {
     if (!is.null(response_data$notas)) {
       notas <- response_data$notas
 
-      # Transformamos las columnas de notas para que coincidan con las deseadas
+      # Aseguramos que todas las columnas deseadas estén presentes en notas
       for (col in names(columnas_deseadas)) {
         if (!col %in% names(notas)) {
-          # Si la columna no está en las notas, la añadimos como NA
           notas[[col]] <- NA
         }
+
         # Forzamos el tipo de la columna según lo especificado en columnas_deseadas
-        notas[[col]] <- as(notas[[col]], class(columnas_deseadas[[col]]))
+        notas[[col]] <- tryCatch({
+          if (class(columnas_deseadas[[col]]) == "Date") {
+            as.Date(notas[[col]]) # Conversión específica para fechas
+          } else {
+            as(notas[[col]], class(columnas_deseadas[[col]]))
+          }
+        }, error = function(e) {
+          warning(paste("No se pudo convertir la columna", col, "al tipo", class(columnas_deseadas[[col]])))
+          notas[[col]] # Devuelve la columna original en caso de error
+        })
       }
 
       # Nos aseguramos de que el orden de las columnas sea consistente

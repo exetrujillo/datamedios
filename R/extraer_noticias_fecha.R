@@ -31,8 +31,8 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin) {
     post_content = character(),
     post_excerpt = character(),
     post_URL = character(),
-    post_categories = c(),
-    post_tags = c(),
+    post_categories = character(),
+    post_tags = character(),
     year = integer(),
     month = integer(),
     day = integer(),
@@ -112,6 +112,15 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin) {
     noticias_filtradas <- data$notas[data$notas$raw_post_date >= as.Date(fecha_inicio) &
                                        data$notas$raw_post_date <= as.Date(fecha_fin), ]
 
+    # Procesar post_categories y post_tags como JSON
+    if (!is.null(noticias_filtradas$post_categories)) {
+      noticias_filtradas$post_categories <- sapply(noticias_filtradas$post_categories, jsonlite::toJSON, auto_unbox = TRUE)
+    }
+
+    if (!is.null(noticias_filtradas$post_tags)) {
+      noticias_filtradas$post_tags <- sapply(noticias_filtradas$post_tags, jsonlite::toJSON, auto_unbox = TRUE)
+    }
+
     # Verificamos si hay noticias filtradas
     if (nrow(noticias_filtradas) > 0) {
       # Aseguramos que solo las columnas necesarias estén presentes
@@ -133,13 +142,6 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin) {
       all_data <- rbind(all_data, noticias_filtradas)
 
     } else {
-      # Verificamos si la nota más antigua es más reciente que fecha_fin
-      #fecha_antigua <- min(data$notas$raw_post_date)
-      #if (fecha_antigua > as.Date(fecha_fin)) {
-        # print("Se alcanzó una noticia fuera del rango de fechas. Terminando la búsqueda.")
-      #}
-
-      # Verificamos si la nota más reciente es más antigua que fecha_inicio
       fecha_reciente <- max(data$notas$raw_post_date)
       if (fecha_reciente < as.Date(fecha_inicio)) {
         print("No hay más noticias dentro del rango de fechas. Terminando la búsqueda.")
@@ -158,3 +160,4 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin) {
 
   return(all_data)
 }
+

@@ -1,6 +1,6 @@
-# Paquete `datamedios` (Versión 0.2.1)
+# Paquete `datamedios` (Versión 0.2.2)
 
-`datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, particularmente desde la API de BíoBío.cl por el momento. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis.
+`datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, particularmente desde la API de BíoBío.cl por el momento. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos MySQL.
 
 ------------------------------------------------------------------------
 
@@ -84,9 +84,50 @@ Un `data.frame` similar al de `extraer_noticias_fecha`, pero filtrado por `max_r
 noticias <- extraer_noticias("inteligencia artificial", max_results = 100)
 ```
 
-### Otras funciones:
+------------------------------------------------------------------------
 
-Tenemos también la función conexión y desconexión, que utilizaremos para hacer peticiones a una base de datos y poder ir guardando resultados del web scraping.
+### Función `agregar_datos_unicos`
+
+Esta función permite agregar datos a una tabla MySQL solo si los registros no están ya presentes, evitando duplicados mediante la columna `ID`.
+
+#### **Parámetros:**
+
+-   **`tabla`**: Nombre de la tabla en MySQL donde se insertarán los datos.
+-   **`datos`**: Un data frame con los datos a insertar. Debe contener una columna `ID`.
+
+#### **Valor devuelto:**
+
+Un mensaje indicando cuántos registros nuevos se agregaron o si no hay datos nuevos para insertar.
+
+#### **Dependencias:**
+
+Esta función utiliza un archivo `credenciales.R` para gestionar las credenciales de conexión a la base de datos.
+
+#### **Ejemplo de uso:**
+
+``` r
+# Agregar datos únicos a la tabla "notas_biobio"
+agregar_datos_unicos("notas_biobio", noticias)
+```
+
+------------------------------------------------------------------------
+
+### Conexión y desconexión a base de datos
+
+Para almacenar los datos extraídos, el paquete incluye funciones para conectarse y desconectarse de una base de datos MySQL. Estas funciones dependen de un archivo `credenciales.R` donde se especifican los detalles de conexión.
+
+#### **Ejemplo:**
+
+``` r
+# Conectar a la base de datos
+con <- conectar_bd("credenciales.R")
+
+# Realizar operaciones en la base de datos
+# ...
+
+# Desconectar de la base de datos
+desconectar_bd(con)
+```
 
 ------------------------------------------------------------------------
 
@@ -108,6 +149,8 @@ Este paquete utiliza los siguientes paquetes de R:
 -   `jsonlite`: Procesamiento de datos JSON.
 -   `lubridate`: Manejo de fechas.
 -   `dplyr`, `tidyverse`: Manipulación y análisis de datos.
+-   `DBI`: Interfaz para bases de datos relacionales.
+-   `RMySQL`: Conexión a bases de datos MySQL.
 
 ------------------------------------------------------------------------
 
@@ -123,5 +166,3 @@ Este paquete fue desarrollado por:
 
 -   **Ismael Aguayo**
 -   **Exequiel Trujillo**
-
-------------------------------------------------------------------------
