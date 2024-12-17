@@ -19,15 +19,26 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL) {
 
   # Inicializamos variables
   encoded_query <- URLencode(search_query)
-  all_data <- data.frame()
-
-  # Definir las columnas deseadas
-  columnas_deseadas <- c(
-    "ID", "post_title", "post_content", "post_excerpt", "post_URL",
-    "post_categories", "post_tags", "year", "month", "day",
-    "post_category_primary.name", "post_category_secondary.name",
-    "post_image.URL", "post_image.alt", "post_image.caption",
-    "author.display_name", "raw_post_date", "resumen_de_ia"
+  all_data <- data.frame(
+    ID = character(),
+    post_title = character(),
+    post_content = character(),
+    post_excerpt = character(),
+    post_URL = character(),
+    post_categories = character(),
+    post_tags = character(),
+    year = integer(),
+    month = integer(),
+    day = integer(),
+    post_category_primary.name = character(),
+    post_category_secondary.name = character(),
+    post_image.URL = character(),
+    post_image.alt = character(),
+    post_image.caption = character(),
+    author.display_name = character(),
+    raw_post_date = as.Date(character()),
+    resumen_de_ia = character(),
+    stringsAsFactors = FALSE
   )
 
   # Obtenemos la respuesta inicial
@@ -73,20 +84,20 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL) {
     }
 
     noticias <- as.data.frame(data$notas)
-    noticias <- noticias[, columnas_deseadas, drop = FALSE]
+    # Verificar las columnas de noticias
+    missing_columns <- setdiff(colnames(all_data), colnames(noticias))
 
-    # Si alguna columna falta en 'noticias', puedes añadirla con valores NA
-    missing_columns <- setdiff(columnas_deseadas, colnames(noticias))
+    # Si faltan columnas, añadirlas con valores NA
     for (col in missing_columns) {
       noticias[[col]] <- NA
     }
 
-    # Asegurarte de que las columnas estén en el mismo orden
-    noticias <- noticias[, columnas_deseadas, drop = FALSE]
-    noticias$raw_post_date <- as.Date(noticias$raw_post_date)
-
+    # Asegurarse de que las columnas estén en el orden correcto
+    noticias <- noticias[, colnames(all_data), drop = FALSE]
+    # Añadir las noticias a all_data
     all_data <- rbind(all_data, noticias)
 
+    # Controlar el número de resultados
     if (nrow(all_data) >= max_results) {
       all_data <- all_data[1:max_results, ]
       break
@@ -95,5 +106,6 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL) {
     offset <- offset + 20
   }
 
+  all_data$raw_post_date <- as.Date(all_data$raw_post_date)
   return(all_data)
 }
