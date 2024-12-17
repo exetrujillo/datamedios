@@ -18,4 +18,5 @@ Imports:
   DBI,
   RMySQL,
   wordcloud2,
-  tidytext
+  tidytext,
+  ggplot2

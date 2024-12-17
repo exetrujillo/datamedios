@@ -27,30 +27,31 @@ word_cloud <- function(datos, max_words, stop_words = NULL) {
   }
 
   # Validar el argumento 'stop_words'
-  if (!is.null(stop_words) && !is.character(stop_words) && !is.list(stop_words)) {
-    stop("'stop_words' debe ser 'es', NULL, o una lista de palabras.")
+  if (!is.null(stop_words) && !is.character(stop_words)) {
+    stop("'stop_words' debe ser un vector de palabras.")
   }
 
   # Generar los tokens (separar palabras)
   words <- datos %>%
-    unnest_tokens(word, post_content)
+    tidytext::unnest_tokens(word, post_content)
 
   # Filtrar stop words si se proporcionan
   if (!is.null(stop_words)) {
+    stop_words_df <- data.frame(word = stop_words)
     words <- words %>%
-      anti_join(stop_words, by = "word")
+      dplyr::anti_join(stop_words_df, by = "word")
   }
 
   # Calcular frecuencia de palabras
   word_counts <- words %>%
-    count(word, sort = TRUE)
+    dplyr::count(word, sort = TRUE)
 
   # Filtrar las palabras más frecuentes
   word_counts_filtered <- word_counts %>%
-    slice_max(n, n = max_words)
+    dplyr::slice_max(n, n = max_words)
 
   # Generar la nube de palabras
-  wordcloud2(
+  wordcloud2::wordcloud2(
     data = word_counts_filtered,
     size = 0.3,              # Aumenta el tamaño general de las palabras
     minSize = 0,             # Asegura que todas las palabras sean visibles
