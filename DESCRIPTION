@@ -16,4 +16,6 @@ Imports:
   utils,
   tidyverse,
   DBI,
-  RMySQL
+  RMySQL,
+  wordcloud2,
+  tidytext

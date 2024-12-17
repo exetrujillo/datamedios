@@ -1,6 +1,6 @@
 # Paquete `datamedios` (Versión 0.2.2)
 
-`datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, particularmente desde la API de BíoBío.cl por el momento. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos MySQL.
+`datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento desde la API de BíoBío.cl. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos MySQL.
 
 ------------------------------------------------------------------------
 
@@ -59,7 +59,7 @@ Un `data.frame` con las siguientes columnas:
 
 ``` r
 # Buscar noticias entre el 1 de enero y el 31 de diciembre de 2023
-noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01", "2023-12-31")
+noticias <- extraer_noticias_fecha("estallido social", "2019-10-18", "2024-12-31")
 ```
 
 ------------------------------------------------------------------------
@@ -186,3 +186,5 @@ Este paquete fue desarrollado por:
 -   Crear un pipeline automatizado para la actualización de la base de datos.
 
 -   Crear una tabla en la base de datos para almacenar búsquedas pendientes por realizar desde el json, para almacenarlas en la base de datos notas_biobio o en otras cuando se incluya el soporte a otros medios de comunicación.
+
+-   Crear un archivo de credenciales con acceso solo a lectura, para cuando el paquete sea abierto al público
