@@ -20,5 +20,4 @@ Imports:
   RMySQL,
   wordcloud2,
   tidytext,
-  ggplot2,
   lubridate

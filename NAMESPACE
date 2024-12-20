@@ -2,9 +2,8 @@ exportPattern("^[[:alpha:]]+")
 importFrom(magrittr, "%>%")
 importFrom(utils, URLencode)
 importFrom(lubridate, ymd_hms)
-importFrom(tidyverse, aes, geom_line, geom_point, geom_smooth, labs, theme_minimal, theme, element_text)
 
-import(ggplot2)
+import(tidyverse)
 
 export(conectar_bd)
 export(extraer_noticias)
