@@ -1,8 +1,8 @@
 \name{extraer_noticias_max_res}
 \alias{extraer_noticias_max_res}
-\title{Extracción de noticias desde la API de BíoBío.cl}
+\title{Extracción de noticias de BíoBío con resultado máximo}
 \description{
-  Esta función permite realizar una extracción automatizada de noticias desde la API de BíoBío.cl, utilizando un término de búsqueda proporcionado por el usuario.
+  Esta función permite realizar una extracción automatizada de noticias desde la API de BíoBío.cl, utilizando un término de búsqueda proporcionado por el usuario. El máximo son 10000 resultados.
 }
 \usage{
 extraer_noticias_max_res(search_query, max_results = NULL)

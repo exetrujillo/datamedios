@@ -1,0 +1,37 @@
+name: R CMD Check para datamedios
+
+# Aquí definimos cuáles son los eventos que activan el flujo de trabajo
+# Este por ejemplo se activa cada vez que hacemos pull o push a la rama 'main'
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Esto al parecer por lo general no se cambia, da solo permisos de lectura
+permissions:
+  contents: read
+
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        r-version: ['3.6.3', '4.0.0', '4.1.1', '4.4.1', 'devel']
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up R ${{ matrix.r-version }}
+        uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
+        with:
+          r-version: ${{ matrix.r-version }}
+      - name: Install dependencies
+        run: |
+          install.packages(c("remotes", "rcmdcheck"))
+          remotes::install_deps(dependencies = TRUE)
+        shell: Rscript {0}
+      - name: Check
+        run: rcmdcheck::rcmdcheck(error_on = "error")
+        shell: Rscript {0}
