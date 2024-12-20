@@ -5,8 +5,9 @@ importFrom(lubridate, ymd_hms)
 
 import(tidyverse)
 
+export(agregar_datos_unicos)
 export(conectar_bd)
-export(extraer_noticias)
+export(desconectar_bd)
 export(extraer_noticias_fecha)
 export(extraer_noticias_max_res)
 export(grafico_notas_por_mes)
