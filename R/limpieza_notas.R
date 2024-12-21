@@ -6,7 +6,7 @@
 #' @param sinonimos
 #' @return Un data frame con todas las notas limpias.
 #' @examples
-#' limpieza_notas(datos_proc)
+#' limpieza_notas(datos, sinonimos = )
 #' @export
 
 limpieza_notas <- function(datos, sinonimos = c()) {
