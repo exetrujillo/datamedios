@@ -20,4 +20,7 @@ Imports:
   RMySQL,
   wordcloud2,
   tidytext,
-  lubridate
+  lubridate,
+  rvest,
+  stringr,
+  xml2

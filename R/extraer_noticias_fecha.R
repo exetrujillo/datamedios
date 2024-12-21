@@ -44,9 +44,9 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin) {
     author.display_name = character(),
     raw_post_date = as.Date(character()),
     resumen_de_ia = character(),
+    search_query = character(),
     stringsAsFactors = FALSE
   )
-
   # Encabezados para la solicitud
   headers <- c(
     `User-Agent` = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0",
@@ -155,6 +155,8 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin) {
     # Salimos si ya hemos procesado todos los resultados disponibles
     if (offset >= total_results) break
   }
+
+  all_data$search_query <- search_query
 
   print(paste0("Total de noticias encontradas en el rango de fechas: ", nrow(all_data)))
 
