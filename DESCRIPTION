@@ -23,4 +23,5 @@ Imports:
   lubridate,
   rvest,
   stringr,
-  xml2
+  xml2,
+  lubridate
