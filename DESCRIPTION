@@ -24,4 +24,6 @@ Imports:
   rvest,
   stringr,
   xml2,
-  lubridate
+  lubridate,
+  purrr,
+  DT
