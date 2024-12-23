@@ -9,8 +9,6 @@
 #'
 #' @return Una tabla con las palabras más frecuentes.
 #' @examples
-#' datos <- data.frame(post_content = c("IA es el futuro. AI está cambiando el mundo.",
-#'                                      "El futuro de la tecnología está en IA y AI."))
 #' tabla_frecuencia_palabras(datos, max_words = 5, stop_words = c("el", "de"))
 #'
 

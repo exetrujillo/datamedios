@@ -10,7 +10,7 @@
   limpieza_notas(datos, sinonimos = c())
 }
 \arguments{
-  \item{datos}{Data frame que se extrae con la función principal. Debe tener la columna {post_content}}
+  \item{datos}{Data frame que se extrae con la función principal. Debe tener la columna \code{post_content}}
 
   \item{sinonimos}{Para filtrar las noticias se pueden agregar sinónimos (opcional). Debe ser carácter, null o una lista vacía}
 }

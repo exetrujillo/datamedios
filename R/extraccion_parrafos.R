@@ -1,20 +1,13 @@
 #' Extraer párrafos de una columna de texto
 #'
-#' Esta función procesa una columna de texto en un dataframe (asumido como HTML) y extrae los párrafos que coinciden con los sinónimos proporcionados.
+#' Esta función procesa una columna de texto en un dataframe y extrae los párrafos que coinciden con los sinónimos proporcionados.
 #'
 #' @param datos Data frame que contiene los datos de entrada con la columna "post_content".
 #' @param sinonimos Vector de sinónimos que se incluirán en la búsqueda.
 #' @return Data frame con una columna adicional 'parrafos_filtrados' que contiene los párrafos extraídos como listas.
 #' @examples
-#' datos <- data.frame(
-#'   id = 1:2,
-#'   post_content = c(
-#'     "<p>Este es un ejemplo de IA.</p><p>Otro párrafo aquí.</p>",
-#'     "<p>Noticias sobre AI y más contenido.</p><p>Otro ejemplo.</p>"
-#'   )
-#' )
-#' resultado <- extracción_párrafos(datos, sinonimos = c("IA", "AI"))
-#' print(resultado$parrafos_filtrados)
+#' datos <- extracción_párrafos(datos, sinonimos = c("IA", "AI"))
+#' print(datos$parrafos_filtrados[[1]])
 #'
 
 extracción_parrafos <- function(datos, sinonimos) {
