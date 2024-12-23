@@ -38,6 +38,7 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL) {
     author.display_name = character(),
     raw_post_date = as.Date(character()),
     resumen_de_ia = character(),
+    search_query = character(),
     stringsAsFactors = FALSE
   )
 
@@ -105,7 +106,7 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL) {
 
     offset <- offset + 20
   }
-
+  all_data$search_query <- search_query
   all_data$raw_post_date <- as.Date(all_data$raw_post_date)
   return(all_data)
 }
