@@ -6,7 +6,7 @@
 #' @param sinonimos Vector de sinónimos que se incluirán en la búsqueda.
 #' @return Data frame con una columna adicional 'parrafos_filtrados' que contiene los párrafos extraídos como listas.
 #' @examples
-#' datos <- extraccion_párrafos(datos, sinonimos = c("IA", "AI"))
+#' datos <- extraccion_parrafos(datos, sinonimos = c("IA", "AI"))
 #' print(datos$parrafos_filtrados[[1]])
 #'
 
