@@ -1,36 +1,44 @@
 #' Agregar datos únicos a una tabla MySQL
 #'
-#' Esta función agrega datos a una tabla MySQL solo si los registros no están ya presentes,
-#' identificando la existencia de duplicados mediante la columna `ID`.
+#' Esta función agrega datos a una tabla MySQL utilizando una API que espera datos en formato de lista.
 #'
-#' @param tabla Nombre de la tabla en MySQL donde se insertarán los datos.
-#' @param datos Un data frame con los datos a insertar. Debe contener una columna `ID`.
-#'
-#' @return Mensaje indicando cuántos registros nuevos se agregaron o si no hay datos nuevos para insertar.
+#' @param data Un data frame con los datos a insertar.
 #'
 #' @examples
 #' \dontrun{
 #' # Agregar datos únicos
-#' agregar_datos_unicos("notas_biobio", noticias)
+#' agregar_datos_unicos(noticias)
 #' }
 #'
 #' @export
 #'
-agregar_datos_unicos <- function(tabla, datos) {
-  con <- conectar_bd("credenciales.R")
-
-  # Verificamos los IDs existentes en la tabla
-  ids_existentes <- DBI::dbGetQuery(con, paste0("SELECT ID FROM ", tabla))$ID
-
-  # Filtramos las filas del DataFrame que no están en la tabla
-  datos_nuevos <- datos[!datos$ID %in% ids_existentes, ]
-
-  # Si hay datos nuevos, los insertamos
-  if (nrow(datos_nuevos) > 0) {
-    DBI::dbWriteTable(con, tabla, datos_nuevos, append = TRUE, row.names = FALSE)
-    cat(nrow(datos_nuevos), "nuevos registros agregados a la tabla.\n")
-  } else {
-    cat("No hay datos nuevos para agregar.\n")
+agregar_datos_unicos <- function(data) {
+  # Validar entrada
+  if (!is.data.frame(data)) {
+    stop("El argumento 'data' debe ser un data frame")
   }
-  desconectar_bd(con)
+  if (nrow(data) == 0 || ncol(data) == 0) {
+    stop("El data frame no puede estar vacío")
+  }
+
+  # Convertir data a lista
+  data_list <- as.list(data)
+
+  # URLs de las APIs
+  url1 <- "http://librosycodigo.ddns.net:3123/write_news"
+  url2 <- "http://librosycodigo.ddns.net:3123/write_search_query"
+
+  # Enviar datos a write_news
+  response1 <- httr:POST(url1, body = data_list, encode = "json")
+  if (response1$status_code != 200) {
+    stop(paste("Error al enviar datos a", url1, "- Código:", response1$status_code))
+  }
+
+  # Enviar datos a write_search_query
+  response2 <- httr:POST(url2, body = data_list, encode = "json")
+  if (response2$status_code != 200) {
+    stop(paste("Error al enviar datos a", url2, "- Código:", response2$status_code))
+  }
+
+  message("Datos agregados exitosamente a ambas tablas.")
 }

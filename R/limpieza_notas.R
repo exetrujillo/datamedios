@@ -3,10 +3,10 @@
 #' Esta función permite limpiar por completo las notas eliminando códigos y secciones irrelevantes.
 #' Verifica que el input sea un data frame con una columna llamada `post_content`.
 #' @param datos Data frame donde están almacenadas las notas.
-#' @param sinonimos
-#' @return Un data frame con todas las notas limpias.
+#' @param sinonimos Una lista
+#' @return Un listado de character que sirva para agregar sinónimos del search_query del data frame
 #' @examples
-#' limpieza_notas(datos, sinonimos = )
+#' limpieza_notas(datos, sinonimos = c("IA", "AI"))
 #' @export
 
 limpieza_notas <- function(datos, sinonimos = c()) {
