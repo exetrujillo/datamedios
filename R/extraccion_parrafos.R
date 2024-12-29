@@ -6,11 +6,11 @@
 #' @param sinonimos Vector de sinónimos que se incluirán en la búsqueda.
 #' @return Data frame con una columna adicional 'parrafos_filtrados' que contiene los párrafos extraídos como listas.
 #' @examples
-#' datos <- extracción_párrafos(datos, sinonimos = c("IA", "AI"))
+#' datos <- extraccion_párrafos(datos, sinonimos = c("IA", "AI"))
 #' print(datos$parrafos_filtrados[[1]])
 #'
 
-extracción_parrafos <- function(datos, sinonimos) {
+extraccion_parrafos <- function(datos, sinonimos) {
   # Verificar que los datos sean un data frame y que contengan la columna 'post_content'
   if (!is.data.frame(datos)) stop("'datos' debe ser un data frame.")
   if (!"post_content" %in% colnames(datos)) stop("El data frame debe contener la columna 'post_content'.")

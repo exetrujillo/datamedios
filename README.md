@@ -1,6 +1,6 @@
-# Paquete `datamedios` (Versión 0.2.2)
+# Paquete `datamedios` (Versión 0.2.4)
 
-`datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento desde la API de BíoBío.cl. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos MySQL.
+`datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento desde la API de BíoBío.cl. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos.
 
 ------------------------------------------------------------------------
 
@@ -54,6 +54,7 @@ Un `data.frame` con las siguientes columnas:
 -   **`author.display_name`**: Nombre del autor.
 -   **`raw_post_date`**: Fecha cruda de publicación.
 -   **`resumen_de_ia`**: Resumen generado por IA (si está disponible).
+-   **`search_query`**: Palabra o frase de búsqueda por la que se obtuvo los datos.
 
 #### **Ejemplo de uso:**
 
@@ -86,51 +87,6 @@ noticias <- extraer_noticias("inteligencia artificial", max_results = 100)
 
 ------------------------------------------------------------------------
 
-### Función `agregar_datos_unicos`
-
-Esta función permite agregar datos a una tabla MySQL solo si los registros no están ya presentes, evitando duplicados mediante la columna `ID`.
-
-#### **Parámetros:**
-
--   **`tabla`**: Nombre de la tabla en MySQL donde se insertarán los datos.
--   **`datos`**: Un data frame con los datos a insertar. Debe contener una columna `ID`.
-
-#### **Valor devuelto:**
-
-Un mensaje indicando cuántos registros nuevos se agregaron o si no hay datos nuevos para insertar.
-
-#### **Dependencias:**
-
-Esta función utiliza un archivo `credenciales.R` para gestionar las credenciales de conexión a la base de datos.
-
-#### **Ejemplo de uso:**
-
-``` r
-# Agregar datos únicos a la tabla "notas_biobio"
-agregar_datos_unicos("notas_biobio", noticias)
-```
-
-------------------------------------------------------------------------
-
-### Conexión y desconexión a base de datos
-
-Para almacenar los datos extraídos, el paquete incluye funciones para conectarse y desconectarse de una base de datos MySQL. Estas funciones dependen de un archivo `credenciales.R` donde se especifican los detalles de conexión.
-
-#### **Ejemplo:**
-
-``` r
-# Conectar a la base de datos
-con <- conectar_bd("credenciales.R")
-
-# Realizar operaciones en la base de datos
-# ...
-
-# Desconectar de la base de datos
-desconectar_bd(con)
-```
-
-------------------------------------------------------------------------
-
 ## 🔖 Documentación
 
 Para acceder a la documentación completa de las funciones, usa el siguiente comando:
@@ -143,14 +99,33 @@ help(package = "datamedios")
 
 ## 📊 Dependencias
 
-Este paquete utiliza los siguientes paquetes de R:
+Este paquete utiliza las siguientes dependencias de R para su correcto funcionamiento:
 
--   `httr`: Realización de solicitudes HTTP.
--   `jsonlite`: Procesamiento de datos JSON.
--   `lubridate`: Manejo de fechas.
--   `dplyr`, `tidyverse`: Manipulación y análisis de datos.
--   `DBI`: Interfaz para bases de datos relacionales.
--   `RMySQL`: Conexión a bases de datos MySQL.
+-   **`dplyr`**: Manipulación y análisis de datos.
+
+-   **`httr`**: Realización de solicitudes HTTP para interactuar con APIs.
+
+-   **`magrittr`**: Uso de operadores como `%>%` para flujos de trabajo más legibles.
+
+-   **`jsonlite`**: Procesamiento y conversión de datos en formato JSON.
+
+-   **`utils`**: Funciones utilitarias básicas incluidas en R.
+
+-   **`tidyverse`**: Conjunto de paquetes para análisis de datos y visualización.
+
+-   **`wordcloud2`**: Generación de nubes de palabras interactivas.
+
+-   **`tidytext`**: Análisis de texto basado en datos ordenados.
+
+-   **`lubridate`**: Manejo y análisis de datos temporales.
+
+-   **`rvest`**: Web scraping de páginas HTML.
+
+-   **`stringr`**: Manejo y manipulación de cadenas de texto.
+
+-   **`xml2`**: Lectura y manejo de datos en formato XML.
+
+-   **`purrr`**: Programación funcional con listas y vectores.
 
 ------------------------------------------------------------------------
 
@@ -171,20 +146,8 @@ Este paquete fue desarrollado por:
 
 ## 📝 To Do
 
--   Crear funciones para limpiar datos extraídos de HTML.
-
--   Hacer que al agregar datos a la tabla, estos queden ordenados por fecha
-
--   Crear funciones para interactuar con la base de datos (como optimizar inserciones y consultas).
-
 -   Incorporar soporte para otros medios de comunicación.
-
--   Optimizar las consultas a la API para mejorar el rendimiento.
-
--   Documentar ejemplos adicionales para las funciones de base de datos.
 
 -   Crear un pipeline automatizado para la actualización de la base de datos.
 
 -   Crear una tabla en la base de datos para almacenar búsquedas pendientes por realizar desde el json, para almacenarlas en la base de datos notas_biobio o en otras cuando se incluya el soporte a otros medios de comunicación.
-
--   Crear un archivo de credenciales con acceso solo a lectura, para cuando el paquete sea abierto al público
