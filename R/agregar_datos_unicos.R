@@ -29,13 +29,13 @@ agregar_datos_unicos <- function(data) {
   url2 <- "http://librosycodigo.ddns.net:3123/write_search_query"
 
   # Enviar datos a write_news
-  response1 <- httr:POST(url1, body = data_list, encode = "json")
+  response1 <- httr::POST(url1, body = data_list, encode = "json")
   if (response1$status_code != 200) {
     stop(paste("Error al enviar datos a", url1, "- Código:", response1$status_code))
   }
 
   # Enviar datos a write_search_query
-  response2 <- httr:POST(url2, body = data_list, encode = "json")
+  response2 <- httr::POST(url2, body = data_list, encode = "json")
   if (response2$status_code != 200) {
     stop(paste("Error al enviar datos a", url2, "- Código:", response2$status_code))
   }
