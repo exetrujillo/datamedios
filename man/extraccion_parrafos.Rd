@@ -18,7 +18,8 @@ Data frame con una columna adicional 'parrafos_filtrados' que contiene los párr
 Esta función procesa una columna de texto en un dataframe y extrae los párrafos que coinciden con los sinónimos proporcionados.
 }
 \examples{
-datos <- extraccion_parrafos(datos, sinonimos = c("IA", "AI"))
+datos <- extraer_noticias_fecha("boric", "2023-01-01", "2023-02-01")
+datos <- extraccion_parrafos(datos, sinonimos = c())
 print(datos$parrafos_filtrados[[1]])
 
 }
