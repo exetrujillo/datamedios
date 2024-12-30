@@ -1,12 +1,12 @@
 #' Función para limpiar notas de contenido HTML
 #'
-#' Esta función permite limpiar por completo las notas eliminando códigos y secciones irrelevantes.
+#' Esta función permite limpiar por completo las notas eliminando códigos, noticias y secciones irrelevantes.
 #' Verifica que el input sea un data frame con una columna llamada `post_content`.
 #' @param datos Data frame donde están almacenadas las notas.
-#' @param sinonimos Una lista
-#' @return Un listado de character que sirva para agregar sinónimos del search_query del data frame
+#' @param sinonimos Una vector de carácteres.
+#' @return Un data frame en donde la columna `post_content` tiene el texto limpio.
 #' @examples
-#' limpieza_notas(datos, sinonimos = c("IA", "AI"))
+#' limpieza_notas(datos, sinonimos = c("congreso", "diputados"))
 #' @export
 
 limpieza_notas <- function(datos, sinonimos = c()) {

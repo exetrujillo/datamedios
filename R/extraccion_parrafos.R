@@ -2,11 +2,11 @@
 #'
 #' Esta función procesa una columna de texto en un dataframe y extrae los párrafos que coinciden con los sinónimos proporcionados.
 #'
-#' @param datos Data frame que contiene los datos de entrada con la columna "post_content".
+#' @param datos Data frame que contiene los datos de entrada. Debe tener las columnas `post_content` y `search_query`.
 #' @param sinonimos Vector de sinónimos que se incluirán en la búsqueda.
 #' @return Data frame con una columna adicional 'parrafos_filtrados' que contiene los párrafos extraídos como listas.
 #' @examples
-#' datos <- extraccion_parrafos(datos, sinonimos = c("IA", "AI"))
+#' datos <- extraccion_parrafos(datos, sinonimos = c("diputados", "congreso"))
 #' print(datos$parrafos_filtrados[[1]])
 #'
 
