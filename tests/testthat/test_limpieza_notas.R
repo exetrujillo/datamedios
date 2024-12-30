@@ -1,12 +1,18 @@
-testthat::test_that("Se recibe un objeto de clase data frame, con 470 resultados y las columans esperadas", {
+testthat::test_that("Se recibe un objeto de clase data frame, con 407 resultados y las columans esperadas", {
 
   resultado <- extraer_noticias_fecha("boric", "2023-01-01", "2023-02-01")
+  resultado <- limpieza_notas(resultado, c("IA", "AI"))
 
   #Verificamos que es data frame
   expect_s3_class(resultado, "data.frame")
 
   #Verificamos la cantidad de resultados
-  expect_equal(nrow(resultado), 470) # No debería cambiar la cantidad de notas ya publicadas de esa fecha
+  expect_equal(nrow(resultado), 407)
+
+  # Verificamos que el texto no tenga html (corchetes <>)
+  indice_aleatorio <- sample(1:407, 1)
+  expect_false(grepl("<[^>]+>", resultado$post_content[indice_aleatorio]),
+               info = paste("Prueba falló en el índice", indice_aleatorio))
 
   #Verificamos la existencia de las columnas deseadas
   expect_true("ID" %in% colnames(resultado))

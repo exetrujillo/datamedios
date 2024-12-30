@@ -29,8 +29,6 @@ testthat::test_that("Se recibe un objeto de clase data frame, con 201 resultados
   expect_true("resumen_de_ia" %in% colnames(resultado))
   expect_true("search_query" %in% colnames(resultado))
 
-
-
 })
 
 
