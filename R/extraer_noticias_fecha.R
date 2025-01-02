@@ -5,12 +5,13 @@
 #' @param search_query Una frase de búsqueda (obligatoria).
 #' @param fecha_inicio Fecha de inicio del rango de búsqueda en formato "YYYY-MM-DD" (obligatoria).
 #' @param fecha_fin Fecha de fin del rango de búsqueda en formato "YYYY-MM-DD" (obligatoria).
+#' @param subir_a_bd por defecto TRUE, FALSE para test y cosas por el estilo (opcional).
 #' @return Un dataframe con las noticias extraídas.
 #' @examples
-#' noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01", "2023-12-31")
+#' noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01", "2023-12-31", subir_a_bd = FALSE)
 #' @export
 
-extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin) {
+extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_a_bd = TRUE) {
   # Validamos los parámetros
   if (missing(search_query) || !is.character(search_query)) {
     stop("Debe proporcionar una frase de búsqueda como texto.")
@@ -156,9 +157,19 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin) {
     if (offset >= total_results) break
   }
 
-  all_data$search_query <- search_query
+  all_data$search_query <- tolower(search_query)
 
   print(paste0("Total de noticias encontradas en el rango de fechas: ", nrow(all_data)))
+
+  # Subimos a la base de datos en caso de que el parametro subir_a_db es TRUE
+  if (subir_a_bd) {
+    tryCatch({
+      # Llamamos a la función que sube los datos si subir_a_bd es TRUE
+      agregar_datos_unicos(all_data)
+    }, error = function(e) {
+      message("Ocurrió un error al intentar agregar los datos a la base de datos: ", e$message)
+    })
+  }
 
   return(all_data)
 }

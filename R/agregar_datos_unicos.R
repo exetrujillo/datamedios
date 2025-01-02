@@ -1,19 +1,20 @@
 #' Agregar datos únicos a una tabla MySQL
 #'
-#' Esta función agrega datos a una tabla MySQL utilizando una API que espera datos en formato de lista.
+#' Esta función agrega datos a una tabla MySQL utilizando una API que espera datos en formato JSON.
 #'
 #' @param data Un data frame con los datos a insertar.
 #'
 #' @examples
 #' \dontrun{
 #' # Agregar datos únicos
+#' noticias <- extraer_noticias_max_res("tesla", max_results=10)
 #' agregar_datos_unicos(noticias)
 #' }
 #'
 #' @export
 #'
 agregar_datos_unicos <- function(data) {
-  # Validar entrada
+  # Validamos entrada
   if (!is.data.frame(data)) {
     stop("El argumento 'data' debe ser un data frame")
   }
@@ -21,24 +22,31 @@ agregar_datos_unicos <- function(data) {
     stop("El data frame no puede estar vacío")
   }
 
-  # Convertir data a lista
+  search_query <- data$search_query[1]
+  data$search_query <- NULL
+
+  # Convertimos data a lista
   data_list <- as.list(data)
 
   # URLs de las APIs
   url1 <- "http://librosycodigo.ddns.net:3123/write_news"
   url2 <- "http://librosycodigo.ddns.net:3123/write_search_query"
 
-  # Enviar datos a write_news
-  response1 <- httr::POST(url1, body = data_list, encode = "json")
-  if (response1$status_code != 200) {
-    stop(paste("Error al enviar datos a", url1, "- Código:", response1$status_code))
+  # Función para enviar datos a la API
+  enviar_datos <- function(url, data) {
+    response <- httr::POST(url, body = data, encode = "json")
+    if (httr::http_status(response)$category != "Success") {
+      stop(paste("Error al enviar datos a", url, "- Código:", response$status_code))
+    }
+    return(response)
   }
 
-  # Enviar datos a write_search_query
-  response2 <- httr::POST(url2, body = data_list, encode = "json")
-  if (response2$status_code != 200) {
-    stop(paste("Error al enviar datos a", url2, "- Código:", response2$status_code))
-  }
+  # Enviamos datos a write_news
+  enviar_datos(url1, data_list)
 
-  message("Datos agregados exitosamente a ambas tablas.")
+  # Enviamos datos a write_search_queries
+  data_list <- append(data_list, list("search_query" = search_query))
+  enviar_datos(url2, data_list)
+
+  message("Datos agregados exitosamente.")
 }

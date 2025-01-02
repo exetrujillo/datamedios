@@ -6,9 +6,11 @@
 #' @param sinonimos Vector de sinónimos que se incluirán en la búsqueda.
 #' @return Data frame con una columna adicional 'parrafos_filtrados' que contiene los párrafos extraídos como listas.
 #' @examples
+#' \dontrun{
+#' datos <- extraer_noticias_max_res("inteligencia artificial", max_resultas = 140)
 #' datos <- extraccion_parrafos(datos, sinonimos = c("IA", "AI"))
-#' print(datos$parrafos_filtrados[[1]])
-#'
+#' }
+#' @export
 
 extraccion_parrafos <- function(datos, sinonimos) {
   # Verificar que los datos sean un data frame y que contengan la columna 'post_content'
@@ -20,6 +22,7 @@ extraccion_parrafos <- function(datos, sinonimos) {
   } else {
     pattern <- paste0("(?i)\\b(", datos$search_query[[1]], ")\\b")
   }
+
   # Procesar cada contenido de 'post_content' para extraer párrafos filtrados
   datos <- datos %>%
     dplyr::mutate(

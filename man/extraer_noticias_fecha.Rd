@@ -4,7 +4,12 @@
 \alias{extraer_noticias_fecha}
 \title{Extracción de noticias desde la API de BíoBío.cl por rango de fechas}
 \usage{
-extraer_noticias_fecha(search_query, fecha_inicio, fecha_fin)
+extraer_noticias_fecha(
+  search_query,
+  fecha_inicio,
+  fecha_fin,
+  subir_a_bd = TRUE
+)
 }
 \arguments{
 \item{search_query}{Una frase de búsqueda (obligatoria).}
@@ -12,6 +17,8 @@ extraer_noticias_fecha(search_query, fecha_inicio, fecha_fin)
 \item{fecha_inicio}{Fecha de inicio del rango de búsqueda en formato "YYYY-MM-DD" (obligatoria).}
 
 \item{fecha_fin}{Fecha de fin del rango de búsqueda en formato "YYYY-MM-DD" (obligatoria).}
+
+\item{subir_a_bd}{por defecto TRUE, FALSE para test y cosas por el estilo (opcional).}
 }
 \value{
 Un dataframe con las noticias extraídas.
@@ -20,5 +27,5 @@ Un dataframe con las noticias extraídas.
 Esta función permite realizar una extracción automatizada de noticias desde la API de BíoBío.cl utilizando un rango de fechas.
 }
 \examples{
-noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01", "2023-12-31")
+noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01", "2023-12-31", subir_a_bd = FALSE)
 }

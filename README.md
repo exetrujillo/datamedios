@@ -1,6 +1,6 @@
-# Paquete `datamedios` (Versión 0.2.4)
+# Paquete `datamedios` (Versión 0.3.1)
 
-`datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento desde la API de BíoBío.cl. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos.
+`datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento desde la API de BíoBío.cl. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos por medio de una API.
 
 ------------------------------------------------------------------------
 
@@ -26,13 +26,14 @@ Para instalar el paquete desde GitHub, sigue los siguientes pasos:
 
 ### Función principal: `extraer_noticias_fecha`
 
-Esta función permite filtrar noticias por un rango de fechas específico, además de aplicar una frase de búsqueda.
+Esta función permite filtrar noticias por un rango de fechas específico, además de aplicar una frase de búsqueda. Por defecto carga los datos automáticamente a la base de datos de api-datamedios.
 
 #### **Parámetros:**
 
 -   **`search_query`**: Frase de búsqueda (obligatorio).
 -   **`fecha_inicio`**: Fecha de inicio en formato `"YYYY-MM-DD"` (obligatorio).
 -   **`fecha_fin`**: Fecha de fin en formato `"YYYY-MM-DD"` (obligatorio).
+-   **`subir_a_bd`**: Por defecto está seteado en TRUE, pero para los tests lo dejamos en FALSE (opcional).
 
 #### **Valor devuelto:**
 
@@ -65,14 +66,15 @@ noticias <- extraer_noticias_fecha("estallido social", "2019-10-18", "2024-12-31
 
 ------------------------------------------------------------------------
 
-### Función secundaria: `extraer_noticias`
+### Función secundaria: `extraer_noticias_max_res`
 
-Esta función permite obtener noticias desde la API de BíoBío.cl utilizando una frase de búsqueda. Además, puedes limitar el número de resultados a extraer.
+Esta función permite obtener noticias desde la API de BíoBío.cl utilizando una frase de búsqueda. Además, puedes limitar el número de resultados a extraer. Por defecto carga los datos automáticamente a la base de datos de api-datamedios.
 
 #### **Parámetros:**
 
 -   **`search_query`**: Frase de búsqueda (obligatorio).
 -   **`max_results`**: Máximo número de resultados a extraer (opcional).
+-   **`subir_a_bd`**: Por defecto está seteado en TRUE, pero para los tests lo dejamos en FALSE (opcional)
 
 #### **Valor devuelto:**
 
@@ -82,7 +84,7 @@ Un `data.frame` similar al de `extraer_noticias_fecha`, pero filtrado por `max_r
 
 ``` r
 # Buscar noticias relacionadas con "inteligencia artificial"
-noticias <- extraer_noticias("inteligencia artificial", max_results = 100)
+noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 100)
 ```
 
 ------------------------------------------------------------------------

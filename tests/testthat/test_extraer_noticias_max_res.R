@@ -1,6 +1,6 @@
 testthat::test_that("Se recibe un objeto de clase data frame, con 201 resultados y las columans esperadas", {
 
-  resultado <- extraer_noticias_max_res("boric", max_results = 201)
+  resultado <- extraer_noticias_max_res("boric", max_results = 201, subir_a_bd = FALSE)
 
   #Verificamos que es data frame
   expect_s3_class(resultado, "data.frame")

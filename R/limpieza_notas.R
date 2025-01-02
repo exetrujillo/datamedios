@@ -2,11 +2,16 @@
 #'
 #' Esta función permite limpiar por completo las notas eliminando códigos y secciones irrelevantes.
 #' Verifica que el input sea un data frame con una columna llamada `post_content`.
-#' @param datos Data frame donde están almacenadas las notas.
-#' @param sinonimos Una lista
-#' @return Un listado de character que sirva para agregar sinónimos del search_query del data frame
+#' @param datos Data frame donde están almacenadas las notas y con la funcion extraccion_parrafos ya operada.
+#' @param sinonimos Una lista de character
+#' @return Un dataframe con el post_content limpio
 #' @examples
-#' limpieza_notas(datos, sinonimos = c("IA", "AI"))
+#'
+#' \dontrun{
+#' datos <- extraer_noticias_max_res("inteligencia artificial", max_results= 150)
+#' datos <- extraccion_parrafos(datos)
+#' datos_proc <- limpieza_notas(datos, sinonimos = c("IA", "AI"))
+#' }
 #' @export
 
 limpieza_notas <- function(datos, sinonimos = c()) {
@@ -80,7 +85,7 @@ limpieza_notas <- function(datos, sinonimos = c()) {
   print(nrow(datos))
 
   # Mostramos un ejemplo de contenido limpio
-  print(datos$post_content[1])
+  # print(datos$post_content[1])
 
   return(datos)
 }

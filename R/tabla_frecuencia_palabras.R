@@ -6,11 +6,13 @@
 #' @param datos Data frame que contiene la columna 'post_content'.
 #' @param max_words Número máximo de palabras que se mostrarán en la tabla.
 #' @param stop_words Vector opcional de palabras que se deben excluir del conteo.
-#'
 #' @return Una tabla con las palabras más frecuentes.
 #' @examples
+#' datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01")
+#' datos <- extraccion_parrafos(datos)
+#' datos <- limpieza_notas(datos)
 #' tabla_frecuencia_palabras(datos, max_words = 5, stop_words = c("el", "de"))
-#'
+#' @export
 
 tabla_frecuencia_palabras <- function(datos, max_words, stop_words = NULL) {
   # Validar que 'datos' sea un data frame

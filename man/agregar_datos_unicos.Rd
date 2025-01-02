@@ -10,11 +10,12 @@ agregar_datos_unicos(data)
 \item{data}{Un data frame con los datos a insertar.}
 }
 \description{
-Esta función agrega datos a una tabla MySQL utilizando una API que espera datos en formato de lista.
+Esta función agrega datos a una tabla MySQL utilizando una API que espera datos en formato JSON.
 }
 \examples{
 \dontrun{
 # Agregar datos únicos
+noticias <- extraer_noticias_max_res("tesla", max_results=10)
 agregar_datos_unicos(noticias)
 }
 
