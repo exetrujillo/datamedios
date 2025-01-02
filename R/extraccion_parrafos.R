@@ -12,7 +12,7 @@
 #' }
 #' @export
 
-extraccion_parrafos <- function(datos, sinonimos) {
+extraccion_parrafos <- function(datos, sinonimos = c()) {
   # Verificar que los datos sean un data frame y que contengan la columna 'post_content'
   if (!is.data.frame(datos)) stop("'datos' debe ser un data frame.")
   if (!"post_content" %in% colnames(datos)) stop("El data frame debe contener la columna 'post_content'.")
