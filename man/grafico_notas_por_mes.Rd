@@ -23,7 +23,7 @@ Esta función genera un gráfico de línea que muestra la cantidad de publicacio
 }
 \examples{
 \dontrun{
-datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01")
+datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
 datos <- extraccion_parrafos(datos)
 datos_proc <- limpieza_notas(datos)
 grafico_notas_por_mes(datos_proc, titulo = "Cambio Climático", fecha_inicio = "2024-01-01", fecha_fin = "2025-01-01")

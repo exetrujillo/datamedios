@@ -8,7 +8,7 @@
 #' @param ... Parámetros adicionales necesarios para ciertos tipos de visualización (e.g., para word_cloud).
 #' @return Un gráfico con características dependientes del tipo especificado y los datos ingresados.
 #' @examples
-#' datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01")
+#' datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
 #' datos <- extraccion_parrafos(datos)
 #' datos_proc <- limpieza_notas(datos)
 #' visualizacion(datos_proc, word_cloud, stop_words=es)

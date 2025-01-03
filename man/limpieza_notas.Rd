@@ -21,7 +21,7 @@ Verifica que el input sea un data frame con una columna llamada `post_content`.
 \examples{
 
 \dontrun{
-datos <- extraer_noticias_max_res("inteligencia artificial", max_results= 150)
+datos <- extraer_noticias_max_res("inteligencia artificial", max_results= 150, subir_a_bd = FALSE)
 datos <- extraccion_parrafos(datos)
 datos_proc <- limpieza_notas(datos, sinonimos = c("IA", "AI"))
 }

@@ -23,5 +23,7 @@ Imports:
   stringr,
   xml2,
   lubridate,
-  purrr
+  purrr,
+  DT,
+  ggplot2
 RoxygenNote: 7.3.2

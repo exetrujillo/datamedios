@@ -21,7 +21,7 @@ Esta función procesa la columna 'post_content' de un dataframe, tokeniza el tex
 cuenta la frecuencia de cada palabra y genera una tabla con las palabras más frecuentes.
 }
 \examples{
-datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01")
+datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
 datos <- extraccion_parrafos(datos)
 datos <- limpieza_notas(datos)
 tabla_frecuencia_palabras(datos, max_words = 5, stop_words = c("el", "de"))
