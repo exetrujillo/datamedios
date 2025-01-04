@@ -22,5 +22,8 @@ Un gráfico con características dependientes del tipo especificado y los datos 
 Esta función incluye varias formas de visualizar los datos obtenidos.
 }
 \examples{
-visualizacion(datos_proc, word_clous, stop_words=es)
+datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
+datos <- extraccion_parrafos(datos)
+datos_proc <- limpieza_notas(datos)
+visualizacion(datos_proc, word_cloud, stop_words=es)
 }

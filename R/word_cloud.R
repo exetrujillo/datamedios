@@ -1,13 +1,16 @@
-#' Función de nube de palabras
+#' Función de visualizaciones
 #'
-#' Esta función permite construir una nube de palabras para visualizar las más frecuentes en el corpus de texto.
+#' Esta función incluye varias formas de visualizar los datos obtenidos.
 #'
-#' @param datos data frame que genera la función de extracción, con el texto ya limpio (con la función `limpieza_notas`). Debe incluir la columna `post_content`.
+#' @param datos data frame que genera la función de extracción, con el texto ya limpio.
 #' @param max_words Cantidad máxima de palabras que aparecerán en la nube.
-#' @param stop_words Definir las palabras que serán ignoradas en la visualización. Debe ser un vector de carácteres. Si se deja vacío, no se omitirán palabras.
+#' @param stop_words Definir las palabras que serán ignoradas en la visualización. Puede ser 'es' (realizado por los desarrolladores del paquete), NULL, o una lista.
 #' @return Una nube de palabras con las palabras más frecuentes.
 #' @examples
-#' word_cloud(datos_proc, max_words = 50, stop_words = (el, yo, de, si))
+#' datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
+#' datos <- extraccion_parrafos(datos)
+#' datos_proc <- limpieza_notas(datos)
+#' word_cloud(datos_proc, max_words = 50, stop_words = es)
 #' @export
 
 word_cloud <- function(datos, max_words, stop_words = NULL) {

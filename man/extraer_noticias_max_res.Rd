@@ -4,12 +4,14 @@
 \alias{extraer_noticias_max_res}
 \title{Extracción de noticias desde la API de BíoBío.cl}
 \usage{
-extraer_noticias_max_res(search_query, max_results = NULL)
+extraer_noticias_max_res(search_query, max_results = NULL, subir_a_bd = TRUE)
 }
 \arguments{
 \item{search_query}{Una frase de búsqueda (obligatoria).}
 
 \item{max_results}{Número máximo de resultados a extraer (opcional, por defecto todos).}
+
+\item{subir_a_bd}{por defecto TRUE, FALSE para test y cosas por el estilo (opcional).}
 }
 \value{
 Un dataframe con las noticias extraídas.
@@ -18,5 +20,5 @@ Un dataframe con las noticias extraídas.
 Esta función permite realizar una extracción automatizada de noticias desde la API de BíoBío.cl.
 }
 \examples{
-noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 100)
+noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 100, subir_a_bd = FALSE)
 }

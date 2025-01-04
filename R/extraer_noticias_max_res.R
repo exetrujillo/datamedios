@@ -4,11 +4,12 @@
 #'
 #' @param search_query Una frase de búsqueda (obligatoria).
 #' @param max_results Número máximo de resultados a extraer (opcional, por defecto todos).
+#' @param subir_a_bd por defecto TRUE, FALSE para test y cosas por el estilo (opcional).
 #' @return Un dataframe con las noticias extraídas.
 #' @examples
-#' noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 100)
+#' noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 100, subir_a_bd = FALSE)
 #' @export
-extraer_noticias_max_res <- function(search_query, max_results = NULL) {
+extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_bd = TRUE) {
   # Validamos los parámetros
   if (missing(search_query) || !is.character(search_query)) {
     stop("Debe proporcionar una frase de búsqueda válida como texto.")
@@ -106,7 +107,21 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL) {
 
     offset <- offset + 20
   }
-  all_data$search_query <- search_query
+
+  all_data$search_query <- tolower(search_query)
   all_data$raw_post_date <- as.Date(all_data$raw_post_date)
+
+  # Subimos a la base de datos en caso de que el parametro subir_a_db es TRUE
+  if (subir_a_bd) {
+    tryCatch({
+      # Llamamos a la función que sube los datos si subir_a_bd es TRUE
+      agregar_datos_unicos(all_data)
+    }, error = function(e) {
+      message("Ocurrió un error al intentar agregar los datos a la base de datos: ", e$message)
+    })
+  }
+
+  print(paste0("Noticias hasta la fecha: ", all_data$raw_post_date[nrow(all_data)]))
+
   return(all_data)
 }

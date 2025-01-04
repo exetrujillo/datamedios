@@ -2,15 +2,17 @@
 #'
 #' Esta función procesa una columna de texto en un dataframe y extrae los párrafos que coinciden con los sinónimos proporcionados.
 #'
-#' @param datos Data frame que contiene los datos de entrada. Debe tener las columnas `post_content` y `search_query`.
+#' @param datos Data frame que contiene los datos de entrada con la columna "post_content".
 #' @param sinonimos Vector de sinónimos que se incluirán en la búsqueda.
 #' @return Data frame con una columna adicional 'parrafos_filtrados' que contiene los párrafos extraídos como listas.
 #' @examples
-#' datos <- extraccion_parrafos(datos, sinonimos = c("diputados", "congreso"))
-#' print(datos$parrafos_filtrados[[1]])
-#'
+#' \dontrun{
+#' datos <- extraer_noticias_max_res("inteligencia artificial", max_resultas = 140, subir_a_bd = FALSE)
+#' datos <- extraccion_parrafos(datos, sinonimos = c("IA", "AI"))
+#' }
+#' @export
 
-extraccion_parrafos <- function(datos, sinonimos) {
+extraccion_parrafos <- function(datos, sinonimos = c()) {
   # Verificar que los datos sean un data frame y que contengan la columna 'post_content'
   if (!is.data.frame(datos)) stop("'datos' debe ser un data frame.")
   if (!"post_content" %in% colnames(datos)) stop("El data frame debe contener la columna 'post_content'.")
@@ -20,6 +22,7 @@ extraccion_parrafos <- function(datos, sinonimos) {
   } else {
     pattern <- paste0("(?i)\\b(", datos$search_query[[1]], ")\\b")
   }
+
   # Procesar cada contenido de 'post_content' para extraer párrafos filtrados
   datos <- datos %>%
     dplyr::mutate(

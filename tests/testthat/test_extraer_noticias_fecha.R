@@ -1,6 +1,6 @@
 testthat::test_that("Se recibe un objeto de clase data frame, con 470 resultados y las columans esperadas", {
 
-  resultado <- extraer_noticias_fecha("boric", "2023-01-01", "2023-02-01")
+  resultado <- extraer_noticias_fecha("boric", "2023-01-01", "2023-02-01", subir_a_bd = FALSE)
 
   #Verificamos que es data frame
   expect_s3_class(resultado, "data.frame")

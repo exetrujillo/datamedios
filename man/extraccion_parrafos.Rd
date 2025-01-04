@@ -4,7 +4,7 @@
 \alias{extraccion_parrafos}
 \title{Extraer párrafos de una columna de texto}
 \usage{
-extraccion_parrafos(datos, sinonimos)
+extraccion_parrafos(datos, sinonimos = c())
 }
 \arguments{
 \item{datos}{Data frame que contiene los datos de entrada con la columna "post_content".}
@@ -18,8 +18,8 @@ Data frame con una columna adicional 'parrafos_filtrados' que contiene los párr
 Esta función procesa una columna de texto en un dataframe y extrae los párrafos que coinciden con los sinónimos proporcionados.
 }
 \examples{
-datos <- extraer_noticias_fecha("boric", "2023-01-01", "2023-02-01")
-datos <- extraccion_parrafos(datos, sinonimos = c())
-print(datos$parrafos_filtrados[[1]])
-
+\dontrun{
+datos <- extraer_noticias_max_res("inteligencia artificial", max_resultas = 140, subir_a_bd = FALSE)
+datos <- extraccion_parrafos(datos, sinonimos = c("IA", "AI"))
+}
 }
