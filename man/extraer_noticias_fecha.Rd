@@ -16,7 +16,7 @@ extraer_noticias_fecha(
 
 \item{fecha_inicio}{Fecha de inicio del rango de busqueda en formato "YYYY-MM-DD" (obligatoria).}
 
-\item{fecha_fin}{Fecha de fin del rango de búsqueda en formato "YYYY-MM-DD" (obligatoria).}
+\item{fecha_fin}{Fecha de fin del rango de busqueda en formato "YYYY-MM-DD" (obligatoria).}
 
 \item{subir_a_bd}{por defecto TRUE, FALSE para test y cosas por el estilo (opcional).}
 }
