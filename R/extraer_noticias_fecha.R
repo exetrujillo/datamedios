@@ -4,7 +4,7 @@
 #'
 #' @param search_query Una frase de busqueda (obligatoria).
 #' @param fecha_inicio Fecha de inicio del rango de busqueda en formato "YYYY-MM-DD" (obligatoria).
-#' @param fecha_fin Fecha de fin del rango de búsqueda en formato "YYYY-MM-DD" (obligatoria).
+#' @param fecha_fin Fecha de fin del rango de busqueda en formato "YYYY-MM-DD" (obligatoria).
 #' @param subir_a_bd por defecto TRUE, FALSE para test y cosas por el estilo (opcional).
 #' @return Un dataframe con las noticias extraidas.
 #' @examples
@@ -124,7 +124,7 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
 
     # Verificamos si hay noticias filtradas
     if (nrow(noticias_filtradas) > 0) {
-      # Aseguramos que solo las columnas necesarias estén presentes
+      # Aseguramos que solo las columnas necesarias esten presentes
       # Seleccionamos solo las columnas que existen en all_data
       noticias_filtradas <- noticias_filtradas[, intersect(names(noticias_filtradas), names(all_data))]
 
@@ -145,7 +145,7 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
     } else {
       fecha_reciente <- max(data$notas$raw_post_date)
       if (fecha_reciente < as.Date(fecha_inicio)) {
-        print("No hay más noticias dentro del rango de fechas. Terminando la búsqueda.")
+        print("No hay mas noticias dentro del rango de fechas. Terminando la busqueda.")
         break  # Salimos del bucle si la fecha mas reciente es anterior a fecha_inicio
       }
     }
