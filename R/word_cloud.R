@@ -45,6 +45,11 @@ word_cloud <- function(datos, max_words, stop_words = NULL) {
       dplyr::anti_join(stop_words_df, by = "word")
   }
 
+  # Verificar si hay palabras suficientes para generar la nube
+  if (nrow(words) == 0) {
+    stop("No se encontraron palabras para generar la nube.")
+  }
+
   # Calcular frecuencia de palabras
   word_counts <- words %>%
     dplyr::count(word, sort = TRUE)

@@ -47,9 +47,12 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
   respuesta_inicial <- init_req_bbcl(search_query)
   fecha_mas_reciente <- lubridate::ymd_hms(respuesta_inicial$raw_post_date[1])
   total_results <- as.integer(respuesta_inicial$total)
+  if(total_results > 0){
   print(paste0("Total de resultados posibles: ", total_results))
   print(paste0("Noticia más reciente disponible es de la fecha: ", fecha_mas_reciente))
-
+  }else{
+  print("No se encontraron noticias con la search query especificada.")
+}
   # Determinamos el número de resultados a extraer
   if (is.null(max_results) || max_results > total_results) {
     max_results <- total_results

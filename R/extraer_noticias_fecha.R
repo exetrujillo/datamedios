@@ -75,7 +75,7 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
         print(paste0("Total de resultados posibles: ", total_results))
         print(paste0("Noticia más reciente disponible es de la fecha: ", fecha_mas_reciente))
       } else {
-        stop("No se encontraron notas en la respuesta inicial.")
+        stop("No se encontraron noticias con la search query especificada.")
       }
     } else {
       stop("No se encontró el parámetro 'total' en la respuesta.")
