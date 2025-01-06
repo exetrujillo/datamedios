@@ -12,7 +12,7 @@ limpieza_notas(datos, sinonimos = c())
 \item{sinonimos}{Una lista de character}
 }
 \value{
-Un dataframe con el post_content limpio
+Un dataframe con el post_content limpio en la columna post_content_clean
 }
 \description{
 Esta funcion permite limpiar por completo las notas eliminando codigos y secciones irrelevantes.
