@@ -1,19 +1,19 @@
-#' Gráfico de notas por mes
+#' Grafico de notas por mes
 #'
-#' Esta función genera un gráfico de línea que muestra la cantidad de publicaciones agrupadas por mes.
+#' Esta funcion genera un grafico de linea que muestra la cantidad de publicaciones agrupadas por mes.
 #'
 #' @param datos Data frame con los datos procesados, que debe incluir la columna `raw_post_date` en formato YYYY-MM-DD.
-#' @param titulo Texto que aparecerá en el título del gráfico.
-#' @param fecha_inicio Fecha de inicio para la construcción del gráfico en formato YYYY-MM-DD (opcional).
-#' @param fecha_fin Fecha de finalización para la construcción del gráfico en formato YYYY-MM-DD (opcional).
-#' @return Un gráfico ggplot2 que muestra la cantidad de publicaciones por mes.
+#' @param titulo Texto que aparecera en el titulo del grafico.
+#' @param fecha_inicio Fecha de inicio para la construccion del grafico en formato YYYY-MM-DD (opcional).
+#' @param fecha_fin Fecha de finalizacion para la construccion del grafico en formato YYYY-MM-DD (opcional).
+#' @return Un grafico ggplot2 que muestra la cantidad de publicaciones por mes.
 #' @examples
 #' \dontrun{
 #' datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
 #' datos <- extraccion_parrafos(datos)
 #' datos_proc <- limpieza_notas(datos)
-#' grafico_notas_por_mes(datos_proc, titulo = "Cambio Climático", fecha_inicio = "2024-01-01", fecha_fin = "2025-01-01")
-#' grafico_notas_por_mes(datos_proc, titulo = "Cambio Climático")
+#' grafico_notas_por_mes(datos_proc, titulo = "Cambio Climatico", fecha_inicio = "2024-01-01", fecha_fin = "2025-01-01")
+#' grafico_notas_por_mes(datos_proc, titulo = "Cambio Climatico")
 #' }
 #'
 #' @export
@@ -51,7 +51,7 @@ grafico_notas_por_mes <- function(datos, titulo, fecha_inicio = NULL, fecha_fin 
       fecha_fin <- max(datos$raw_post_date, na.rm = TRUE)
     }
 
-    # Validar que las fechas sean válidas
+    # Validar que las fechas sean validas
     if (fecha_inicio > fecha_fin) {
       stop("'fecha_inicio' debe ser anterior o igual a 'fecha_fin'.")
     }
@@ -64,7 +64,7 @@ grafico_notas_por_mes <- function(datos, titulo, fecha_inicio = NULL, fecha_fin 
     datos_filtrados <- datos
   }
 
-  # Verificar si hay datos después del filtrado
+  # Verificar si hay datos despues del filtrado
   if (nrow(datos_filtrados) == 0) {
     stop("No hay datos en el rango de fechas seleccionado.")
   }
@@ -76,7 +76,7 @@ grafico_notas_por_mes <- function(datos, titulo, fecha_inicio = NULL, fecha_fin 
     dplyr::summarise(cantidad = dplyr::n(), .groups = "drop") %>%
     dplyr::arrange(fecha)
 
-  # Generar el gráfico
+  # Generar el grafico
   grafico <- ggplot2::ggplot(publicaciones_por_mes, ggplot2::aes(x = fecha, y = cantidad)) +
     ggplot2::geom_line(color = "blue", linewidth = 1) +
     ggplot2::geom_point(color = "red", size = 1) +
@@ -89,6 +89,6 @@ grafico_notas_por_mes <- function(datos, titulo, fecha_inicio = NULL, fecha_fin 
     ggplot2::theme_minimal() +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
 
-  # Devolver el gráfico
+  # Devolver el grafico
   return(grafico)
 }

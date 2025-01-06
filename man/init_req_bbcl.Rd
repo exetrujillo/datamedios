@@ -2,18 +2,18 @@
 % Please edit documentation in R/init_req_bbcl.R
 \name{init_req_bbcl}
 \alias{init_req_bbcl}
-\title{Inicializa una solicitud a la API de BíoBío.cl y retorna el primer caso de búsqueda}
+\title{Inicializa una solicitud a la API de BioBio.cl y retorna el primer caso de busqueda}
 \usage{
 init_req_bbcl(search_query)
 }
 \arguments{
-\item{search_query}{Una frase de búsqueda (obligatoria).}
+\item{search_query}{Una frase de busqueda (obligatoria).}
 }
 \value{
-Un dataframe con el primer caso de la búsqueda.
+Un dataframe con el primer caso de la busqueda.
 }
 \description{
-Esta función permite realizar una consulta inicial a la API de BíoBío.cl utilizando una frase de búsqueda.
+Esta funcion permite realizar una consulta inicial a la API de BioBio.cl utilizando una frase de busqueda.
 }
 \examples{
 primer_caso <- init_req_bbcl("inteligencia artificial")

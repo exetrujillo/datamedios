@@ -1,10 +1,10 @@
-#' Extraer párrafos de una columna de texto
+#' Extraer parrafos de una columna de texto
 #'
-#' Esta función procesa una columna de texto en un dataframe y extrae los párrafos que coinciden con los sinónimos proporcionados.
+#' Esta funcion procesa una columna de texto en un dataframe y extrae los parrafos que coinciden con los sinonimos proporcionados.
 #'
 #' @param datos Data frame que contiene los datos de entrada con la columna "post_content".
-#' @param sinonimos Vector de sinónimos que se incluirán en la búsqueda.
-#' @return Data frame con una columna adicional 'parrafos_filtrados' que contiene los párrafos extraídos como listas.
+#' @param sinonimos Vector de sinonimos que se incluiran en la busqueda.
+#' @return Data frame con una columna adicional 'parrafos_filtrados' que contiene los parrafos extraidos como listas.
 #' @examples
 #' \dontrun{
 #' datos <- extraer_noticias_max_res("inteligencia artificial", max_resultas = 140, subir_a_bd = FALSE)
@@ -23,7 +23,7 @@ extraccion_parrafos <- function(datos, sinonimos = c()) {
     pattern <- paste0("(?i)\\b(", datos$search_query[[1]], ")\\b")
   }
 
-  # Procesar cada contenido de 'post_content' para extraer párrafos filtrados
+  # Procesar cada contenido de 'post_content' para extraer parrafos filtrados
   datos <- datos %>%
     dplyr::mutate(
       parrafos_filtrados = purrr::map(post_content, ~ {
@@ -31,10 +31,10 @@ extraccion_parrafos <- function(datos, sinonimos = c()) {
         nodo_html <- tryCatch(rvest::read_html(.x), error = function(e) return(NA))
 
         if (!is.na(nodo_html)) {
-          # Extraer párrafos del HTML
+          # Extraer parrafos del HTML
           parrafos <- nodo_html %>% rvest::html_elements("p") %>% rvest::html_text2()
 
-          # Filtrar párrafos que coincidan con los sinónimos
+          # Filtrar parrafos que coincidan con los sinonimos
           parrafos[grepl(pattern, parrafos)]
         } else {
           return(NA) # En caso de error

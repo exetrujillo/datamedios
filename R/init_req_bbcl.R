@@ -1,17 +1,17 @@
-#' Inicializa una solicitud a la API de BíoBío.cl y retorna el primer caso de búsqueda
+#' Inicializa una solicitud a la API de BioBio.cl y retorna el primer caso de busqueda
 #'
-#' Esta función permite realizar una consulta inicial a la API de BíoBío.cl utilizando una frase de búsqueda.
+#' Esta funcion permite realizar una consulta inicial a la API de BioBio.cl utilizando una frase de busqueda.
 #'
-#' @param search_query Una frase de búsqueda (obligatoria).
-#' @return Un dataframe con el primer caso de la búsqueda.
+#' @param search_query Una frase de busqueda (obligatoria).
+#' @return Un dataframe con el primer caso de la busqueda.
 #' @examples
 #' primer_caso <- init_req_bbcl("inteligencia artificial")
 #' @export
 
 init_req_bbcl <- function(search_query) {
-  # Validamos el parámetro
+  # Validamos el parametro
   if (missing(search_query) || !is.character(search_query)) {
-    stop("Debe proporcionar una frase de búsqueda como texto.")
+    stop("Debe proporcionar una frase de busqueda como texto.")
   }
 
   # Encabezados para la solicitud
@@ -48,6 +48,6 @@ init_req_bbcl <- function(search_query) {
       stop("No se encontraron notas en la respuesta inicial.")
     }
   } else {
-    stop("Error al realizar la solicitud inicial. Código de estado: ", response_initial$status_code)
+    stop("Error al realizar la solicitud inicial. Codigo de estado: ", response_initial$status_code)
   }
 }

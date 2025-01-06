@@ -1,23 +1,23 @@
-#' Extracción de noticias desde la API de BíoBío.cl por rango de fechas
+#' Extraccion de noticias desde la API de BioBio.cl por rango de fechas
 #'
-#' Esta función permite realizar una extracción automatizada de noticias desde la API de BíoBío.cl utilizando un rango de fechas.
+#' Esta funcion permite realizar una extraccion automatizada de noticias desde la API de BioBio.cl utilizando un rango de fechas.
 #'
-#' @param search_query Una frase de búsqueda (obligatoria).
-#' @param fecha_inicio Fecha de inicio del rango de búsqueda en formato "YYYY-MM-DD" (obligatoria).
+#' @param search_query Una frase de busqueda (obligatoria).
+#' @param fecha_inicio Fecha de inicio del rango de busqueda en formato "YYYY-MM-DD" (obligatoria).
 #' @param fecha_fin Fecha de fin del rango de búsqueda en formato "YYYY-MM-DD" (obligatoria).
 #' @param subir_a_bd por defecto TRUE, FALSE para test y cosas por el estilo (opcional).
-#' @return Un dataframe con las noticias extraídas.
+#' @return Un dataframe con las noticias extraidas.
 #' @examples
 #' noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01", "2023-12-31", subir_a_bd = FALSE)
 #' @export
 
 extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_a_bd = TRUE) {
-  # Validamos los parámetros
+  # Validamos los parametros
   if (missing(search_query) || !is.character(search_query)) {
-    stop("Debe proporcionar una frase de búsqueda como texto.")
+    stop("Debe proporcionar una frase de busqueda como texto.")
   }
   if (missing(fecha_inicio) || missing(fecha_fin) || !lubridate::is.Date(lubridate::ymd(fecha_inicio)) || !lubridate::is.Date(lubridate::ymd(fecha_fin))) {
-    stop("Debe proporcionar fechas de inicio y fin válidas en formato 'YYYY-MM-DD'.")
+    stop("Debe proporcionar fechas de inicio y fin validas en formato 'YYYY-MM-DD'.")
   }
   if (lubridate::ymd(fecha_inicio) > lubridate::ymd(fecha_fin)) {
     stop("La fecha de inicio debe ser anterior o igual a la fecha de fin.")
@@ -73,37 +73,37 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
       if (!is.null(data_initial$notas) && length(data_initial$notas) > 0) {
         fecha_mas_reciente <- lubridate::ymd_hms(data_initial$notas$raw_post_date[1])
         print(paste0("Total de resultados posibles: ", total_results))
-        print(paste0("Noticia más reciente disponible es de la fecha: ", fecha_mas_reciente))
+        print(paste0("Noticia mas reciente disponible es de la fecha: ", fecha_mas_reciente))
       } else {
         stop("No se encontraron noticias con la search query especificada.")
       }
     } else {
-      stop("No se encontró el parámetro 'total' en la respuesta.")
+      stop("No se encontro el parametro 'total' en la respuesta.")
     }
   } else {
-    stop("Error al realizar la solicitud inicial. Código de estado: ", response_initial$status_code)
+    stop("Error al realizar la solicitud inicial. Codigo de estado: ", response_initial$status_code)
   }
 
-  ## Bucle para iterar sobre las páginas de resultados
+  ## Bucle para iterar sobre las paginas de resultados
   repeat {
     # URL de solicitud
     url <- paste0(
       "https://www.biobiochile.cl/lista/api/buscador?offset=", offset,
-      "&search=", URLencode(search_query),
+      "&search=", utils::URLencode(search_query),
       "&intervalo=&orden=ultimas"
     )
 
     # Solicitud a la API
     response <- httr::GET(url, httr::add_headers(.headers = headers))
     if (response$status_code != 200) {
-      stop("Error en la solicitud: código de estado ", response$status_code)
+      stop("Error en la solicitud: codigo de estado ", response$status_code)
     }
 
     # Parseo de la respuesta
     data <- httr::content(response, "text", encoding = "UTF-8") %>%
       jsonlite::fromJSON(flatten = TRUE)
 
-    # Salimos del bucle si no hay más datos
+    # Salimos del bucle si no hay mas datos
     if (is.null(data$notas) || length(data$notas) == 0) break
 
     # Convertimos las fechas de las noticias
@@ -146,7 +146,7 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
       fecha_reciente <- max(data$notas$raw_post_date)
       if (fecha_reciente < as.Date(fecha_inicio)) {
         print("No hay más noticias dentro del rango de fechas. Terminando la búsqueda.")
-        break  # Salimos del bucle si la fecha más reciente es anterior a fecha_inicio
+        break  # Salimos del bucle si la fecha mas reciente es anterior a fecha_inicio
       }
     }
 
@@ -164,10 +164,10 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
   # Subimos a la base de datos en caso de que el parametro subir_a_db es TRUE
   if (subir_a_bd) {
     tryCatch({
-      # Llamamos a la función que sube los datos si subir_a_bd es TRUE
+      # Llamamos a la funcion que sube los datos si subir_a_bd es TRUE
       agregar_datos_unicos(all_data)
     }, error = function(e) {
-      message("Ocurrió un error al intentar agregar los datos a la base de datos: ", e$message)
+      message("Ocurrio un error al intentar agregar los datos a la base de datos: ", e$message)
     })
   }
 

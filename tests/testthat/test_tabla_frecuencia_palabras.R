@@ -1,8 +1,3 @@
-library(testthat)
-library(dplyr)
-library(tidytext)
-library(DT)
-
 test_that("Error cuando el input no es un data frame", {
   expect_error(
     tabla_frecuencia_palabras(list(a = 1, b = 2), max_words = 5),

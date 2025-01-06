@@ -1,4 +1,4 @@
-test_that("La función procesa correctamente los datos sin sinónimos", {
+test_that("La funcion procesa correctamente los datos sin sinonimos", {
   datos <- data.frame(
     search_query = "inteligencia artificial",
     post_content = c(
@@ -13,18 +13,18 @@ test_that("La función procesa correctamente los datos sin sinónimos", {
   expect_equal(resultado$parrafos_filtrados[[2]], character(0))
 })
 
-test_that("La función procesa correctamente los datos con sinónimos", {
+test_that("La funcion procesa correctamente los datos con sinonimos", {
   datos <- data.frame(
     search_query = "inteligencia artificial",
     post_content = c(
-      "<html><p>La IA está en todas partes.</p><p>La inteligencia artificial está en auge.</p></html>",
-      "<html><p>No hay menciones aquí.</p></html>"
+      "<html><p>La IA esta en todas partes.</p><p>La inteligencia artificial esta en auge.</p></html>",
+      "<html><p>No hay menciones aqui.</p></html>"
     ),
     stringsAsFactors = FALSE
   )
   sinonimos <- c("IA", "AI")
   resultado <- extraccion_parrafos(datos, sinonimos)
-  expect_equal(resultado$parrafos_filtrados[[1]], c("La IA está en todas partes.", "La inteligencia artificial está en auge."))
+  expect_equal(resultado$parrafos_filtrados[[1]], c("La IA esta en todas partes.", "La inteligencia artificial esta en auge."))
   expect_equal(resultado$parrafos_filtrados[[2]], character(0))
 })
 

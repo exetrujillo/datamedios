@@ -1,9 +1,3 @@
-library(testthat)
-library(dplyr)
-library(tidytext)
-library(wordcloud2)
-
-
 test_that("Error cuando el input no es un data frame", {
   expect_error(
     word_cloud(list(a = 1, b = 2), max_words = 50),

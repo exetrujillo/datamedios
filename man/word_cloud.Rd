@@ -2,22 +2,22 @@
 % Please edit documentation in R/word_cloud.R
 \name{word_cloud}
 \alias{word_cloud}
-\title{Función de visualizaciones}
+\title{Funcion de visualizaciones}
 \usage{
 word_cloud(datos, max_words, stop_words = NULL)
 }
 \arguments{
-\item{datos}{data frame que genera la función de extracción, con el texto ya limpio.}
+\item{datos}{data frame que genera la funcion de extraccion, con el texto ya limpio.}
 
-\item{max_words}{Cantidad máxima de palabras que aparecerán en la nube.}
+\item{max_words}{Cantidad maxima de palabras que apareceran en la nube.}
 
-\item{stop_words}{Definir las palabras que serán ignoradas en la visualización. Puede ser 'es' (realizado por los desarrolladores del paquete), NULL, o una lista.}
+\item{stop_words}{Definir las palabras que seran ignoradas en la visualizacion. Puede ser 'es' (realizado por los desarrolladores del paquete), NULL, o una lista.}
 }
 \value{
-Una nube de palabras con las palabras más frecuentes.
+Una nube de palabras con las palabras mas frecuentes.
 }
 \description{
-Esta función incluye varias formas de visualizar los datos obtenidos.
+Esta funcion incluye varias formas de visualizar los datos obtenidos.
 }
 \examples{
 datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)

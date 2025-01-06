@@ -2,7 +2,7 @@
 % Please edit documentation in R/agregar_datos_unicos.R
 \name{agregar_datos_unicos}
 \alias{agregar_datos_unicos}
-\title{Agregar datos únicos a una tabla MySQL}
+\title{Agregar datos unicos a una tabla MySQL}
 \usage{
 agregar_datos_unicos(data)
 }
@@ -10,11 +10,11 @@ agregar_datos_unicos(data)
 \item{data}{Un data frame con los datos a insertar.}
 }
 \description{
-Esta función agrega datos a una tabla MySQL utilizando una API que espera datos en formato JSON.
+Esta funcion agrega datos a una tabla MySQL utilizando una API que espera datos en formato JSON.
 }
 \examples{
 \dontrun{
-# Agregar datos únicos
+# Agregar datos unicos
 noticias <- extraer_noticias_max_res("tesla", max_results=10, subir_a_bd = FALSE)
 agregar_datos_unicos(noticias)
 }

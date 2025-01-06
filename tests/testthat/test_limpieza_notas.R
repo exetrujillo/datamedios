@@ -1,5 +1,3 @@
-library(testthat)
-
 # Test para validar errores por entradas incorrectas
 test_that("Error cuando el input no es un data.frame", {
   expect_error(
@@ -27,16 +25,13 @@ test_that("Errores cuando 'sinonimos' no es un vector de caracteres", {
 test_that("Se realiza el filtrado correctamente considerando los sinónimos", {
   # Datos generados con la función del paquete
   datos <- datamedios::extraer_noticias_max_res("boric", max_results = 100, subir_a_bd = FALSE)
-
   resultado <- datamedios::limpieza_notas(datos, sinonimos = c("presidente"))
 
-  #
-
   # Verificamos que solo queden filas relevantes
-expect_true(
-  any(grepl("presidente", resultado$post_content) & !grepl("boric", resultado$post_content)),
-  info = "No se encontró ninguna fila donde aparezca 'presidente' pero no 'boric'."
-)
+  expect_true(
+    any(grepl("presidente", resultado$post_content) & !grepl("boric", resultado$post_content)),
+    info = "No se encontró ninguna fila donde aparezca 'presidente' pero no 'boric'."
+  )
 })
 
 # Test para limpiar datos extraídos con la función de tu paquete
@@ -49,9 +44,20 @@ test_that("La función limpia el texto de forma correcta en datos reales", {
 
   # Verificamos que no quede HTML en una fila aleatoria
   indice_aleatorio <- sample(1:nrow(resultado), 1)
+
+  es_html <- tryCatch({
+    xml2::read_html(resultado$post_content_clean[indice_aleatorio])
+    TRUE
+  }, error = function(e) {
+    print(paste("Error al procesar HTML en la fila:", indice_aleatorio))
+    print(resultado$post_content_clean[indice_aleatorio])
+    print(paste("Mensaje de error:", e$message))
+    FALSE
+  })
+
   expect_false(
-    grepl("<[^>]+>", resultado$post_content[indice_aleatorio]),
-    info = paste("HTML no fue eliminado en la fila", indice_aleatorio)
+    es_html,
+    info = paste("HTML no fue eliminado correctamente en la fila", indice_aleatorio)
   )
 })
 
@@ -81,8 +87,19 @@ test_that("Resultados finales tienen estructura correcta y columnas esperadas", 
 
   # Verificamos que no quede HTML en una fila aleatoria
   indice_aleatorio <- sample(1:nrow(resultado), 1)
+
+  es_html <- tryCatch({
+    xml2::read_html(resultado$post_content_clean[indice_aleatorio])
+    TRUE
+  }, error = function(e) {
+    print(paste("Error al procesar HTML en la fila:", indice_aleatorio))
+    print(resultado$post_content_clean[indice_aleatorio])
+    print(paste("Mensaje de error:", e$message))
+    FALSE
+  })
+
   expect_false(
-    grepl("<[^>]+>", resultado$post_content[indice_aleatorio]),
-    info = paste("HTML no fue eliminado en la fila", indice_aleatorio)
+    es_html,
+    info = paste("HTML no fue eliminado correctamente en la fila", indice_aleatorio)
   )
 })

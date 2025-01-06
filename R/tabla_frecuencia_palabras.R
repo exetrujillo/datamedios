@@ -1,12 +1,12 @@
-#' Generar una tabla estilizada con las palabras más frecuentes
+#' Generar una tabla estilizada con las palabras mas frecuentes
 #'
-#' Esta función procesa la columna 'post_content' de un dataframe, tokeniza el texto,
-#' cuenta la frecuencia de cada palabra y genera una tabla con las palabras más frecuentes.
+#' Esta funcion procesa la columna 'post_content' de un dataframe, tokeniza el texto,
+#' cuenta la frecuencia de cada palabra y genera una tabla con las palabras mas frecuentes.
 #'
 #' @param datos Data frame que contiene la columna 'post_content'.
-#' @param max_words Número máximo de palabras que se mostrarán en la tabla.
+#' @param max_words Numero maximo de palabras que se mostraran en la tabla.
 #' @param stop_words Vector opcional de palabras que se deben excluir del conteo.
-#' @return Una tabla con las palabras más frecuentes.
+#' @return Una tabla con las palabras mas frecuentes.
 #' @examples
 #' datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
 #' datos <- extraccion_parrafos(datos)
@@ -25,9 +25,9 @@ tabla_frecuencia_palabras <- function(datos, max_words, stop_words = NULL) {
     stop("'datos' debe contener una columna llamada 'post_content'.")
   }
 
-  # Validar que 'max_words' sea numérico y esté definido
+  # Validar que 'max_words' sea numerico y este definido
   if (missing(max_words) || !is.numeric(max_words)) {
-    stop("'max_words' debe ser un número.")
+    stop("'max_words' debe ser un numero.")
   }
 
   # Validar el argumento 'stop_words'
@@ -50,7 +50,7 @@ tabla_frecuencia_palabras <- function(datos, max_words, stop_words = NULL) {
   word_counts <- words %>%
     dplyr::count(word, sort = TRUE)
 
-  # Filtrar las palabras más frecuentes
+  # Filtrar las palabras mas frecuentes
   word_counts_filtered <- word_counts %>%
     dplyr::slice_max(n, n = max_words)
 
@@ -58,8 +58,8 @@ tabla_frecuencia_palabras <- function(datos, max_words, stop_words = NULL) {
   word_counts_filtered %>%
     DT::datatable(
       options = list(
-        pageLength = 10,            # Número de filas por página
-        autoWidth = TRUE,           # Ajusta el ancho de las columnas automáticamente
+        pageLength = 10,            # Numero de filas por pagina
+        autoWidth = TRUE,           # Ajusta el ancho de las columnas automaticamente
         columnDefs = list(
           list(className = 'dt-center', targets = "_all")  # Centra el contenido de las celdas
         )

@@ -2,32 +2,32 @@
 % Please edit documentation in R/grafico_notas_por_mes.R
 \name{grafico_notas_por_mes}
 \alias{grafico_notas_por_mes}
-\title{Gráfico de notas por mes}
+\title{Grafico de notas por mes}
 \usage{
 grafico_notas_por_mes(datos, titulo, fecha_inicio = NULL, fecha_fin = NULL)
 }
 \arguments{
 \item{datos}{Data frame con los datos procesados, que debe incluir la columna `raw_post_date` en formato YYYY-MM-DD.}
 
-\item{titulo}{Texto que aparecerá en el título del gráfico.}
+\item{titulo}{Texto que aparecera en el titulo del grafico.}
 
-\item{fecha_inicio}{Fecha de inicio para la construcción del gráfico en formato YYYY-MM-DD (opcional).}
+\item{fecha_inicio}{Fecha de inicio para la construccion del grafico en formato YYYY-MM-DD (opcional).}
 
-\item{fecha_fin}{Fecha de finalización para la construcción del gráfico en formato YYYY-MM-DD (opcional).}
+\item{fecha_fin}{Fecha de finalizacion para la construccion del grafico en formato YYYY-MM-DD (opcional).}
 }
 \value{
-Un gráfico ggplot2 que muestra la cantidad de publicaciones por mes.
+Un grafico ggplot2 que muestra la cantidad de publicaciones por mes.
 }
 \description{
-Esta función genera un gráfico de línea que muestra la cantidad de publicaciones agrupadas por mes.
+Esta funcion genera un grafico de linea que muestra la cantidad de publicaciones agrupadas por mes.
 }
 \examples{
 \dontrun{
 datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
 datos <- extraccion_parrafos(datos)
 datos_proc <- limpieza_notas(datos)
-grafico_notas_por_mes(datos_proc, titulo = "Cambio Climático", fecha_inicio = "2024-01-01", fecha_fin = "2025-01-01")
-grafico_notas_por_mes(datos_proc, titulo = "Cambio Climático")
+grafico_notas_por_mes(datos_proc, titulo = "Cambio Climatico", fecha_inicio = "2024-01-01", fecha_fin = "2025-01-01")
+grafico_notas_por_mes(datos_proc, titulo = "Cambio Climatico")
 }
 
 }

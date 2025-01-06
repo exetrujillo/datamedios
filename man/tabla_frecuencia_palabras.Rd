@@ -2,23 +2,23 @@
 % Please edit documentation in R/tabla_frecuencia_palabras.R
 \name{tabla_frecuencia_palabras}
 \alias{tabla_frecuencia_palabras}
-\title{Generar una tabla estilizada con las palabras más frecuentes}
+\title{Generar una tabla estilizada con las palabras mas frecuentes}
 \usage{
 tabla_frecuencia_palabras(datos, max_words, stop_words = NULL)
 }
 \arguments{
 \item{datos}{Data frame que contiene la columna 'post_content'.}
 
-\item{max_words}{Número máximo de palabras que se mostrarán en la tabla.}
+\item{max_words}{Numero maximo de palabras que se mostraran en la tabla.}
 
 \item{stop_words}{Vector opcional de palabras que se deben excluir del conteo.}
 }
 \value{
-Una tabla con las palabras más frecuentes.
+Una tabla con las palabras mas frecuentes.
 }
 \description{
-Esta función procesa la columna 'post_content' de un dataframe, tokeniza el texto,
-cuenta la frecuencia de cada palabra y genera una tabla con las palabras más frecuentes.
+Esta funcion procesa la columna 'post_content' de un dataframe, tokeniza el texto,
+cuenta la frecuencia de cada palabra y genera una tabla con las palabras mas frecuentes.
 }
 \examples{
 datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)

@@ -1,4 +1,4 @@
-testthat::test_that("Se recibe un objeto de clase data frame, con 470 resultados y las columans esperadas", {
+testthat::test_that("Se recibe un objeto de clase data frame, con 470 resultados y las columnas esperadas", {
 
   resultado <- extraer_noticias_fecha("boric", "2023-01-01", "2023-02-01", subir_a_bd = FALSE)
 

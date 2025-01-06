@@ -2,20 +2,20 @@
 % Please edit documentation in R/extraccion_parrafos.R
 \name{extraccion_parrafos}
 \alias{extraccion_parrafos}
-\title{Extraer párrafos de una columna de texto}
+\title{Extraer parrafos de una columna de texto}
 \usage{
 extraccion_parrafos(datos, sinonimos = c())
 }
 \arguments{
 \item{datos}{Data frame que contiene los datos de entrada con la columna "post_content".}
 
-\item{sinonimos}{Vector de sinónimos que se incluirán en la búsqueda.}
+\item{sinonimos}{Vector de sinonimos que se incluiran en la busqueda.}
 }
 \value{
-Data frame con una columna adicional 'parrafos_filtrados' que contiene los párrafos extraídos como listas.
+Data frame con una columna adicional 'parrafos_filtrados' que contiene los parrafos extraidos como listas.
 }
 \description{
-Esta función procesa una columna de texto en un dataframe y extrae los párrafos que coinciden con los sinónimos proporcionados.
+Esta funcion procesa una columna de texto en un dataframe y extrae los parrafos que coinciden con los sinonimos proporcionados.
 }
 \examples{
 \dontrun{

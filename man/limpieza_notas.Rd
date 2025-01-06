@@ -2,12 +2,12 @@
 % Please edit documentation in R/limpieza_notas.R
 \name{limpieza_notas}
 \alias{limpieza_notas}
-\title{Función para limpiar notas de contenido HTML}
+\title{Funcion para limpiar notas de contenido HTML}
 \usage{
 limpieza_notas(datos, sinonimos = c())
 }
 \arguments{
-\item{datos}{Data frame donde están almacenadas las notas y con la funcion extraccion_parrafos ya operada.}
+\item{datos}{Data frame donde estan almacenadas las notas y con la funcion extraccion_parrafos ya operada.}
 
 \item{sinonimos}{Una lista de character}
 }
@@ -15,7 +15,7 @@ limpieza_notas(datos, sinonimos = c())
 Un dataframe con el post_content limpio
 }
 \description{
-Esta función permite limpiar por completo las notas eliminando códigos y secciones irrelevantes.
+Esta funcion permite limpiar por completo las notas eliminando codigos y secciones irrelevantes.
 Verifica que el input sea un data frame con una columna llamada `post_content`.
 }
 \examples{
