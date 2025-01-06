@@ -18,8 +18,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest]
-        r-version: ['4.1.1', '4.4.1', 'devel']
+        os: [macos-latest, ubuntu latest. windows-latest]
+        r-version: ['4.4.1']
 
     steps:
       - uses: actions/checkout@v4
