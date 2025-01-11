@@ -7,7 +7,8 @@
 #' @param subir_a_bd por defecto TRUE, FALSE para test y cosas por el estilo (opcional).
 #' @return Un dataframe con las noticias extraidas.
 #' @examples
-#' noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 100, subir_a_bd = FALSE)
+#' noticias <- extraer_noticias_max_res("inteligencia artificial",
+#' max_results = 100, subir_a_bd = FALSE)
 #' @export
 extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_bd = TRUE) {
   # Validamos los parametros

@@ -16,7 +16,7 @@ test_that("Error cuando 'max_words' no es numérico", {
   datos <- data.frame(post_content = c("Texto relevante."))
   expect_error(
     word_cloud(datos, max_words = "cincuenta"),
-    "'max_words' debe ser un número."
+    "'max_words' debe ser un numero."
   )
 })
 

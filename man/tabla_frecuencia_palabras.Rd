@@ -7,7 +7,7 @@
 tabla_frecuencia_palabras(datos, max_words, stop_words = NULL)
 }
 \arguments{
-\item{datos}{Data frame que contiene la columna 'post_content'.}
+\item{datos}{Data frame que contiene la columna 'post_content_clean'.}
 
 \item{max_words}{Numero maximo de palabras que se mostraran en la tabla.}
 
@@ -17,7 +17,7 @@ tabla_frecuencia_palabras(datos, max_words, stop_words = NULL)
 Una tabla con las palabras mas frecuentes.
 }
 \description{
-Esta funcion procesa la columna 'post_content' de un dataframe, tokeniza el texto,
+Esta funcion procesa la columna 'post_content_clean' de un dataframe, tokeniza el texto,
 cuenta la frecuencia de cada palabra y genera una tabla con las palabras mas frecuentes.
 }
 \examples{

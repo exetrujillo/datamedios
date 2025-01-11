@@ -24,7 +24,6 @@ Imports:
   rvest,
   stringr,
   xml2,
-  lubridate,
   purrr,
   DT,
   ggplot2

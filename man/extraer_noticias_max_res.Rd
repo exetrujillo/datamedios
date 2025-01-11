@@ -20,5 +20,6 @@ Un dataframe con las noticias extraidas.
 Esta funcion permite realizar una extraccion automatizada de noticias desde la API de BioBio.cl.
 }
 \examples{
-noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 100, subir_a_bd = FALSE)
+noticias <- extraer_noticias_max_res("inteligencia artificial",
+max_results = 100, subir_a_bd = FALSE)
 }

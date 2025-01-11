@@ -26,7 +26,8 @@ Esta funcion genera un grafico de linea que muestra la cantidad de publicaciones
 datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
 datos <- extraccion_parrafos(datos)
 datos_proc <- limpieza_notas(datos)
-grafico_notas_por_mes(datos_proc, titulo = "Cambio Climatico", fecha_inicio = "2024-01-01", fecha_fin = "2025-01-01")
+grafico_notas_por_mes(datos_proc, titulo = "Cambio Climatico",
+fecha_inicio = "2024-01-01", fecha_fin = "2025-01-01")
 grafico_notas_por_mes(datos_proc, titulo = "Cambio Climatico")
 }
 

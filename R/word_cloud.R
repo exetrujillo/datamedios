@@ -21,9 +21,9 @@ word_cloud <- function(datos, max_words, stop_words = NULL) {
     stop("'datos' debe ser un data frame.")
   }
 
-  # Validar que 'post_content' exista en los datos
-  if (!"post_content" %in% colnames(datos)) {
-    stop("'datos' debe contener una columna llamada 'post_content'.")
+  # Validar que 'post_content_clean' exista en los datos
+  if (!"post_content_clean" %in% colnames(datos)) {
+    stop("'datos' debe contener una columna llamada 'post_content_clean'.")
   }
 
   # Validar que 'max_words' sea numerico y este definido
@@ -38,7 +38,7 @@ word_cloud <- function(datos, max_words, stop_words = NULL) {
 
   # Generar los tokens (separar palabras)
   words <- datos %>%
-    tidytext::unnest_tokens(word, post_content)
+    tidytext::unnest_tokens(word, post_content_clean)
 
   # Filtrar stop words si se proporcionan
   if (!is.null(stop_words)) {
