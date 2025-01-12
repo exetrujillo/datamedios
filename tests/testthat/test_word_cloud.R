@@ -5,15 +5,15 @@ test_that("Error cuando el input no es un data frame", {
   )
 })
 
-test_that("Error cuando falta la columna 'post_content'", {
+test_that("Error cuando falta la columna 'post_content_clean'", {
   expect_error(
     word_cloud(data.frame(otra_columna = c("Texto")), max_words = 50),
-    "'datos' debe contener una columna llamada 'post_content'."
+    "'datos' debe contener una columna llamada 'post_content_clean'."
   )
 })
 
 test_that("Error cuando 'max_words' no es numérico", {
-  datos <- data.frame(post_content = c("Texto relevante."))
+  datos <- data.frame(post_content_clean = c("Texto relevante."))
   expect_error(
     word_cloud(datos, max_words = "cincuenta"),
     "'max_words' debe ser un numero."
@@ -21,7 +21,7 @@ test_that("Error cuando 'max_words' no es numérico", {
 })
 
 test_that("Error cuando 'stop_words' no es un vector de caracteres", {
-  datos <- data.frame(post_content = c("Texto relevante."))
+  datos <- data.frame(post_content_clean = c("Texto relevante."))
   expect_error(
     word_cloud(datos, max_words = 50, stop_words = 123),
     "'stop_words' debe ser un vector de palabras."
@@ -30,7 +30,7 @@ test_that("Error cuando 'stop_words' no es un vector de caracteres", {
 
 test_that("La función genera una nube de palabras correctamente", {
   datos <- data.frame(
-    post_content = c(
+    post_content_clean = c(
       "La inteligencia artificial está transformando el mundo.",
       "La transformación digital depende de la inteligencia artificial."
     )
@@ -44,7 +44,7 @@ test_that("La función genera una nube de palabras correctamente", {
 
   # Verificar las palabras más frecuentes
   palabras_frecuentes <- datos %>%
-    tidytext::unnest_tokens(word, post_content) %>%
+    tidytext::unnest_tokens(word, post_content_clean) %>%
     dplyr::count(word, sort = TRUE) %>%
     dplyr::slice_max(n, n = 5)
 
@@ -54,7 +54,7 @@ test_that("La función genera una nube de palabras correctamente", {
 })
 
 test_that("Stop words son excluidas correctamente", {
-  datos <- data.frame(post_content = c("Esto es un ejemplo. Esto es una prueba."))
+  datos <- data.frame(post_content_clean = c("Esto es un ejemplo. Esto es una prueba."))
 
   # Generar la nube de palabras excluyendo stop words
   nube <- word_cloud(datos, max_words = 3, stop_words = c("esto", "es", "un", "una"))
@@ -65,7 +65,7 @@ test_that("Stop words son excluidas correctamente", {
 })
 
 test_that("La función maneja casos límite de datos correctamente", {
-  datos <- data.frame(post_content = c(""))
+  datos <- data.frame(post_content_clean = c(""))
 
   # Generar la nube con un texto vacío
   expect_error(
@@ -74,7 +74,7 @@ test_that("La función maneja casos límite de datos correctamente", {
   )
 
   # Generar la nube con un único dato
-  datos <- data.frame(post_content = c("inteligencia artificial"))
+  datos <- data.frame(post_content_clean = c("inteligencia artificial"))
   nube <- word_cloud(datos, max_words = 5)
 
   # Verificar que la palabra aparece en la nube
@@ -85,7 +85,7 @@ test_that("La función maneja casos límite de datos correctamente", {
 
 test_that("'max_words' limita correctamente la cantidad de palabras en la nube", {
   datos <- data.frame(
-    post_content = c(
+    post_content_clean = c(
       "La inteligencia artificial está transformando el mundo.",
       "La transformación digital depende de la inteligencia artificial.",
       "El futuro está marcado por la inteligencia artificial y la digitalización."
