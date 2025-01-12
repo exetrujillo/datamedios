@@ -8,7 +8,7 @@ Description: La función principal es crear un data frame de noticias a partir d
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 4.1.1)
+Depends: R (>= 4.1)
 Suggests:
   rcmdcheck
 Imports: 
