@@ -89,6 +89,30 @@ noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 10
 
 ------------------------------------------------------------------------
 
+### Funciones de procesamiento
+
+#### limpieza_notas
+
+**Descripcion:** recibe el data.frame generado por la funcion y devuelve el mismo con una columna con las noticias limpias de contenido html. Ademas, elimina noticias sin la search query, permitiendo agregar sinonomos de esta.
+
+**Ejemplo de uso:** 
+
+datos <- (datos, sinonimos = c("diputados", "congreso"))
+
+#### extraccion_parrafos
+
+------------------------------------------------------------------------
+
+### Funciones de visualizacion
+
+#### grafico_notas_por_mes
+
+#### tabla_frecuencia_palabras 
+
+#### word_cloud
+
+------------------------------------------------------------------------
+
 ## 🔖 Documentación
 
 Para acceder a la documentación completa de las funciones, usa el siguiente comando:
