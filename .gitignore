@@ -2,11 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
-credenciales.R
-.Rproj.user/D11C4969/pcs/files-pane.pper
-.Rproj.user/D11C4969/pcs/source-pane.pper
-.Rproj.user/D11C4969/pcs/workbench-pane.pper
-.Rproj.user/D11C4969/persistent-state
-.Rproj.user/D11C4969/sources/prop/INDEX
-.Rproj.user/shared/notebooks/paths
+.github
 *.pper
