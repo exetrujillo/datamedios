@@ -19,8 +19,8 @@ limpieza_notas <- function(datos, sinonimos = c()) {
   if (!is.data.frame(datos)) {
     stop("El argumento 'datos' debe ser un data frame.")
   }
-  if (!"post_content" %in% colnames(datos)) {
-    stop("El data frame debe contener una columna llamada 'post_content'.")
+  if (!"contenido" %in% colnames(datos)) {
+    stop("El data frame debe contener una columna llamada 'contenido'.")
   }
   # Validar el argumento 'stop_words'
   if (!is.null(sinonimos) && !is.character(sinonimos)) {
@@ -28,12 +28,12 @@ limpieza_notas <- function(datos, sinonimos = c()) {
   }
 
   # Definimos la nueva columna
-  datos$post_content_clean <- datos$post_content
+  datos$contenido_limpio <- datos$contenido
 
   # Iteramos sobre cada fila del data frame
   for (i in seq_len(nrow(datos))) {
     # Convertimos el contenido a un objeto HTML para usar rvest
-    contenido_html <- rvest::read_html(datos$post_content_clean[[i]])
+    contenido_html <- rvest::read_html(datos$contenido_limpio[[i]])
 
     # Eliminamos los divs con contenido irrelevante
     contenido_html %>%
@@ -57,7 +57,7 @@ limpieza_notas <- function(datos, sinonimos = c()) {
     )
 
     # Guardamos el contenido limpio de vuelta en el data frame
-    datos$post_content_clean[[i]] <- contenido_texto
+    datos$contenido_limpio[[i]] <- contenido_texto
   }
   print(nrow(datos))
 
@@ -67,7 +67,7 @@ limpieza_notas <- function(datos, sinonimos = c()) {
     pattern <- paste0("(?i)\\b(", datos$search_query[[1]], ")\\b")
   }
   # Identificamos las filas que NO contienen el termino de busqueda
-  indices_no_match <- which(!stringr::str_detect(datos$post_content_clean, pattern))
+  indices_no_match <- which(!stringr::str_detect(datos$contenido_limpio, pattern))
 
   # Eliminamos las filas que no contienen el termino de busqueda
   datos <- datos[-indices_no_match, ]
@@ -80,13 +80,13 @@ limpieza_notas <- function(datos, sinonimos = c()) {
 
   # Procesamos cada nota para extraer y limpiar el texto plano
   for (contador in seq_len(total_results)) {
-    datos$post_content_clean[[contador]] <- rvest::read_html(datos$post_content_clean[[contador]]) %>%
+    datos$contenido_limpio[[contador]] <- rvest::read_html(datos$contenido_limpio[[contador]]) %>%
       rvest::html_text2() %>%
       stringr::str_squish()
   }
 
   # Mostramos un ejemplo de contenido limpio
-  # print(datos$post_content_clean[1])
+  # print(datos$contenido_limpio[1])
 
   return(datos)
 }
