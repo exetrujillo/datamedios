@@ -31,23 +31,18 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
     ID = character(),
     post_title = character(),
     post_content = character(),
-    post_excerpt = character(),
+    post_content_clean = character(),
     post_URL = character(),
-    post_categories = character(),
-    post_tags = character(),
-    year = integer(),
-    month = integer(),
-    day = integer(),
-    post_category_primary.name = character(),
-    post_category_secondary.name = character(),
+    post_categories = character(), # este
+    post_tags = character(),       # y este los tenemos que unificar posteriormente
     post_image.URL = character(),
-    post_image.alt = character(),
-    post_image.caption = character(),
     author.display_name = character(),
     raw_post_date = as.Date(character()),
     resumen_de_ia = character(),
     search_query = character(),
+    medio = character(), # en esta version solo es posible bbcl
     stringsAsFactors = FALSE
+
   )
   # Encabezados para la solicitud
   headers <- c(
@@ -114,15 +109,6 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
     noticias_filtradas <- data$notas[data$notas$raw_post_date >= as.Date(fecha_inicio) &
                                        data$notas$raw_post_date <= as.Date(fecha_fin), ]
 
-    # Procesar post_categories y post_tags como JSON
-    if (!is.null(noticias_filtradas$post_categories)) {
-      noticias_filtradas$post_categories <- sapply(noticias_filtradas$post_categories, jsonlite::toJSON, auto_unbox = TRUE)
-    }
-
-    if (!is.null(noticias_filtradas$post_tags)) {
-      noticias_filtradas$post_tags <- sapply(noticias_filtradas$post_tags, jsonlite::toJSON, auto_unbox = TRUE)
-    }
-
     # Verificamos si hay noticias filtradas
     if (nrow(noticias_filtradas) > 0) {
       # Aseguramos que solo las columnas necesarias esten presentes
@@ -160,7 +146,46 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
 
   all_data$search_query <- tolower(search_query)
 
+  all_data$post_image.URL <- paste0("https://media.biobiochile.cl/wp-content/uploads/", as.character(all_data$post_image.URL))
+
   print(paste0("Total de noticias encontradas en el rango de fechas: ", nrow(all_data)))
+
+  # Crear columna categorias y eliminar las que almacenaban data frames
+  # Crear la nueva columna "categorias"
+  all_data$categorias <- lapply(seq_len(nrow(all_data)), function(i) {
+    # Extraer los slugs de post_categories
+    slugs_categorias <- all_data$post_categories[[i]]$slug
+
+    # Extraer los slugs de post_tags
+    slugs_tags <- all_data$post_tags[[i]]$slug
+
+    # Combinar ambos en una lista
+    c(slugs_categorias, slugs_tags)
+  })
+
+  all_data$post_categories <- NULL
+  all_data$post_tags <- NULL
+
+  # Definir contenido de la columa medio
+  all_data$medio <- "bbcl"
+
+  ###############################
+
+  # Redefinir nombres de columnas
+
+  colnames(all_data) <- colnames(all_data) %>%
+    dplyr::recode(
+      post_title = "titulo",
+      post_content = "contenido",
+      post_URL = "url",
+      `author.display_name` = "autor",
+      raw_post_date = "fecha",
+      resumen_de_ia = "resumen",
+      post_content_clean = "contenido_limpio",
+      `post_image.URL` = "url_imagen"
+    )
+
+  ###############################
 
   # Subimos a la base de datos en caso de que el parametro subir_a_db es TRUE
   if (subir_a_bd) {

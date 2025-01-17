@@ -25,22 +25,16 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
     ID = character(),
     post_title = character(),
     post_content = character(),
-    post_excerpt = character(),
+    post_content_clean = character(),
     post_URL = character(),
-    post_categories = character(),
-    post_tags = character(),
-    year = integer(),
-    month = integer(),
-    day = integer(),
-    post_category_primary.name = character(),
-    post_category_secondary.name = character(),
+    post_categories = character(), # este
+    post_tags = character(),       # y este los tenemos que unificar posteriormente
     post_image.URL = character(),
-    post_image.alt = character(),
-    post_image.caption = character(),
     author.display_name = character(),
     raw_post_date = as.Date(character()),
     resumen_de_ia = character(),
     search_query = character(),
+    medio = character(), # en esta version solo es posible bbcl
     stringsAsFactors = FALSE
   )
 
@@ -115,6 +109,44 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
 
   all_data$search_query <- tolower(search_query)
   all_data$raw_post_date <- as.Date(all_data$raw_post_date)
+  all_data$post_image.URL <- paste0("https://media.biobiochile.cl/wp-content/uploads/", as.character(all_data$post_image.URL))
+
+  # Crear columna categorias y eliminar las que almacenaban data frames
+  # Crear la nueva columna "categorias"
+  all_data$categorias <- lapply(seq_len(nrow(all_data)), function(i) {
+    # Extraer los slugs de post_categories
+    slugs_categorias <- all_data$post_categories[[i]]$slug
+
+    # Extraer los slugs de post_tags
+    slugs_tags <- all_data$post_tags[[i]]$slug
+
+    # Combinar ambos en una lista
+    c(slugs_categorias, slugs_tags)
+  })
+
+  all_data$post_categories <- NULL
+  all_data$post_tags <- NULL
+
+  # Definir contenido de la columa medio
+  all_data$medio <- "bbcl"
+
+  ###############################
+
+  # Redefinir nombres de columnas
+
+  colnames(all_data) <- colnames(all_data) %>%
+    dplyr::recode(
+      post_title = "titulo",
+      post_content = "contenido",
+      post_URL = "url",
+      `author.display_name` = "autor",
+      raw_post_date = "fecha",
+      resumen_de_ia = "resumen",
+      post_content_clean = "contenido_limpio",
+      `post_image.URL` = "url_imagen"
+    )
+
+  ###############################
 
   # Subimos a la base de datos en caso de que el parametro subir_a_db es TRUE
   if (subir_a_bd) {

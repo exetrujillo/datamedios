@@ -2,7 +2,7 @@
 #'
 #' Esta funcion procesa una columna de texto en un dataframe y extrae los parrafos que coinciden con los sinonimos proporcionados.
 #'
-#' @param datos Data frame que contiene los datos de entrada con la columna "post_content".
+#' @param datos Data frame que contiene los datos de entrada con la columna "contenido".
 #' @param sinonimos Vector de sinonimos que se incluiran en la busqueda.
 #' @return Data frame con una columna adicional 'parrafos_filtrados' que contiene los parrafos extraidos como listas.
 #' @examples
@@ -15,7 +15,7 @@
 extraccion_parrafos <- function(datos, sinonimos = c()) {
   # Verificar que los datos sean un data frame y que contengan la columna 'post_content'
   if (!is.data.frame(datos)) stop("'datos' debe ser un data frame.")
-  if (!"post_content" %in% colnames(datos)) stop("El data frame debe contener la columna 'post_content'.")
+  if (!"contenido" %in% colnames(datos)) stop("El data frame debe contener la columna 'contenido'.")
 
   if (!is.null(sinonimos)){
     pattern <- paste0("(?i)\\b(", datos$search_query[[1]], "|", paste(sinonimos, collapse = "|"), ")\\b")
@@ -23,10 +23,10 @@ extraccion_parrafos <- function(datos, sinonimos = c()) {
     pattern <- paste0("(?i)\\b(", datos$search_query[[1]], ")\\b")
   }
 
-  # Procesar cada contenido de 'post_content' para extraer parrafos filtrados
+  # Procesar cada contenido de 'contenido' para extraer parrafos filtrados
   datos <- datos %>%
     dplyr::mutate(
-      parrafos_filtrados = purrr::map(post_content, ~ {
+      parrafos_filtrados = purrr::map(contenido, ~ {
         # Manejo de errores para lectura HTML
         nodo_html <- tryCatch(rvest::read_html(.x), error = function(e) return(NA))
 
