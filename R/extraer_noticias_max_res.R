@@ -112,7 +112,7 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
   all_data$post_image.URL <- paste0("https://media.biobiochile.cl/wp-content/uploads/", as.character(all_data$post_image.URL))
 
   # Crear columna categorias y eliminar las que almacenaban data frames
-  # Crear la nueva columna "categorias"
+  # Crear la nueva columna "categorias" en formato JSON
   all_data$categorias <- lapply(seq_len(nrow(all_data)), function(i) {
     # Extraer los slugs de post_categories
     slugs_categorias <- all_data$post_categories[[i]]$slug
@@ -121,9 +121,16 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
     slugs_tags <- all_data$post_tags[[i]]$slug
 
     # Combinar ambos en una lista
-    c(slugs_categorias, slugs_tags)
+    categorias_combinadas <- list(
+      categorias = slugs_categorias,
+      tags = slugs_tags
+    )
+
+    # Convertir a JSON
+    jsonlite::toJSON(categorias_combinadas, auto_unbox = TRUE)
   })
 
+  # Eliminar columnas originales
   all_data$post_categories <- NULL
   all_data$post_tags <- NULL
 
