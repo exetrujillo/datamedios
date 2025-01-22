@@ -1,10 +1,10 @@
 #' Funcion para limpiar notas de contenido HTML
 #'
 #' Esta funcion permite limpiar por completo las notas eliminando codigos y secciones irrelevantes.
-#' Verifica que el input sea un data frame con una columna llamada `post_content`.
+#' Verifica que el input sea un data frame con una columna llamada `contenido`.
 #' @param datos Data frame donde estan almacenadas las notas y con la funcion extraccion_parrafos ya operada.
 #' @param sinonimos Una lista de character
-#' @return Un dataframe con el post_content limpio en la columna post_content_clean
+#' @return Un dataframe con el contenido limpio en la columna contenido_limpio
 #' @examples
 #'
 #' \dontrun{

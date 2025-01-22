@@ -2,7 +2,7 @@
 #'
 #' Esta funcion permite realizar una nube de palabras con las palabras más frecuentes del corpus de noticias.
 #'
-#' @param datos data frame que incluye la columna post_content_clean.
+#' @param datos data frame que incluye la columna contenido_limpio.
 #' @param max_words Cantidad maxima de palabras que apareceran en la nube.
 #' @param stop_words Definir las palabras que seran ignoradas en la visualizacion. Debe ser un vector de carácteres.
 #' @return Una nube de palabras con las palabras mas frecuentes.
@@ -20,9 +20,9 @@ word_cloud <- function(datos, max_words, stop_words = NULL) {
     stop("'datos' debe ser un data frame.")
   }
 
-  # Validar que 'post_content_clean' exista en los datos
-  if (!"post_content_clean" %in% colnames(datos)) {
-    stop("'datos' debe contener una columna llamada 'post_content_clean'.")
+  # Validar que 'contenido_limpio' exista en los datos
+  if (!"contenido_limpio" %in% colnames(datos)) {
+    stop("'datos' debe contener una columna llamada 'contenido_limpio'.")
   }
 
   # Validar que 'max_words' sea numerico y este definido
@@ -37,7 +37,7 @@ word_cloud <- function(datos, max_words, stop_words = NULL) {
 
   # Generar los tokens (separar palabras)
   words <- datos %>%
-    tidytext::unnest_tokens(word, post_content_clean)
+    tidytext::unnest_tokens(word, contenido_limpio)
 
   # Filtrar stop words si se proporcionan
   if (!is.null(stop_words)) {

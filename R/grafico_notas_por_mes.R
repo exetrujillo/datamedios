@@ -2,7 +2,7 @@
 #'
 #' Esta funcion genera un grafico de linea que muestra la cantidad de publicaciones agrupadas por mes.
 #'
-#' @param datos Data frame con los datos procesados, que debe incluir la columna `raw_post_date` en formato YYYY-MM-DD.
+#' @param datos Data frame con los datos procesados, que debe incluir la columna `fecha` en formato YYYY-MM-DD.
 #' @param titulo Texto que aparecera en el titulo del grafico.
 #' @param fecha_inicio Fecha de inicio para la construccion del grafico en formato YYYY-MM-DD (opcional).
 #' @param fecha_fin Fecha de finalizacion para la construccion del grafico en formato YYYY-MM-DD (opcional).
@@ -25,9 +25,9 @@ grafico_notas_por_mes <- function(datos, titulo, fecha_inicio = NULL, fecha_fin 
     stop("'datos' debe ser un data frame.")
   }
 
-  # Validar que 'raw_post_date' exista en los datos
-  if (!"raw_post_date" %in% colnames(datos)) {
-    stop("'datos' debe contener la columna 'raw_post_date'.")
+  # Validar que 'fecha' exista en los datos
+  if (!"fecha" %in% colnames(datos)) {
+    stop("'datos' debe contener la columna 'fecha'.")
   }
 
   # Validar que 'titulo' sea texto
@@ -35,21 +35,21 @@ grafico_notas_por_mes <- function(datos, titulo, fecha_inicio = NULL, fecha_fin 
     stop("'titulo' debe ser texto (string).")
   }
 
-  # Convertir 'raw_post_date' a formato fecha
+  # Convertir 'fecha' a formato fecha
   datos <- datos %>%
-    dplyr::mutate(raw_post_date = as.Date(raw_post_date, format = "%Y-%m-%d"))
+    dplyr::mutate(fecha = as.Date(fecha, format = "%Y-%m-%d"))
 
   # Filtrar por rango de fechas si se especifican
   if (!is.null(fecha_inicio) || !is.null(fecha_fin)) {
     if (!is.null(fecha_inicio)) {
       fecha_inicio <- as.Date(fecha_inicio, format = "%Y-%m-%d")
     } else {
-      fecha_inicio <- min(datos$raw_post_date, na.rm = TRUE)
+      fecha_inicio <- min(datos$fecha, na.rm = TRUE)
     }
     if (!is.null(fecha_fin)) {
       fecha_fin <- as.Date(fecha_fin, format = "%Y-%m-%d")
     } else {
-      fecha_fin <- max(datos$raw_post_date, na.rm = TRUE)
+      fecha_fin <- max(datos$fecha, na.rm = TRUE)
     }
 
     # Validar que las fechas sean validas
@@ -59,7 +59,7 @@ grafico_notas_por_mes <- function(datos, titulo, fecha_inicio = NULL, fecha_fin 
 
     # Filtrar datos por rango
     datos_filtrados <- datos %>%
-      dplyr::filter(raw_post_date >= fecha_inicio & raw_post_date <= fecha_fin)
+      dplyr::filter(fecha >= fecha_inicio & fecha <= fecha_fin)
   } else {
     # Usar todo el rango de fechas disponible
     datos_filtrados <- datos
@@ -72,7 +72,7 @@ grafico_notas_por_mes <- function(datos, titulo, fecha_inicio = NULL, fecha_fin 
 
   # Agrupar datos por mes y contar las publicaciones
   publicaciones_por_mes <- datos_filtrados %>%
-    dplyr::mutate(fecha = lubridate::floor_date(raw_post_date, "month")) %>%
+    dplyr::mutate(fecha = lubridate::floor_date(fecha, "month")) %>%
     dplyr::group_by(fecha) %>%
     dplyr::summarise(cantidad = dplyr::n(), .groups = "drop") %>%
     dplyr::arrange(fecha)

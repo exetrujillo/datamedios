@@ -7,7 +7,7 @@
 grafico_notas_por_mes(datos, titulo, fecha_inicio = NULL, fecha_fin = NULL)
 }
 \arguments{
-\item{datos}{Data frame con los datos procesados, que debe incluir la columna `raw_post_date` en formato YYYY-MM-DD.}
+\item{datos}{Data frame con los datos procesados, que debe incluir la columna `fecha` en formato YYYY-MM-DD.}
 
 \item{titulo}{Texto que aparecera en el titulo del grafico.}
 

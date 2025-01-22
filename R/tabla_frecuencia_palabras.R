@@ -1,9 +1,9 @@
 #' Generar una tabla estilizada con las palabras mas frecuentes
 #'
-#' Esta funcion procesa la columna 'post_content_clean' de un dataframe, tokeniza el texto,
+#' Esta funcion procesa la columna 'contenido_limpio' de un dataframe, tokeniza el texto,
 #' cuenta la frecuencia de cada palabra y genera una tabla con las palabras mas frecuentes.
 #'
-#' @param datos Data frame que contiene la columna 'post_content_clean'.
+#' @param datos Data frame que contiene la columna 'contenido_limpio'.
 #' @param max_words Numero maximo de palabras que se mostraran en la tabla.
 #' @param stop_words Vector opcional de palabras que se deben excluir del conteo.
 #' @return Una tabla con las palabras mas frecuentes.
@@ -20,9 +20,9 @@ tabla_frecuencia_palabras <- function(datos, max_words, stop_words = NULL) {
     stop("'datos' debe ser un data frame.")
   }
 
-  # Validar que 'post_content_clean' exista en los datos
-  if (!"post_content_clean" %in% colnames(datos)) {
-    stop("'datos' debe contener una columna llamada 'post_content_clean'.")
+  # Validar que 'contenido_limpio' exista en los datos
+  if (!"contenido_limpio" %in% colnames(datos)) {
+    stop("'datos' debe contener una columna llamada 'contenido_limpio'.")
   }
 
   # Validar que 'max_words' sea numerico y este definido
@@ -37,7 +37,7 @@ tabla_frecuencia_palabras <- function(datos, max_words, stop_words = NULL) {
 
   # Generar los tokens (separar palabras)
   words <- datos %>%
-    tidytext::unnest_tokens(word, post_content_clean)
+    tidytext::unnest_tokens(word, contenido_limpio)
 
   # Filtrar stop words si se proporcionan
   if (!is.null(stop_words)) {

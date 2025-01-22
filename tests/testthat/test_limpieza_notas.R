@@ -6,15 +6,15 @@ test_that("Error cuando el input no es un data.frame", {
   )
 })
 
-test_that("Error cuando falta la columna 'post_content'", {
+test_that("Error cuando falta la columna 'contenido'", {
   expect_error(
     datamedios::limpieza_notas(data.frame(otra_columna = c("Texto"))),
-    "El data frame debe contener una columna llamada 'post_content'."
+    "El data frame debe contener una columna llamada 'contenido'."
   )
 })
 
 test_that("Errores cuando 'sinonimos' no es un vector de caracteres", {
-  datos <- data.frame(post_content = c("Texto de prueba"), stringsAsFactors = FALSE)
+  datos <- data.frame(contenido = c("Texto de prueba"), stringsAsFactors = FALSE)
   expect_error(
     datamedios::limpieza_notas(datos, sinonimos = 123),
     "'sinonimos' debe ser un vector de palabras."
@@ -29,7 +29,7 @@ test_that("Se realiza el filtrado correctamente considerando los sinónimos", {
 
   # Verificamos que solo queden filas relevantes
   expect_true(
-    any(grepl("presidente", resultado$post_content) & !grepl("boric", resultado$post_content)),
+    any(grepl("presidente", resultado$contenido) & !grepl("boric", resultado$contenido)),
     info = "No se encontró ninguna fila donde aparezca 'presidente' pero no 'boric'."
   )
 })
@@ -46,11 +46,11 @@ test_that("La función limpia el texto de forma correcta en datos reales", {
   indice_aleatorio <- sample(1:nrow(resultado), 1)
 
   es_html <- tryCatch({
-    xml2::read_html(resultado$post_content_clean[indice_aleatorio])
+    xml2::read_html(resultado$contenido_limpio[indice_aleatorio])
     TRUE
   }, error = function(e) {
     print(paste("Error al procesar HTML en la fila:", indice_aleatorio))
-    print(resultado$post_content_clean[indice_aleatorio])
+    print(resultado$contenido_limpio[indice_aleatorio])
     print(paste("Mensaje de error:", e$message))
     FALSE
   })
@@ -72,11 +72,9 @@ test_that("Resultados finales tienen estructura correcta y columnas esperadas", 
 
   # Verificamos que las columnas deseadas existen
   columnas_esperadas <- c(
-    "ID", "post_title", "post_content", "post_excerpt", "post_URL",
-    "post_categories", "post_tags", "year", "month", "day",
-    "post_category_primary.name", "post_category_secondary.name",
-    "post_image.URL", "post_image.alt", "post_image.caption",
-    "author.display_name", "raw_post_date", "resumen_de_ia", "search_query"
+    "ID", "titulo", "contenido", "contenido_limpio", "url", "url_imagen",
+    "autor", "fecha", "resumen", "search_query", "medio",
+    "temas"
   )
   for (columna in columnas_esperadas) {
     expect_true(
@@ -89,11 +87,11 @@ test_that("Resultados finales tienen estructura correcta y columnas esperadas", 
   indice_aleatorio <- sample(1:nrow(resultado), 1)
 
   es_html <- tryCatch({
-    xml2::read_html(resultado$post_content_clean[indice_aleatorio])
+    xml2::read_html(resultado$contenido_limpio[indice_aleatorio])
     TRUE
   }, error = function(e) {
     print(paste("Error al procesar HTML en la fila:", indice_aleatorio))
-    print(resultado$post_content_clean[indice_aleatorio])
+    print(resultado$contenido_limpio[indice_aleatorio])
     print(paste("Mensaje de error:", e$message))
     FALSE
   })

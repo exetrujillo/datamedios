@@ -5,15 +5,15 @@ test_that("Error cuando el input no es un data frame", {
   )
 })
 
-test_that("Error cuando falta la columna 'post_content_clean'", {
+test_that("Error cuando falta la columna 'contenido_limpio'", {
   expect_error(
     tabla_frecuencia_palabras(data.frame(otra_columna = c("Texto")), max_words = 5),
-    "'datos' debe contener una columna llamada 'post_content_clean'."
+    "'datos' debe contener una columna llamada 'contenido_limpio'."
   )
 })
 
 test_that("Error cuando 'max_words' no es numérico", {
-  datos <- data.frame(post_content_clean = c("Texto relevante."))
+  datos <- data.frame(contenido_limpio = c("Texto relevante."))
   expect_error(
     tabla_frecuencia_palabras(datos, max_words = "cinco"),
     "'max_words' debe ser un numero."
@@ -21,7 +21,7 @@ test_that("Error cuando 'max_words' no es numérico", {
 })
 
 test_that("Error cuando 'stop_words' no es un vector de caracteres", {
-  datos <- data.frame(post_content_clean = c("Texto relevante."))
+  datos <- data.frame(contenido_limpio = c("Texto relevante."))
   expect_error(
     tabla_frecuencia_palabras(datos, max_words = 5, stop_words = 123),
     "'stop_words' debe ser un vector de palabras."
@@ -41,7 +41,7 @@ test_that("Tabla de palabras frecuentes funciona correctamente con datos válido
 
   # Verificar que las palabras y frecuencias sean correctas
   palabras_frecuentes <- datos %>%
-    tidytext::unnest_tokens(word, post_content_clean) %>%
+    tidytext::unnest_tokens(word, contenido_limpio) %>%
     dplyr::count(word, sort = TRUE) %>%
     dplyr::slice_max(n, n = 5)
 
@@ -54,7 +54,7 @@ test_that("Tabla de palabras frecuentes funciona correctamente con datos válido
 })
 
 test_that("Stop words son excluidas correctamente", {
-  datos <- data.frame(post_content_clean = c("Esto es un ejemplo. Esto es una prueba."))
+  datos <- data.frame(contenido_limpio = c("Esto es un ejemplo. Esto es una prueba."))
 
   # Generar la tabla excluyendo palabras comunes
   tabla <- tabla_frecuencia_palabras(datos, max_words = 3, stop_words = c("esto", "es", "un", "una"))

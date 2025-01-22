@@ -7,7 +7,7 @@
 extraccion_parrafos(datos, sinonimos = c())
 }
 \arguments{
-\item{datos}{Data frame que contiene los datos de entrada con la columna "post_content".}
+\item{datos}{Data frame que contiene los datos de entrada con la columna "contenido".}
 
 \item{sinonimos}{Vector de sinonimos que se incluiran en la busqueda.}
 }
