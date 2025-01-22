@@ -25,9 +25,7 @@ agregar_datos_unicos <- function(data) {
     stop("El data frame debe contener una columna llamada 'search_query'.")
   }
 
-  # Extraemos y removemos search_query y operamos otras columnas que harían fallar la API
-  search_query <- data$search_query[1]
-  data$search_query <- NULL
+  # Eliminaciones necesarias
   data$parrafos_filtrados <- NULL # Si es que el dataframe viene con esta columna
 
   # Convertimos data a lista
