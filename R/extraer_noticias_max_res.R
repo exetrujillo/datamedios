@@ -113,7 +113,7 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
 
   # Crear columna categorias y eliminar las que almacenaban data frames
   # Crear la nueva columna "categorias" en formato JSON
-  all_data$categorias <- lapply(seq_len(nrow(all_data)), function(i) {
+  all_data$temas <- lapply(seq_len(nrow(all_data)), function(i) {
     # Extraer los slugs de post_categories
     slugs_categorias <- all_data$post_categories[[i]]$slug
 
@@ -121,13 +121,13 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
     slugs_tags <- all_data$post_tags[[i]]$slug
 
     # Combinar ambos en una lista
-    categorias_combinadas <- list(
+    temas_combinados <- list(
       categorias = slugs_categorias,
       tags = slugs_tags
     )
 
     # Convertir a JSON
-    jsonlite::toJSON(categorias_combinadas, auto_unbox = TRUE)
+    jsonlite::toJSON(temas_combinados, auto_unbox = TRUE)
   })
 
   # Eliminar columnas originales
@@ -165,7 +165,7 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
     })
   }
 
-  print(paste0("Noticias hasta la fecha: ", all_data$raw_post_date[nrow(all_data)]))
+  print(paste0("Noticias hasta la fecha: ", all_data$fecha[nrow(all_data)]))
 
   return(all_data)
 }

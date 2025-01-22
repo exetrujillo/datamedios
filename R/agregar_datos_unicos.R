@@ -28,8 +28,7 @@ agregar_datos_unicos <- function(data) {
   # Extraemos y removemos search_query y operamos otras columnas que harían fallar la API
   search_query <- data$search_query[1]
   data$search_query <- NULL
-  data$post_content_clean <- NULL # En caso de que el data frame venga con esta columna
-  data$parrafos_filtrados <- NULL # O que tenga esta columna
+  data$parrafos_filtrados <- NULL # Si es que el dataframe viene con esta columna
 
   # Convertimos data a lista
   data_list <- as.list(data)
@@ -51,7 +50,6 @@ agregar_datos_unicos <- function(data) {
   enviar_datos(url1, data_list)
 
   # Enviamos datos a write_search_queries
-  data_list <- append(data_list, list("search_query" = search_query))
   enviar_datos(url2, data_list)
 
   message("Datos agregados exitosamente.")
