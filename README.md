@@ -20,6 +20,14 @@ Para instalar el paquete desde GitHub, sigue los siguientes pasos:
     devtools::install_github("exetrujillo/datamedios")
     ```
 
+Para instalarlo desde CRAN (próximamente): 
+
+1. Instala `datamedios` desde la libreria de CRAN:
+
+ ``` r
+   install.packages("datamedios")
+   libreary(datamedios) 
+    ```
 ------------------------------------------------------------------------
 
 ## 🔄 Uso
@@ -40,22 +48,18 @@ Esta función permite filtrar noticias por un rango de fechas específico, adem�
 Un `data.frame` con las siguientes columnas:
 
 -   **`ID`**: Identificador de la noticia.
--   **`post_title`**: Título de la noticia.
--   **`post_content`**: Contenido completo.
--   **`post_excerpt`**: Resumen o extracto.
--   **`post_URL`**: Enlace a la noticia.
--   **`post_categories`**: Categorías asociadas.
--   **`post_tags`**: Etiquetas relacionadas.
--   **`year, month, day`**: Fecha de publicación (año, mes y día).
--   **`post_category_primary.name`**: Categoría principal.
--   **`post_category_secondary.name`**: Categoría secundaria.
--   **`post_image.URL`**: URL de la imagen asociada.
--   **`post_image.alt`**: Texto alternativo de la imagen.
--   **`post_image.caption`**: Leyenda de la imagen.
--   **`author.display_name`**: Nombre del autor.
--   **`raw_post_date`**: Fecha cruda de publicación.
--   **`resumen_de_ia`**: Resumen generado por IA (si está disponible).
+-   **`titulo`**: Título de la noticia.
+-   **`contenido`**: Contenido completo.
+-   **`contenido limpio`**: Resumen o extracto.
+-   **`url`**: Enlace a la noticia.
+-   **`url_imagen`**: Categorías asociadas.
+-   **`autor`**: Etiquetas relacionadas.
+-   **`fecha`**: Fecha cruda de publicación (formato 'YYYY-MM-DD').
+-   **`resumen`**: Resumen de la IA o bajada de la nota, según disponibilidad.
 -   **`search_query`**: Palabra o frase de búsqueda por la que se obtuvo los datos.
+-   **`medio`**: Medio al que corresponde la noticia.
+-   **`temas`**: Categorías de la noticia.
+- 
 
 #### **Ejemplo de uso:**
 
@@ -91,26 +95,9 @@ noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 10
 
 ### Funciones de procesamiento
 
-#### limpieza_notas
 
-**Descripcion:** recibe el data.frame generado por la funcion y devuelve el mismo con una columna con las noticias limpias de contenido html. Ademas, elimina noticias sin la search query, permitiendo agregar sinonomos de esta.
-
-**Ejemplo de uso:** 
-
-datos <- (datos, sinonimos = c("diputados", "congreso"))
 
 #### extraccion_parrafos
-
-------------------------------------------------------------------------
-
-### Funciones de visualizacion
-
-#### grafico_notas_por_mes
-
-#### tabla_frecuencia_palabras 
-
-#### word_cloud
-
 ------------------------------------------------------------------------
 
 ## 🔖 Documentación
@@ -167,13 +154,6 @@ Este paquete fue desarrollado por:
 
 -   **Ismael Aguayo**
 -   **Exequiel Trujillo**
+-   **Klaus Lehmann**
 
 ------------------------------------------------------------------------
-
-## 📝 To Do
-
--   Incorporar soporte para otros medios de comunicación.
-
--   Crear un pipeline automatizado para la actualización de la base de datos.
-
--   Crear una tabla en la base de datos para almacenar búsquedas pendientes por realizar desde el json, para almacenarlas en la base de datos notas_biobio o en otras cuando se incluya el soporte a otros medios de comunicación.
