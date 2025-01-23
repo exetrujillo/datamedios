@@ -25,7 +25,7 @@ Para instalarlo desde CRAN (próximamente):
 
 1. Instala `datamedios` desde la libreria de CRAN:
 
- ``` r
+   ``` r
    install.packages("datamedios")
    libreary(datamedios) 
     ```
