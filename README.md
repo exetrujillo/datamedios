@@ -27,7 +27,7 @@ Para instalarlo desde CRAN (próximamente):
 
    ``` r
    install.packages("datamedios")
-   libreary(datamedios) 
+   library(datamedios) 
     ```
 ------------------------------------------------------------------------
 
@@ -94,11 +94,7 @@ noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 10
 
 ------------------------------------------------------------------------
 
-### Funciones de procesamiento
-
-
-
-#### extraccion_parrafos
+*Además, el paquete incluye funciones de limpieza, manejo y visualización de las noticias de diversas formas. Para visitar la documentación de todos los códigos haga click [aquí]().
 ------------------------------------------------------------------------
 
 ## 🔖 Documentación
