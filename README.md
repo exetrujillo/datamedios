@@ -66,7 +66,7 @@ Un `data.frame` con las siguientes columnas:
 
 ``` r
 # Buscar noticias entre el 1 de enero y el 31 de diciembre de 2023
-noticias <- extraer_noticias_fecha("estallido social", "2019-10-18", "2024-12-31")
+noticias <- extraer_noticias_fecha("estallido social", "2019-10-18", "2020-12-31")
 ```
 
 ------------------------------------------------------------------------
@@ -136,6 +136,10 @@ Este paquete utiliza las siguientes dependencias de R para su correcto funcionam
 -   **`xml2`**: Lectura y manejo de datos en formato XML.
 
 -   **`purrr`**: Programación funcional con listas y vectores.
+  
+-   **`DT`**: Generación de tablas interactivas en HTML desde R.
+  
+-   **`ggplot2`**: Creación de gráficos sofisticados y personalizados basados en la gramática de los gráficos.
 
 ------------------------------------------------------------------------
 
