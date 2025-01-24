@@ -94,7 +94,7 @@ noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 10
 
 ------------------------------------------------------------------------
 
-#### Además, el paquete incluye funciones de limpieza, manejo y visualización de las noticias de diversas formas. Para visitar la documentación de todos los códigos haga click [aquí](https://exetrujillo.github.io/datamedios/reference/index.html).
+**Además, el paquete incluye funciones de limpieza, manejo y visualización de las noticias de diversas formas. Para visitar la documentación de todos los códigos haga click [aquí](https://exetrujillo.github.io/datamedios/reference/index.html).**
 ------------------------------------------------------------------------
 
 ## 🔖 Documentación
