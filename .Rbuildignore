@@ -4,3 +4,9 @@
 ^cran-comments\.md$
 ^\\.github$
 ^docs$
+^\.github/
+^docs/
+^cran-comments\.md$
+^LICENSE\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
