@@ -32,8 +32,8 @@ agregar_datos_unicos <- function(data) {
   data_list <- as.list(data)
 
   # URLs de las APIs
-  url1 <- "http://librosycodigo.ddns.net:3123/write_news"
-  url2 <- "http://librosycodigo.ddns.net:3123/write_search_query"
+  url1 <- "http://librosycodigo.ddns.net:3124/write_news"
+  url2 <- "http://librosycodigo.ddns.net:3124/write_search_query"
 
   # Funcion para enviar datos a la API
   enviar_datos <- function(url, data) {
