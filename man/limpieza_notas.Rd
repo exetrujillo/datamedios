@@ -18,11 +18,11 @@ Un dataframe con el contenido limpio en la columna contenido_limpio
 Esta funcion permite limpiar por completo las notas eliminando codigos y secciones irrelevantes.
 Verifica que el input sea un data frame con una columna llamada `contenido`.
 }
-\examples
+\examples{
 
 \dontrun{
 datos <- extraer_noticias_max_res("inteligencia artificial", max_results= 150, subir_a_bd = FALSE)
 datos <- extraccion_parrafos(datos)
-datos_proc <- limpieza_notas(datos, sinonimos = c("IA", "AI")
+datos_proc <- limpieza_notas(datos, sinonimos = c("IA", "AI"))
 }
-
+}
