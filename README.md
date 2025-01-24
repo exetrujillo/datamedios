@@ -6,7 +6,16 @@
 
 ## 🔧 Instalación
 
-Para instalar el paquete desde GitHub, sigue los siguientes pasos:
+Para instalarlo desde CRAN:
+
+Instala `datamedios` desde la librería de CRAN:
+
+``` r
+install.packages("datamedios")
+library(datamedios) 
+```
+
+Adicionalmente, para instalar el paquete desde GitHub, sigue los siguientes pasos:
 
 1.  Asegúrate de tener instalado el paquete `devtools`. Si no lo tienes, instálalo ejecutando:
 
@@ -20,16 +29,7 @@ Para instalar el paquete desde GitHub, sigue los siguientes pasos:
     devtools::install_github("exetrujillo/datamedios")
     ```
 
-Para instalarlo desde CRAN (próximamente):
-
-1.  Instala `datamedios` desde la libreria de CRAN:
-
-    ``` r
-    install.packages("datamedios")
-    library(datamedios) 
-    ```
-
-    ------------------------------------------------------------------------
+------------------------------------------------------------------------
 
 ## 🔄 Uso
 
