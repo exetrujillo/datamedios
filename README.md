@@ -91,25 +91,9 @@ Un `data.frame` similar al de `extraer_noticias_fecha`, pero filtrado por `max_r
 noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 100)
 ```
 
-<table>
-<colgroup>
-<col style="width: 100%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><h4>Además, el paquete incluye funciones de limpieza, manejo y visualización de las noticias de diversas formas. Para visitar la documentación de todos los códigos haga click <a href="https://exetrujillo.github.io/datamedios/reference/index.html">aquí</a>.</h4></td>
-</tr>
-<tr class="even">
-<td><h2>🔖 Documentación</h2></td>
-</tr>
-<tr class="odd">
-<td><p>Para acceder a la documentación completa de las funciones, usa el siguiente comando:</p></td>
-</tr>
-<tr class="even">
-<td><p><code>r help(package = "datamedios")</code></p></td>
-</tr>
-</tbody>
-</table>
+## 🔖 Documentación
+
+**Adicionalmente, el paquete incluye funciones de limpieza, manejo y visualización de las noticias extraídas. Para visitar la documentación de todos los códigos haga click [aquí](https://exetrujillo.github.io/datamedios/reference/index.html).**
 
 ## 📊 Dependencias
 
