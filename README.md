@@ -65,7 +65,7 @@ Un `data.frame` con las siguientes columnas:
 
 ``` r
 # Buscar noticias entre el 1 de enero y el 31 de diciembre de 2023
-noticias <- extraer_noticias_fecha("estallido social", "2019-10-18", "2020-12-31")
+noticias <- extraer_noticias_fecha("estallido social", "2019-10-18", "2020-10-18")
 ```
 
 ------------------------------------------------------------------------
@@ -157,8 +157,8 @@ Este paquete utiliza las siguientes dependencias de R para su correcto funcionam
 
 Este paquete fue desarrollado por:
 
--   **Ismael Aguayo**
--   **Exequiel Trujillo**
--   **Klaus Lehmann**
+-   **Exequiel Trujillo** (contacto: exequiel.trujillo@ug.uchile.cl)
+-   **Ismael Aguayo** (contacto: ismael.aguayo@ug.uchile.cl)
+-   **Klaus Lehmann** (klehmann@fen.uchile.cl)
 
 ------------------------------------------------------------------------
