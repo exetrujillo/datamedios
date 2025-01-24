@@ -9,7 +9,7 @@
 #' @return Un dataframe con las noticias extraidas.
 #' @examples
 #' noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01",
-#' "2023-12-31", subir_a_bd = FALSE)
+#' "2023-02-02", subir_a_bd = FALSE)
 #' @export
 
 extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_a_bd = TRUE) {

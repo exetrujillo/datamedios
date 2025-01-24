@@ -28,5 +28,5 @@ Esta funcion permite realizar una extraccion automatizada de noticias desde la A
 }
 \examples{
 noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01",
-"2023-12-31", subir_a_bd = FALSE)
+"2023-02-02", subir_a_bd = FALSE)
 }
