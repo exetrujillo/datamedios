@@ -3,9 +3,9 @@ Type: Package
 Title: Scraping de medios chilenos
 Version: 1.0.0
 Authors@R:c(
-        person("Exequiel", "Trujillo", email = "exequiel.trujillo@ug.uchile.cl", role = c("aut", "cre")),
-        person("Ismael", "Aguayo", email = "ismael.aguayo@ug.uchile.cl", role = "aut"),
-        person("Klaus", "Lehmann", email = "klehmann@fen.uchile.cl", role = "aut")
+        person("Exequiel", "Trujillo", email = "exequiel.trujillo@ug.uchile.cl", role = c("aut", "cre", "cph", "fnd")),
+        person("Ismael", "Aguayo", email = "ismael.aguayo@ug.uchile.cl", role = "aut", "fnd"),
+        person("Klaus", "Lehmann", email = "klehmann@fen.uchile.cl", role = "aut", "fnd")
     )
 Maintainer: Exequiel Trujillo <exequiel.trujillo@ug.uchile.cl>
 Description: La función principal es crear un data frame de noticias a partir de parametros como, por ejemplo, una frase de busqueda y un intervalo de fechas. 
