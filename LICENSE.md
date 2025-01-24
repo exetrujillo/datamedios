@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2025 Exequiel Trujillo, Ismael Aguayo y Klaus Lehmann
+Copyright (c) 2025 Exequiel Trujillo, Ismael Aguayo & Klaus Lehmann
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

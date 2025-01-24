@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">datamedios</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -56,7 +56,7 @@
       </header><div class="row">
   <div class="contents col-md-9">
 <div class="section level1">
-<div class="page-header"><h1 id="paquete-datamedios-versión-031">Paquete <code>datamedios</code> (Versión 0.3.1)<a class="anchor" aria-label="anchor" href="#paquete-datamedios-versi%C3%B3n-031"></a>
+<div class="page-header"><h1 id="paquete-datamedios-versión-100">Paquete <code>datamedios</code> (Versión 1.0.0)<a class="anchor" aria-label="anchor" href="#paquete-datamedios-versi%C3%B3n-100"></a>
 </h1></div>
 <p><code>datamedios</code> es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento desde la API de BíoBío.cl. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos por medio de una API.</p>
 <hr>
@@ -140,8 +140,6 @@
 <strong><code>medio</code></strong>: Medio al que corresponde la noticia.</li>
 <li>
 <strong><code>temas</code></strong>: Categorías de la noticia.</li>
-<li>
-</li>
 </ul>
 </div>
 <div class="section level4">
@@ -185,21 +183,41 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Buscar noticias relacionadas con "inteligencia artificial"</span></span>
 <span><span class="va">noticias</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/extraer_noticias_max_res.html">extraer_noticias_max_res</a></span><span class="op">(</span><span class="st">"inteligencia artificial"</span>, max_results <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
-<hr>
-</div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="id_-además-el-paquete-incluye-funciones-de-limpieza-manejo-y-visualización-de-las-noticias-de-diversas-formas-para-visitar-la-documentación-de-todos-los-códigos-haga-click-aquí">#### Además, el paquete incluye funciones de limpieza, manejo y visualización de las noticias de diversas formas. Para visitar la documentación de todos los códigos haga click <a href="https://exetrujillo.github.io/datamedios/reference/index.html" class="external-link">aquí</a>.<a class="anchor" aria-label="anchor" href="#id_-adem%C3%A1s-el-paquete-incluye-funciones-de-limpieza-manejo-y-visualizaci%C3%B3n-de-las-noticias-de-diversas-formas-para-visitar-la-documentaci%C3%B3n-de-todos-los-c%C3%B3digos-haga-click-aqu%C3%AD"></a>
+<table class="table">
+<colgroup><col style="width: 100%"></colgroup>
+<tbody>
+<tr class="odd">
+<td>
+<h4>
+Además, el paquete incluye funciones de limpieza, manejo y visualización de las noticias de diversas formas. Para visitar la documentación de todos los códigos haga click <a href="https://exetrujillo.github.io/datamedios/reference/index.html" class="external-link">aquí</a>.
+</h4>
+</td>
+</tr>
+<tr class="even">
+<td>
+<h2>
+🔖 Documentación
 </h2>
+</td>
+</tr>
+<tr class="odd">
+<td>
+<p>
+Para acceder a la documentación completa de las funciones, usa el siguiente comando:
+</p>
+</td>
+</tr>
+<tr class="even">
+<td>
+<p>
+<code>r help(package = “datamedios”)</code>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="section level2">
-<h2 id="id_-documentación">🔖 Documentación<a class="anchor" aria-label="anchor" href="#id_-documentaci%C3%B3n"></a>
-</h2>
-<p>Para acceder a la documentación completa de las funciones, usa el siguiente comando:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"datamedios"</span><span class="op">)</span></span></code></pre></div>
-<hr>
+</div>
 </div>
 <div class="section level2">
 <h2 id="id_-dependencias">📊 Dependencias<a class="anchor" aria-label="anchor" href="#id_-dependencias"></a>
@@ -264,8 +282,9 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Exequiel Trujillo <br><small class="roles"> Maintainer </small>  </li>
-<li><a href="authors.html">More about authors...</a></li>
+<li>Exequiel Trujillo <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Ismael Aguayo <br><small class="roles"> Author </small>  </li>
+<li>Klaus Lehmann <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -277,7 +296,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Exequiel Trujillo.</p>
+<p>Developed by Exequiel Trujillo, Ismael Aguayo, Klaus Lehmann.</p>
 </div>
 
 <div class="pkgdown">

@@ -1,4 +1,4 @@
-# Paquete `datamedios` (Versión 0.3.1)
+# Paquete `datamedios` (Versión 1.0.0)
 
 `datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento desde la API de BíoBío.cl. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos por medio de una API.
 
@@ -14,22 +14,22 @@ Para instalar el paquete desde GitHub, sigue los siguientes pasos:
     install.packages("devtools")
     ```
 
-
 2.  Instala `datamedios` desde el repositorio de GitHub:
 
     ``` r
     devtools::install_github("exetrujillo/datamedios")
     ```
 
-Para instalarlo desde CRAN (próximamente): 
+Para instalarlo desde CRAN (próximamente):
 
-1. Instala `datamedios` desde la libreria de CRAN:
+1.  Instala `datamedios` desde la libreria de CRAN:
 
-   ``` r
-   install.packages("datamedios")
-   library(datamedios) 
+    ``` r
+    install.packages("datamedios")
+    library(datamedios) 
     ```
-------------------------------------------------------------------------
+
+    ------------------------------------------------------------------------
 
 ## 🔄 Uso
 
@@ -60,7 +60,6 @@ Un `data.frame` con las siguientes columnas:
 -   **`search_query`**: Palabra o frase de búsqueda por la que se obtuvo los datos.
 -   **`medio`**: Medio al que corresponde la noticia.
 -   **`temas`**: Categorías de la noticia.
-- 
 
 #### **Ejemplo de uso:**
 
@@ -91,18 +90,26 @@ Un `data.frame` similar al de `extraer_noticias_fecha`, pero filtrado por `max_r
 # Buscar noticias relacionadas con "inteligencia artificial"
 noticias <- extraer_noticias_max_res("inteligencia artificial", max_results = 100)
 ```
-------------------------------------------------------------------------
-#### Además, el paquete incluye funciones de limpieza, manejo y visualización de las noticias de diversas formas. Para visitar la documentación de todos los códigos haga click [aquí](https://exetrujillo.github.io/datamedios/reference/index.html).
 
-## 🔖 Documentación
-
-Para acceder a la documentación completa de las funciones, usa el siguiente comando:
-
-``` r
-help(package = "datamedios")
-```
-
-------------------------------------------------------------------------
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><h4>Además, el paquete incluye funciones de limpieza, manejo y visualización de las noticias de diversas formas. Para visitar la documentación de todos los códigos haga click <a href="https://exetrujillo.github.io/datamedios/reference/index.html">aquí</a>.</h4></td>
+</tr>
+<tr class="even">
+<td><h2>🔖 Documentación</h2></td>
+</tr>
+<tr class="odd">
+<td><p>Para acceder a la documentación completa de las funciones, usa el siguiente comando:</p></td>
+</tr>
+<tr class="even">
+<td><p><code>r help(package = "datamedios")</code></p></td>
+</tr>
+</tbody>
+</table>
 
 ## 📊 Dependencias
 
@@ -133,9 +140,9 @@ Este paquete utiliza las siguientes dependencias de R para su correcto funcionam
 -   **`xml2`**: Lectura y manejo de datos en formato XML.
 
 -   **`purrr`**: Programación funcional con listas y vectores.
-  
+
 -   **`DT`**: Generación de tablas interactivas en HTML desde R.
-  
+
 -   **`ggplot2`**: Creación de gráficos sofisticados y personalizados basados en la gramática de los gráficos.
 
 ------------------------------------------------------------------------
