@@ -3,7 +3,7 @@
 #' Esta funcion agrega datos a una tabla MySQL utilizando una API que espera datos en formato JSON.
 #'
 #' @param data Un data frame con los datos a insertar.
-#'
+#' @return No retorna ningun valor.
 #' @examples
 #' \dontrun{
 #' # Agregar datos unicos

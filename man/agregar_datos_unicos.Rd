@@ -9,6 +9,9 @@ agregar_datos_unicos(data)
 \arguments{
 \item{data}{Un data frame con los datos a insertar.}
 }
+\value{
+No retorna ningun valor.
+}
 \description{
 Esta funcion agrega datos a una tabla MySQL utilizando una API que espera datos en formato JSON.
 }
