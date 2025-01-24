@@ -15,7 +15,7 @@ install.packages("datamedios")
 library(datamedios) 
 ```
 
-Adicionalmente, para instalar el paquete desde GitHub, sigue los siguientes pasos:
+Alternativamente, para instalar el paquete desde GitHub, sigue los siguientes pasos:
 
 1.  Asegúrate de tener instalado el paquete `devtools`. Si no lo tienes, instálalo ejecutando:
 
