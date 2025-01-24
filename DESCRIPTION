@@ -1,8 +1,8 @@
 Package: datamedios
 Type: Package
 Title: Scraping de medios chilenos
-Version: 1.0.0
-Authors@R:c(
+Version: 1.1.0
+Authors@R: c(
         person("Exequiel", "Trujillo", email = "exequiel.trujillo@ug.uchile.cl", role = c("aut", "cre", "cph", "fnd")),
         person("Ismael", "Aguayo", email = "ismael.aguayo@ug.uchile.cl", role = "aut", "fnd"),
         person("Klaus", "Lehmann", email = "klehmann@fen.uchile.cl", role = "aut", "fnd")
