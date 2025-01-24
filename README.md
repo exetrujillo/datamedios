@@ -157,8 +157,8 @@ Este paquete utiliza las siguientes dependencias de R para su correcto funcionam
 
 Este paquete fue desarrollado por:
 
--   **Exequiel Trujillo** (contacto: exequiel.trujillo@ug.uchile.cl)
--   **Ismael Aguayo** (contacto: ismael.aguayo@ug.uchile.cl)
--   **Klaus Lehmann** (klehmann@fen.uchile.cl)
+-   **Exequiel Trujillo** (contacto: [exequiel.trujillo\@ug.uchile.cl](mailto:exequiel.trujillo@ug.uchile.cl){.email})
+-   **Ismael Aguayo** (contacto: [ismael.aguayo\@ug.uchile.cl](mailto:ismael.aguayo@ug.uchile.cl){.email})
+-   **Klaus Lehmann** (contacto: [klehmann\@fen.uchile.cl](mailto:klehmann@fen.uchile.cl){.email})
 
 ------------------------------------------------------------------------
