@@ -38,10 +38,6 @@ Thank you for considering `datamedios` for CRAN. I look forward to your feedback
 
 ## R CMD check results
 
-Duration: 57.3s
-
-❯ checking for hidden files and directories ... NOTE Found the following hidden files and directories: .github These were most likely included in error. See section 'Package structure' in the 'Writing R Extensions' manual.
+Duration: 1m 54.6s
 
 ❯ checking for future file timestamps ... NOTE unable to verify current time
-
-0 errors ✔ \| 0 warnings ✔ \| 2 notes ✖
