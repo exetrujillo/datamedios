@@ -1,11 +1,12 @@
 Package: datamedios
 Type: Package
-Title: Scraping de medios chilenos
+Title: Scraping Chilean Media
 Version: 1.1.0
 Authors@R: c(
-        person("Exequiel", "Trujillo", email = "exequiel.trujillo@ug.uchile.cl", role = c("aut", "cre", "cph", "fnd")),
-        person("Ismael", "Aguayo", email = "ismael.aguayo@ug.uchile.cl", role = "aut", "fnd"),
-        person("Klaus", "Lehmann", email = "klehmann@fen.uchile.cl", role = "aut", "fnd")
+        person(given = "Exequiel", family = "Trujillo", email = "exequiel.trujillo@ug.uchile.cl", role = c("aut", "cre", "cph", "fnd")),
+        person(given = "Ismael", family = "Aguayo", email = "ismael.aguayo@ug.uchile.cl", role = "aut", "fnd"),
+        person(given = "Klaus", family = "Lehmann", email = "klehmann@fen.uchile.cl", role = "aut", "fnd")
+    )
 Maintainer: Exequiel Trujillo <exequiel.trujillo@ug.uchile.cl>
 Description: A system for extracting news from Chilean media,
   specifically through the BíoBío.cl API. The package allows for news searches using search phrases and date filters,
