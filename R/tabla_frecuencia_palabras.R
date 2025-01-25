@@ -8,8 +8,7 @@
 #' @param stop_words Vector opcional de palabras que se deben excluir del conteo.
 #' @return Una tabla con las palabras mas frecuentes.
 #' @examples
-#' datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
-#' datos <- extraccion_parrafos(datos)
+#' datos <- extraer_noticias_max_res("cambio climatico", max_results = 20)
 #' datos <- limpieza_notas(datos)
 #' tabla_frecuencia_palabras(datos, max_words = 5, stop_words = c("el", "de"))
 #' @export
