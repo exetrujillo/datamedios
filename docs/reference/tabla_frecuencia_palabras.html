@@ -75,19 +75,16 @@ cuenta la frecuencia de cada palabra y genera una tabla con las palabras mas fre
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="extraer_noticias_fecha.html">extraer_noticias_fecha</a></span><span class="op">(</span><span class="st">"cambio climatico"</span>, <span class="st">"2024-01-01"</span>,<span class="st">"2025-01-01"</span>, subir_a_bd <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Total de resultados posibles: 5656"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Noticia mas reciente disponible es de la fecha: 2025-01-24 13:41:22"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "No hay mas noticias dentro del rango de fechas. Terminando la busqueda."</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Total de noticias encontradas en el rango de fechas: 547"</span>
-<span class="r-in"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="extraccion_parrafos.html">extraccion_parrafos</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="limpieza_notas.html">limpieza_notas</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 547</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> El numero total de resultados obtenidos es: 0 </span>
-<span class="r-in"><span><span class="fu">tabla_frecuencia_palabras</span><span class="op">(</span><span class="va">datos</span>, max_words <span class="op">=</span> <span class="fl">5</span>, stop_words <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"el"</span>, <span class="st">"de"</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="extraer_noticias_max_res.html">extraer_noticias_max_res</a></span><span class="op">(</span><span class="st">"Boric"</span>, max_results <span class="op">=</span> <span class="fl">20</span>, subir_a_bd <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Total de resultados posibles: 10000"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Noticia mas reciente disponible es de la fecha: 2025-01-24 16:08:36"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Se extraeran un maximo de 20 resultados."</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Noticias hasta la fecha: 2025-01-23"</span>
+<span class="r-in"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu">limpieza_datos</span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in limpieza_datos(datos):</span> could not find function "limpieza_datos"</span>
+<span class="r-in"><span><span class="fu">tabla_frecuencia_palabras</span><span class="op">(</span><span class="va">datos</span>, max_words <span class="op">=</span> <span class="fl">5</span>, stop_words <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <div id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:700px;height:432.632880098888px;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"filter":"none","vertical":false,"data":[[],[],[]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Palabra<\/th>\n      <th>Frecuencia<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"columnDefs":[{"className":"dt-center","targets":"_all"},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"word","targets":1},{"name":"n","targets":2}],"order":[],"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script></code></pre></div>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5"],["de","la","p","que","a"],[1015,585,524,500,496]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Palabra<\/th>\n      <th>Frecuencia<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"columnDefs":[{"className":"dt-center","targets":"_all"},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"word","targets":1},{"name":"n","targets":2}],"order":[],"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -97,7 +94,7 @@ cuenta la frecuencia de cada palabra y genera una tabla con las palabras mas fre
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Exequiel Trujillo, Ismael fnd Aguayo, Klaus fnd Lehmann.</p>
+  <p></p><p>Developed by Exequiel Trujillo, Ismael Aguayo, Klaus Lehmann.</p>
 </div>
 
 <div class="pkgdown">

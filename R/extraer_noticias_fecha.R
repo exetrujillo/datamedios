@@ -8,8 +8,8 @@
 #' @param subir_a_bd por defecto TRUE, FALSE para test y cosas por el estilo (opcional).
 #' @return Un dataframe con las noticias extraidas.
 #' @examples
-#' noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01",
-#' "2023-02-02", subir_a_bd = FALSE)
+#' noticias <- extraer_noticias_fecha("inteligencia artificial", "2025-01-01",
+#' "2025-02-24", subir_a_bd = FALSE)
 #' @export
 
 extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_a_bd = TRUE) {

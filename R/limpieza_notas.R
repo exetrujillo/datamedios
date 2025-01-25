@@ -59,7 +59,7 @@ limpieza_notas <- function(datos, sinonimos = c()) {
     # Guardamos el contenido limpio de vuelta en el data frame
     datos$contenido_limpio[[i]] <- contenido_texto
   }
-  print(nrow(datos))
+  #print(nrow(datos))
 
   if (!is.null(sinonimos)){
     pattern <- paste0("(?i)\\b(", datos$search_query[[1]], "|", paste(sinonimos, collapse = "|"), ")\\b")
@@ -72,11 +72,11 @@ limpieza_notas <- function(datos, sinonimos = c()) {
   # Eliminamos las filas que no contienen el termino de busqueda
   datos <- datos[-indices_no_match, ]
 
-  print(nrow(datos))
+  #print(nrow(datos))
 
   # Calculamos el numero total de resultados
   total_results <- nrow(datos)
-  cat("El numero total de resultados obtenidos es:", total_results, "\n")
+  #cat("El numero total de resultados obtenidos es:", total_results, "\n")
 
   # Procesamos cada nota para extraer y limpiar el texto plano
   for (contador in seq_len(total_results)) {

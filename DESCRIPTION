@@ -2,10 +2,14 @@ Package: datamedios
 Type: Package
 Title: Scraping Chilean Media
 Version: 1.1.0
-Authors@R: c(person(given = "Exequiel", family = "Trujillo", email = "exequiel.trujillo@ug.uchile.cl", role = c("aut", "cre", "cph", "fnd")), person(given = "Ismael", family = "Aguayo", email = "ismael.aguayo@ug.uchile.cl", role = c("aut", "fnd")), person(given = "Klaus", family = "Lehmann", email = "klehmann@fen.uchile.cl", role = c("aut", "fnd")))
+Authors@R: c(
+  person(given = "Exequiel", family = "Trujillo", email = "exequiel.trujillo@ug.uchile.cl", role = c("aut", "cre", "cph", "fnd")),
+  person(given = "Ismael", family = "Aguayo", email = "ismael.aguayo@ug.uchile.cl", role = c("aut", "fnd")),
+  person(given = "Klaus", family = "Lehmann", email = "klehmann@fen.uchile.cl", role = c("aut", "fnd"))
+  )
 Maintainer: Exequiel Trujillo <exequiel.trujillo@ug.uchile.cl>
 Description: A system for extracting news from Chilean media,
-  specifically through the BioBio.cl API. The package allows for news searches using search phrases and date filters,
+  specifically through API from Chilean media. The package allows for news searches using search phrases and date filters,
   and returns the results in a structured format, ready for analysis.
   Additionally, it includes functions to clean the extracted data, visualize it, and
   store it in databases. All of this can be done automatically, facilitating the collection and analysis of relevant
@@ -13,6 +17,7 @@ Description: A system for extracting news from Chilean media,
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Language: es-ES
 Depends: R (>= 4.1)
 Suggests:
   rcmdcheck

@@ -3,15 +3,11 @@
 ## Results from `R CMD check`
 
 -   **Checks performed**: All checks passed without errors on Windows, macOS, and Linux systems. GitHub Actions were used to validate across different platforms.
--   **Warnings**: No significant warnings were found during the checks. Minor issues related to documentation were addressed.
+-   **Warnings**: No significant warnings were found during the checks.
 
 ## Reverse dependency checks (`revdep`)
 
 -   **Results**: No compatibility issues with other packages were found during reverse dependency checks.
-
-## Changes made at CRAN's request
-
--   No specific requests from CRAN were made in this version.
 
 ## Other details
 
@@ -38,6 +34,6 @@ Thank you for considering `datamedios` for CRAN. I look forward to your feedback
 
 ## R CMD check results
 
-Duration: 1m 54.6s
+Duration: 40.8s
 
-❯ checking for future file timestamps ... NOTE unable to verify current time
+0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔

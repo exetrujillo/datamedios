@@ -27,6 +27,6 @@ Un dataframe con las noticias extraidas.
 Esta funcion permite realizar una extraccion automatizada de noticias desde la API de BioBio.cl utilizando un rango de fechas.
 }
 \examples{
-noticias <- extraer_noticias_fecha("inteligencia artificial", "2023-01-01",
-"2023-02-02", subir_a_bd = FALSE)
+noticias <- extraer_noticias_fecha("inteligencia artificial", "2025-01-01",
+"2025-02-24", subir_a_bd = FALSE)
 }

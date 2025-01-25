@@ -21,7 +21,16 @@ Esta funcion procesa la columna 'contenido_limpio' de un dataframe, tokeniza el 
 cuenta la frecuencia de cada palabra y genera una tabla con las palabras mas frecuentes.
 }
 \examples{
-datos <- extraer_noticias_max_res("cambio climatico", max_results = 20)
-datos <- limpieza_notas(datos)
-tabla_frecuencia_palabras(datos, max_words = 5, stop_words = c("el", "de"))
+datos <- data.frame(
+  contenido_limpio = c(
+    "La ministra de Defensa Maya Fernandez enfrenta cuestionamientos
+    el presidente Gabriel Boric solicita transparencia en los procesos.
+    Renovacion Nacional pide la renuncia de Maya Fernandez debido a la polemica.
+    La transparencia es fundamental en la politica y la gestion publica"
+  ),
+  stringsAsFactors = FALSE
+)
+
+# Probar la funcion con el dataframe de ejemplo
+tabla_frecuencia_palabras(datos, max_words = 5, stop_words = c())
 }
