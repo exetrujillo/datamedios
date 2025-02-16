@@ -23,11 +23,22 @@
 #' @export
 
 tabla_frecuencia_palabras <- function(datos, max_words, stop_words = NULL) {
-  # Validar entradas de manera mas eficiente
-  stopifnot(is.data.frame(datos),
-            "contenido_limpio" %in% colnames(datos),
-            is.numeric(max_words) && max_words > 0,
-            is.null(stop_words) || is.character(stop_words))
+  # Validar que 'datos' sea un data frame
+  if (!is.data.frame(datos)) {
+    stop("'datos' debe ser un data frame.")
+  }
+  # Validar que 'contenido_limpio' exista en los datos
+  if (!"contenido_limpio" %in% colnames(datos)) {
+    stop("'datos' debe contener una columna llamada 'contenido_limpio'.")
+  }
+  # Validar que 'max_words' sea numerico y este definido
+  if (missing(max_words) || !is.numeric(max_words)) {
+    stop("'max_words' debe ser un numero.")
+  }
+  # Validar el argumento 'stop_words'
+  if (!is.null(stop_words) && !is.character(stop_words)) {
+    stop("'stop_words' debe ser un vector de palabras.")
+  }
 
   # Generar los tokens (separar palabras)
   words <- datos %>%
