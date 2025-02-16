@@ -16,7 +16,7 @@ No retorna ningun valor.
 Esta funcion agrega datos a una tabla MySQL utilizando una API que espera datos en formato JSON.
 }
 \examples{
-\dontrun{
+\donttest{
 # Agregar datos unicos
 noticias <- extraer_noticias_max_res("tesla", max_results=10, subir_a_bd = FALSE)
 agregar_datos_unicos(noticias)

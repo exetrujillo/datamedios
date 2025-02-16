@@ -18,8 +18,8 @@ Data frame con una columna adicional 'parrafos_filtrados' que contiene los parra
 Esta funcion procesa una columna de texto en un dataframe y extrae los parrafos que coinciden con los sinonimos proporcionados.
 }
 \examples{
-\dontrun{
-datos <- extraer_noticias_max_res("inteligencia artificial", max_resultas = 140, subir_a_bd = FALSE)
+\donttest{
+datos <- extraer_noticias_max_res("inteligencia artificial", max_results = 140, subir_a_bd = FALSE)
 datos <- extraccion_parrafos(datos, sinonimos = c("IA", "AI"))
 }
 }
