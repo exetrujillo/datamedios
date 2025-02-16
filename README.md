@@ -1,6 +1,6 @@
 # Paquete `datamedios` (Versión 1.1.0)
 
-`datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento desde la API de BíoBío.cl. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos por medio de una API.
+`datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento haciendo web scraping de BíoBío.cl. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos de manera opcional.
 
 ------------------------------------------------------------------------
 
@@ -12,7 +12,7 @@ Instala `datamedios` desde la librería de CRAN:
 
 ``` r
 install.packages("datamedios")
-library(datamedios) 
+library(datamedios)
 ```
 
 Alternativamente, para instalar el paquete desde GitHub, sigue los siguientes pasos:
@@ -72,7 +72,7 @@ noticias <- extraer_noticias_fecha("estallido social", "2019-10-18", "2020-10-18
 
 ### Función secundaria: `extraer_noticias_max_res`
 
-Esta función permite obtener noticias desde la API de BíoBío.cl utilizando una frase de búsqueda. Además, puedes limitar el número de resultados a extraer. Por defecto carga los datos automáticamente a la base de datos de api-datamedios.
+Esta función permite obtener noticias desde BíoBío.cl utilizando una frase de búsqueda. Además, puedes limitar el número de resultados a extraer. Por defecto carga los datos automáticamente a la base de datos de api-datamedios.
 
 #### **Parámetros:**
 
