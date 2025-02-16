@@ -43,8 +43,8 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
   fecha_mas_reciente <- lubridate::ymd_hms(respuesta_inicial$raw_post_date[1])
   total_results <- as.integer(respuesta_inicial$total)
   if(total_results > 0){
-    print(paste0("Total de resultados posibles: ", total_results))
-    print(paste0("Noticia mas reciente disponible es de la fecha: ", fecha_mas_reciente))
+    message(paste0("Total de resultados posibles: ", total_results))
+    message(paste0("Noticia mas reciente disponible es de la fecha: ", fecha_mas_reciente))
   }else{
     stop("No se encontraron noticias con la search query especificada.")
   }
@@ -54,7 +54,7 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
     max_results <- total_results
   }
 
-  print(paste0("Se extraeran un maximo de ", max_results, " resultados."))
+  message(paste0("Se extraeran un maximo de ", max_results, " resultados."))
 
   # Iteramos para obtener todas las noticias necesarias
   offset <- 0
@@ -162,7 +162,7 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
     })
   }
 
-  print(paste0("Noticias hasta la fecha: ", all_data$fecha[nrow(all_data)]))
+  message(paste0("Noticias hasta la fecha: ", all_data$fecha[nrow(all_data)]))
 
   return(all_data)
 }

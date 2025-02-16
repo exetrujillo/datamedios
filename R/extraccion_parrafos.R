@@ -6,7 +6,7 @@
 #' @param sinonimos Vector de sinonimos que se incluiran en la busqueda.
 #' @return Data frame con una columna adicional 'parrafos_filtrados' que contiene los parrafos extraidos como listas.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' datos <- extraer_noticias_max_res("inteligencia artificial", max_resultas = 140, subir_a_bd = FALSE)
 #' datos <- extraccion_parrafos(datos, sinonimos = c("IA", "AI"))
 #' }

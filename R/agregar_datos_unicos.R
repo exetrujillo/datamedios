@@ -5,7 +5,7 @@
 #' @param data Un data frame con los datos a insertar.
 #' @return No retorna ningun valor.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Agregar datos unicos
 #' noticias <- extraer_noticias_max_res("tesla", max_results=10, subir_a_bd = FALSE)
 #' agregar_datos_unicos(noticias)

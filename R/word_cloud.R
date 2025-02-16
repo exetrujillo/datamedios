@@ -7,7 +7,7 @@
 #' @param stop_words Definir las palabras que seran ignoradas en la visualizacion. Debe ser un vector de carácteres.
 #' @return Una nube de palabras con las palabras mas frecuentes.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' datos <- extraer_noticias_fecha("Monsalve", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
 #' datos_proc <- limpieza_notas(datos)
 #' word_cloud(datos_proc, max_words = 50, stop_words = c("es", "la"))

@@ -8,7 +8,7 @@
 #' @param fecha_fin Fecha de finalizacion para la construccion del grafico en formato YYYY-MM-DD (opcional).
 #' @return Un grafico ggplot2 que muestra la cantidad de publicaciones por mes.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
 #' datos <- extraccion_parrafos(datos)
 #' datos_proc <- limpieza_notas(datos)

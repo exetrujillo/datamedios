@@ -68,8 +68,8 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
       total_results <- as.numeric(data_initial$total)
       if (!is.null(data_initial$notas) && length(data_initial$notas) > 0) {
         fecha_mas_reciente <- lubridate::ymd_hms(data_initial$notas$raw_post_date[1])
-        print(paste0("Total de resultados posibles: ", total_results))
-        print(paste0("Noticia mas reciente disponible es de la fecha: ", fecha_mas_reciente))
+        message(paste0("Total de resultados posibles: ", total_results))
+        message(paste0("Noticia mas reciente disponible es de la fecha: ", fecha_mas_reciente))
       } else {
         stop("No se encontraron noticias con la search query especificada.")
       }
@@ -132,7 +132,7 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
     } else {
       fecha_reciente <- max(data$notas$raw_post_date)
       if (fecha_reciente < as.Date(fecha_inicio)) {
-        print("No hay mas noticias dentro del rango de fechas. Terminando la busqueda.")
+        message("No hay mas noticias dentro del rango de fechas. Terminando la busqueda.")
         break  # Salimos del bucle si la fecha mas reciente es anterior a fecha_inicio
       }
     }
@@ -148,7 +148,7 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
 
   all_data$post_image.URL <- paste0("https://media.biobiochile.cl/wp-content/uploads/", as.character(all_data$post_image.URL))
 
-  print(paste0("Total de noticias encontradas en el rango de fechas: ", nrow(all_data)))
+  message(paste0("Total de noticias encontradas en el rango de fechas: ", nrow(all_data)))
 
   # Creamos columna temas y eliminamos las que almacenaban data frames
   # Creamos la nueva columna "temas" como una lista combinada
