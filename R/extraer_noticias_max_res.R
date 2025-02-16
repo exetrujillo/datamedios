@@ -1,6 +1,6 @@
-#' Extraccion de noticias desde la API de BioBio.cl
+#' Extraccion de noticias de BioBio.cl
 #'
-#' Esta funcion permite realizar una extraccion automatizada de noticias desde la API de BioBio.cl.
+#' Esta funcion permite realizar una extraccion automatizada de noticias de BioBio.cl.
 #'
 #' @param search_query Una frase de busqueda (obligatoria).
 #' @param max_results Numero maximo de resultados a extraer (opcional, por defecto todos).

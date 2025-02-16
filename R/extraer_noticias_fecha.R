@@ -1,6 +1,6 @@
-#' Extraccion de noticias desde la API de BioBio.cl por rango de fechas
+#' Extraccion de noticias de BioBio.cl por rango de fechas
 #'
-#' Esta funcion permite realizar una extraccion automatizada de noticias desde la API de BioBio.cl utilizando un rango de fechas.
+#' Esta funcion permite realizar una extraccion automatizada de noticias de BioBio.cl utilizando un rango de fechas.
 #'
 #' @param search_query Una frase de busqueda (obligatoria).
 #' @param fecha_inicio Fecha de inicio del rango de busqueda en formato "YYYY-MM-DD" (obligatoria).

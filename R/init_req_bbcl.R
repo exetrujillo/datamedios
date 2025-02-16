@@ -1,6 +1,6 @@
-#' Inicializa una solicitud a la API de BioBio.cl y retorna el primer caso de busqueda
+#' Inicializa una solicitud a BioBio.cl y retorna el primer caso de busqueda
 #'
-#' Esta funcion permite realizar una consulta inicial a la API de BioBio.cl utilizando una frase de busqueda.
+#' Esta funcion permite realizar una consulta inicial a BioBio.cl utilizando una frase de busqueda.
 #'
 #' @param search_query Una frase de busqueda (obligatoria).
 #' @return Un dataframe con el primer caso de la busqueda.
