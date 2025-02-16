@@ -9,7 +9,7 @@ Authors@R: c(
   )
 Maintainer: Exequiel Trujillo <exequiel.trujillo@ug.uchile.cl>
 Description: A system for extracting news from Chilean media,
-  specifically through API from Chilean media. The package allows for news searches using search phrases and date filters,
+  specifically through Web Scapping from Chilean media. The package allows for news searches using search phrases and date filters,
   and returns the results in a structured format, ready for analysis.
   Additionally, it includes functions to clean the extracted data, visualize it, and
   store it in databases. All of this can be done automatically, facilitating the collection and analysis of relevant
