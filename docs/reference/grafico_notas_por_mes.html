@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">datamedios</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -79,10 +79,26 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="extraer_noticias_fecha.html">extraer_noticias_fecha</a></span><span class="op">(</span><span class="st">"cambio climatico"</span>, <span class="st">"2024-01-01"</span>,<span class="st">"2025-01-01"</span>, subir_a_bd <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in extraer_noticias_fecha("cambio climatico", "2024-01-01", "2025-01-01",     subir_a_bd = FALSE):</span> unused argument (subir_a_bd = FALSE)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Fuentes parseadas: bbclFuentes parseadas: emol-todas</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total de resultados posibles: 5741</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Noticia mas reciente disponible es de la fecha: 2025-04-24 14:06:41</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> No hay mas noticias dentro del rango de fechas. Terminando la busqueda.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total de noticias encontradas en el rango de fechas: 547</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total de resultados disponibles en emol para la busqueda: 2924</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Fecha mas reciente: 2025-04-23 12:37:00</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Se alcanzo la fecha de inicio. Finalizando extraccion.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total de resultados disponibles en mediosregionales para la busqueda: 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Fecha mas reciente: 2014-01-25 12:49:00</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Se alcanzo la fecha de inicio. Finalizando extraccion.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> No se encontraron datos para la fuente: mediosregionales en el rango de fechas especificado.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total de resultados disponibles en guioteca para la busqueda: 32</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Fecha mas reciente: 2023-07-27 11:39:37</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Se alcanzo la fecha de inicio. Finalizando extraccion.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> No se encontraron datos para la fuente: guioteca en el rango de fechas especificado.</span>
 <span class="r-in"><span><span class="fu">grafico_notas_por_mes</span><span class="op">(</span><span class="va">datos</span>, titulo <span class="op">=</span> <span class="st">"Cambio Climatico"</span>,</span></span>
 <span class="r-in"><span>fecha_inicio <span class="op">=</span> <span class="st">"2024-01-01"</span>, fecha_fin <span class="op">=</span> <span class="st">"2024-06-06"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in grafico_notas_por_mes(datos, titulo = "Cambio Climatico", fecha_inicio = "2024-01-01",     fecha_fin = "2024-06-06"):</span> unused arguments (fecha_inicio = "2024-01-01", fecha_fin = "2024-06-06")</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> `geom_smooth()` using formula = 'y ~ x'</span>
+<span class="r-plt img"><img src="grafico_notas_por_mes-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

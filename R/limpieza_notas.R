@@ -8,7 +8,10 @@
 #' @examples
 #'
 #' \donttest{
-#' datos <- extraer_noticias_max_res("inteligencia artificial", max_results= 150, subir_a_bd = FALSE)
+#' datos <- extraer_noticias_max_res("inteligencia artificial",
+#' max_results= 20,
+#' fuentes="bbcl",
+#' subir_a_bd = FALSE)
 #' datos <- extraccion_parrafos(datos)
 #' datos_proc <- limpieza_notas(datos, sinonimos = c("IA", "AI"))
 #' }
@@ -84,9 +87,6 @@ limpieza_notas <- function(datos, sinonimos = c()) {
       rvest::html_text2() %>%
       stringr::str_squish()
   }
-
-  # Mostramos un ejemplo de contenido limpio
-  # print(datos$contenido_limpio[1])
 
   return(datos)
 }

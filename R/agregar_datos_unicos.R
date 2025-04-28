@@ -1,18 +1,17 @@
 #' Agregar datos unicos a una tabla MySQL
 #'
-#' Esta funcion agrega datos a una tabla MySQL utilizando una API que espera datos en formato JSON.
+#' Esta funcion agrega datos a una tabla MySQL utilizando endpoints que esperan datos en formato JSON.
 #'
 #' @param data Un data frame con los datos a insertar.
 #' @return No retorna ningun valor.
+#' @export
 #' @examples
 #' \donttest{
 #' # Agregar datos unicos
-#' noticias <- extraer_noticias_max_res("tesla", max_results=10, subir_a_bd = FALSE)
+#' noticias <- extraer_noticias_max_res("tesla", max_results=10, fuentes="bbcl", subir_a_bd = FALSE)
 #' agregar_datos_unicos(noticias)
 #' }
-#'
-#' @export
-#'
+
 agregar_datos_unicos <- function(data) {
   # Validamos entrada
   if (!is.data.frame(data)) {
@@ -37,9 +36,15 @@ agregar_datos_unicos <- function(data) {
 
   # Funcion para enviar datos a la API
   enviar_datos <- function(url, data) {
+    if(url == url1){
+      mensaje <- "endpoint de noticias"
+    } else if (url==url2){
+      mensaje <- "endpoint de queries"
+    }
+
     response <- httr::POST(url, body = data, encode = "json")
     if (httr::http_status(response)$category != "Success") {
-      stop(paste("Error al enviar datos a", url, "- Codigo:", response$status_code))
+      stop(paste("Error al enviar datos a", mensaje, "- Codigo:", response$status_code))
     }
     return(response)
   }
@@ -48,7 +53,7 @@ agregar_datos_unicos <- function(data) {
   enviar_datos(url1, data_list)
 
   # Enviamos datos a write_search_queries
-  enviar_datos(url2, data_list)
+  invisible(enviar_datos(url2, data_list))
 
-  message("Datos agregados exitosamente.")
+  #message("Datos agregados exitosamente.")
 }

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">datamedios</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -59,9 +59,9 @@
       </header><div class="row">
   <div class="contents col-md-9">
 <div class="section level1">
-<div class="page-header"><h1 id="paquete-datamedios-versión-110">Paquete <code>datamedios</code> (Versión 1.1.0)<a class="anchor" aria-label="anchor" href="#paquete-datamedios-versi%C3%B3n-110"></a>
+<div class="page-header"><h1 id="paquete-datamedios-versión-120">Paquete <code>datamedios</code> (Versión 1.2.0)<a class="anchor" aria-label="anchor" href="#paquete-datamedios-versi%C3%B3n-120"></a>
 </h1></div>
-<p><code>datamedios</code> es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento haciendo web scraping de BíoBío.cl. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos de manera opcional.</p>
+<p><code>datamedios</code> es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento haciendo web scraping de medios chilenos. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos de manera opcional.</p>
 <hr>
 <div class="section level2">
 <h2 id="id_-instalación">🔧 Instalación<a class="anchor" aria-label="anchor" href="#id_-instalaci%C3%B3n"></a>
@@ -93,7 +93,7 @@
 <h3 id="función-principal-extraer_noticias_fecha">Función principal: <code>extraer_noticias_fecha</code>
 <a class="anchor" aria-label="anchor" href="#funci%C3%B3n-principal-extraer_noticias_fecha"></a>
 </h3>
-<p>Esta función permite filtrar noticias por un rango de fechas específico, además de aplicar una frase de búsqueda. Por defecto carga los datos automáticamente a la base de datos de api-datamedios.</p>
+<p>Esta función permite filtrar noticias por un rango de fechas específico, además de aplicar una frase de búsqueda.</p>
 <div class="section level4">
 <h4 id="parámetros">
 <strong>Parámetros:</strong><a class="anchor" aria-label="anchor" href="#par%C3%A1metros"></a>
@@ -106,7 +106,26 @@
 <li>
 <strong><code>fecha_fin</code></strong>: Fecha de fin en formato <code>"YYYY-MM-DD"</code> (obligatorio).</li>
 <li>
-<strong><code>subir_a_bd</code></strong>: Por defecto está seteado en TRUE, pero para los tests lo dejamos en FALSE (opcional).</li>
+<strong><code>subir_a_bd</code></strong>: Por defecto está seteado en TRUE, para los tests lo dejamos en FALSE (opcional).</li>
+<li>
+<strong><code>fuentes</code></strong>:Es un string con las fuentes a extraer. Puede ser:
+<ul>
+<li>
+<code>"todas"</code>: Todas las fuentes disponibles.</li>
+<li>
+<code>"bbcl"</code>: BíoBío como única fuente</li>
+<li>
+<code>"emol-todas"</code>: Búsqueda simultánea en las fuentes “emol”, “guioteca” y “mediosregionales”.</li>
+<li>
+<code>"emol"</code>: Noticias no pagas de El Mercurio.</li>
+<li>
+<code>"mediosregionales"</code>: Noticias de los diarios regionales propiedad de El Mercurio.</li>
+<li>
+<code>"guioteca"</code>: Guías especializadas de Emol.</li>
+<li>
+<strong>O una combinación,</strong> solo separando medios por comas, por ejemplo: <code>fuentes = "mediosregionales, bbcl"</code>.</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section level4">
@@ -126,11 +145,11 @@
 <li>
 <strong><code>url</code></strong>: Enlace a la noticia.</li>
 <li>
-<strong><code>url_imagen</code></strong>: Categorías asociadas.</li>
+<strong><code>url_imagen</code></strong>: Url con la imagen principal de la noticia.</li>
 <li>
-<strong><code>autor</code></strong>: Etiquetas relacionadas.</li>
+<strong><code>autor</code></strong>: Autor de la noticia.</li>
 <li>
-<strong><code>fecha</code></strong>: Fecha cruda de publicación (formato ‘YYYY-MM-DD’).</li>
+<strong><code>fecha</code></strong>: Fecha de publicación (formato ‘YYYY-MM-DD’).</li>
 <li>
 <strong><code>resumen</code></strong>: Resumen de la IA o bajada de la nota, según disponibilidad.</li>
 <li>
@@ -146,8 +165,8 @@
 <strong>Ejemplo de uso:</strong><a class="anchor" aria-label="anchor" href="#ejemplo-de-uso"></a>
 </h4>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Buscar noticias entre el 1 de enero y el 31 de diciembre de 2023</span></span>
-<span><span class="va">noticias</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/extraer_noticias_fecha.html">extraer_noticias_fecha</a></span><span class="op">(</span><span class="st">"estallido social"</span>, <span class="st">"2019-10-18"</span>, <span class="st">"2020-10-18"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Buscar noticias entre el 18 de octubre de 2019 al 18 de octubre de 2020</span></span>
+<span><span class="va">noticias</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/extraer_noticias_fecha.html">extraer_noticias_fecha</a></span><span class="op">(</span><span class="st">"estallido social"</span>, <span class="st">"2019-10-18"</span>, <span class="st">"2020-10-18"</span>, fuentes <span class="op">=</span> <span class="st">"bbcl, emol, mediosregionales"</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 </div>
@@ -155,7 +174,7 @@
 <h3 id="función-secundaria-extraer_noticias_max_res">Función secundaria: <code>extraer_noticias_max_res</code>
 <a class="anchor" aria-label="anchor" href="#funci%C3%B3n-secundaria-extraer_noticias_max_res"></a>
 </h3>
-<p>Esta función permite obtener noticias desde BíoBío.cl utilizando una frase de búsqueda. Además, puedes limitar el número de resultados a extraer. Por defecto carga los datos automáticamente a la base de datos de api-datamedios.</p>
+<p>Esta función permite obtener noticias desde medios chilenos utilizando una frase de búsqueda. Además, puedes limitar el número de resultados a extraer.</p>
 <div class="section level4">
 <h4 id="parámetros-1">
 <strong>Parámetros:</strong><a class="anchor" aria-label="anchor" href="#par%C3%A1metros-1"></a>
@@ -166,7 +185,9 @@
 <li>
 <strong><code>max_results</code></strong>: Máximo número de resultados a extraer (opcional).</li>
 <li>
-<strong><code>subir_a_bd</code></strong>: Por defecto está seteado en TRUE, pero para los tests lo dejamos en FALSE (opcional)</li>
+<strong><code>subir_a_bd</code></strong>: Por defecto está seteado en TRUE, pero para los tests lo dejamos en FALSE (opcional).</li>
+<li>
+<strong><code>fuentes</code></strong>:Es un string con las fuentes a extraer. Funciona de la misma forma que en extraer_noticias_fecha. Por defecto extrae de todas las fuentes (opcional).</li>
 </ul>
 </div>
 <div class="section level4">
@@ -181,7 +202,7 @@
 </h4>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Buscar noticias relacionadas con "inteligencia artificial"</span></span>
-<span><span class="va">noticias</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/extraer_noticias_max_res.html">extraer_noticias_max_res</a></span><span class="op">(</span><span class="st">"inteligencia artificial"</span>, max_results <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">noticias</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/extraer_noticias_max_res.html">extraer_noticias_max_res</a></span><span class="op">(</span><span class="st">"inteligencia artificial"</span>, max_results <span class="op">=</span> <span class="fl">100</span>, fuentes<span class="op">=</span> <span class="st">"bbcl"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -200,7 +221,7 @@
 <li><p><strong><code>magrittr</code></strong>: Uso de operadores como <code>%&gt;%</code> para flujos de trabajo más legibles.</p></li>
 <li><p><strong><code>jsonlite</code></strong>: Procesamiento y conversión de datos en formato JSON.</p></li>
 <li><p><strong><code>utils</code></strong>: Funciones utilitarias básicas incluidas en R.</p></li>
-<li><p><strong><code>tidyverse</code></strong>: Conjunto de paquetes para análisis de datos y visualización.</p></li>
+<li><p><strong><code>rlang</code></strong>: Herramientas para manipulación de expresiones.</p></li>
 <li><p><strong><code>wordcloud2</code></strong>: Generación de nubes de palabras interactivas.</p></li>
 <li><p><strong><code>tidytext</code></strong>: Análisis de texto basado en datos ordenados.</p></li>
 <li><p><strong><code>lubridate</code></strong>: Manejo y análisis de datos temporales.</p></li>
@@ -225,11 +246,11 @@
 <p>Este paquete fue desarrollado por:</p>
 <ul>
 <li>
-<strong>Exequiel Trujillo</strong> (contacto: <a href="mailto:exequiel.trujillo@ug.uchile.cl" class="email">exequiel.trujillo@ug.uchile.cl</a>)</li>
+<strong>Exequiel Trujillo</strong> (contacto: <a href="mailto:exequiel.trujillo@ug.uchile.cl">exequiel.trujillo@ug.uchile.cl</a>)</li>
 <li>
-<strong>Ismael Aguayo</strong> (contacto: <a href="mailto:ismael.aguayo@ug.uchile.cl" class="email">ismael.aguayo@ug.uchile.cl</a>)</li>
+<strong>Ismael Aguayo</strong> (contacto: <a href="mailto:ismael.aguayo@ug.uchile.cl">ismael.aguayo@ug.uchile.cl</a>)</li>
 <li>
-<strong>Klaus Lehmann</strong> (contacto: <a href="mailto:klehmann@fen.uchile.cl" class="email">klehmann@fen.uchile.cl</a>)</li>
+<strong>Klaus Lehmann</strong> (contacto: <a href="mailto:klehmann@fen.uchile.cl">klehmann@fen.uchile.cl</a>)</li>
 </ul>
 <hr>
 </div>
@@ -237,7 +258,14 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=datamedios" class="external-link">View on CRAN</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>

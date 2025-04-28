@@ -16,15 +16,25 @@
 
 ## Additional comments for CRAN
 
-The package facilitates automated extraction and processing of news articles from Chilean media outlets (initially focusing on BioBio.cl) and is specifically designed to handle Spanish-language content.
+The package facilitates automated extraction and processing of news articles from Chilean media outlets (initially focusing on BioBio.cl and now in Emol.com) and is specifically designed to handle Spanish-language content.
 
 Since the package is aimed at Spanish-speaking users who work with Chilean media data, the function names, parameters, and documentation are written in Spanish. This ensures clarity and accessibility for the intended audience, as the use of the native language is essential for proper understanding and usability.
 
+### Use of \dontrun in examples
+
+Several functions in the package use `\dontrun{}` in their examples for the following reasons:
+
+1. **External API dependencies**: Functions like `agregar_datos_unicos()` interact with external APIs that may not be available during CRAN checks.
+2. **Database modifications**: Some functions write data to external databases, which is not appropriate for automated testing.
+3. **Network requirements**: The package requires internet access to scrape news websites, which cannot be guaranteed in the CRAN check environment.
+
+These examples are fully functional for users but are wrapped in `\dontrun{}` to prevent issues during CRAN's automated checking process.
+
 The package was developed by:
 
--   Exequiel Trujillo (Maintainer, [exequiel.trujillo\@ug.uchile.cl](mailto:exequiel.trujillo@ug.uchile.cl){.email})
--   Ismael Aguayo ([ismael.aguayo\@ug.uchile.cl](mailto:ismael.aguayo@ug.uchile.cl){.email})
--   Klaus Lehmann ([klehmann\@fen.uchile.cl](mailto:klehmann@fen.uchile.cl){.email})
+-   Exequiel Trujillo (Maintainer, [exequiel.trujillo\@ug.uchile.cl](mailto:exequiel.trujillo@ug.uchile.cl))
+-   Ismael Aguayo ([ismael.aguayo\@ug.uchile.cl](mailto:ismael.aguayo@ug.uchile.cl))
+-   Klaus Lehmann ([klehmann\@fen.uchile.cl](mailto:klehmann@fen.uchile.cl))
 
 We conducted thorough testing of the package on multiple devices and environments, including GitHub Actions, without encountering any issues. All examples, tests, and documentation were validated successfully to ensure compliance with CRAN policies.
 
@@ -34,6 +44,6 @@ Thank you for considering `datamedios` for CRAN. I look forward to your feedback
 
 ## R CMD check results
 
-Duration: 40.8s
+Duration: 1m 57.5s
 
-0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔

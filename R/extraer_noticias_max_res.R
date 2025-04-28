@@ -1,16 +1,23 @@
-#' Extraccion de noticias de BioBio.cl
+#' Extraccion de noticias de medios chilenos por cantidad maxima de resultados
 #'
-#' Esta funcion permite realizar una extraccion automatizada de noticias de BioBio.cl.
+#' Esta funcion permite realizar una extraccion automatizada de noticias
+#' de BioBio y fuentes de El Mercurio.
+#'
+#' Es importante mencionar que si tiene mas de una fuente seleccionada, la
+#' cantidad maxima de resultados se aplicara para cada una de las fuentes, es
+#' decir, si pones max_results = 10 y tienes fuentes = "emol,guioteca,bbcl"
+#' tendras como maximo 30 resultados.
 #'
 #' @param search_query Una frase de busqueda (obligatoria).
 #' @param max_results Numero maximo de resultados a extraer (opcional, por defecto todos).
 #' @param subir_a_bd por defecto TRUE, FALSE para test y cosas por el estilo (opcional).
+#' @param fuentes por defecto marca todas las fuentes, pero se puede elegir una o varias de las disponibles en el README. (opcional)
 #' @return Un dataframe con las noticias extraidas.
 #' @examples
 #' noticias <- extraer_noticias_max_res("inteligencia artificial",
-#' max_results = 100, subir_a_bd = FALSE)
+#' max_results = 20, fuentes="bbcl", subir_a_bd = FALSE)
 #' @export
-extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_bd = TRUE) {
+extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_bd = TRUE, fuentes = "todas") {
   # Validamos los parametros
   if (missing(search_query) || !is.character(search_query)) {
     stop("Debe proporcionar una frase de busqueda valida como texto.")
@@ -19,138 +26,81 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
     stop("max_results debe ser un numero entero positivo o NULL.")
   }
 
-  # Inicializamos variables
-  encoded_query <- URLencode(search_query)
+  ##############################################################################
+
+  # Inicializamos variables y objetos
+  patronFuentes = ""
   all_data <- data.frame(
     ID = character(),
-    post_title = character(),
-    post_content = character(),
-    post_content_clean = character(),
-    post_URL = character(),
-    post_categories = character(), # este
-    post_tags = character(),       # y este los tenemos que unificar posteriormente
-    post_image.URL = character(),
-    author.display_name = character(),
-    raw_post_date = as.Date(character()),
-    resumen_de_ia = character(),
+    titulo = character(),
+    contenido = character(),
+    contenido_limpio = character(),
+    url = character(),
+    url_imagen = character(),
+    autor = character(),
+    fecha = character(),
+    temas = list(),
+    resumen = character(),
     search_query = character(),
-    medio = character(), # en esta version solo es posible bbcl
+    medio = character(),
     stringsAsFactors = FALSE
   )
 
-  # Obtenemos la respuesta inicial
-  respuesta_inicial <- init_req_bbcl(search_query)
-  fecha_mas_reciente <- lubridate::ymd_hms(respuesta_inicial$raw_post_date[1])
-  total_results <- as.integer(respuesta_inicial$total)
-  if(total_results > 0){
-    message(paste0("Total de resultados posibles: ", total_results))
-    message(paste0("Noticia mas reciente disponible es de la fecha: ", fecha_mas_reciente))
-  }else{
-    stop("No se encontraron noticias con la search query especificada.")
+  # Indice de fuentes
+  if(fuentes=="todas"){
+    patronFuentes <- "bbcl, emol-todas"
+  } else {
+    patronFuentes <- fuentes
   }
 
-  # Determinamos el numero de resultados a extraer
-  if (is.null(max_results) || max_results > total_results) {
-    max_results <- total_results
+  fuentesParseadas <- parserFuentes(patronFuentes)
+  message(paste0("Fuentes parseadas: ", fuentesParseadas))
+
+  ##############################################################################
+  # CONJUNTOS DE FUENTES
+
+  # emol
+  fuentes_emol <- c("emol", "mediosregionales", "guioteca")
+
+  ##############################################################################
+  # SELECTOR DE EJECUCIONES
+
+  #### BBCL ####
+  if ("bbcl" %in% fuentesParseadas) {
+    # Ejecutar la funcion para bbcl
+    data_bbcl <- extraer_noticias_max_res_bbcl(search_query, max_results = max_results)
+    if (!is.null(data_bbcl) && nrow(data_bbcl) > 0) {
+      all_data <- rbind(all_data, data_bbcl)
+    }
   }
 
-  message(paste0("Se extraeran un maximo de ", max_results, " resultados."))
-
-  # Iteramos para obtener todas las noticias necesarias
-  offset <- 0
-  while (nrow(all_data) < max_results) {
-    url <- paste0(
-      "https://www.biobiochile.cl/lista/api/buscador?offset=", offset,
-      "&search=", encoded_query,
-      "&intervalo=&orden=ultimas"
-    )
-
-    response <- httr::GET(url, httr::add_headers(.headers = c(
-      `User-Agent` = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0",
-      `Accept` = "application/json, text/plain, */*",
-      `Content-Type` = "application/json; charset=UTF-8"
-    )))
-
-    if (response$status_code != 200) {
-      warning("Error al realizar la solicitud. Codigo de estado: ", response$status_code)
-      break
+  #### EMOL ####
+  if ("emol-todas" %in% fuentesParseadas) {
+    # Ejecutar la funcion para cada fuente de emol por separado
+    for (fuente in fuentes_emol) {
+      data_emol <- extraer_noticias_max_res_emol(search_query, max_results = max_results, fuente = fuente)
+      if (!is.null(data_emol) && nrow(data_emol) > 0) {
+        all_data <- rbind(all_data, data_emol)
+      }
     }
-
-    data <- httr::content(response, "text", encoding = "UTF-8") %>%
-      jsonlite::fromJSON(flatten = TRUE)
-
-    if (is.null(data$notas) || length(data$notas) == 0) {
-      warning("No se encontraron mas notas para extraer.")
-      break
+  } else {
+    # Filtrar las fuentes de emol seleccionadas
+    fuentes_emol_seleccionadas <- intersect(fuentesParseadas, fuentes_emol)
+    if (length(fuentes_emol_seleccionadas) > 0) {
+      # Ejecutar la funcion para cada fuente seleccionada individualmente
+      for (fuente in fuentes_emol_seleccionadas) {
+        data_emol <- extraer_noticias_max_res_emol(search_query, max_results = max_results, fuente = fuente)
+        if (!is.null(data_emol) && nrow(data_emol) > 0) {
+          all_data <- rbind(all_data, data_emol)
+        }
+      }
     }
-
-    noticias <- as.data.frame(data$notas)
-    # Verificar las columnas de noticias
-    missing_columns <- setdiff(colnames(all_data), colnames(noticias))
-
-    # Si faltan columnas, anadirlas con valores NA
-    for (col in missing_columns) {
-      noticias[[col]] <- NA
-    }
-
-    # Asegurarse de que las columnas esten en el orden correcto
-    noticias <- noticias[, colnames(all_data), drop = FALSE]
-    # Anadir las noticias a all_data
-    all_data <- rbind(all_data, noticias)
-
-    # Controlar el numero de resultados
-    if (nrow(all_data) >= max_results) {
-      all_data <- all_data[1:max_results, ]
-      break
-    }
-
-    offset <- offset + 20
   }
 
-  all_data$search_query <- tolower(search_query)
-  all_data$raw_post_date <- as.Date(all_data$raw_post_date)
-  all_data$post_image.URL <- paste0("https://media.biobiochile.cl/wp-content/uploads/", as.character(all_data$post_image.URL))
+  #### ACA IREMOS AGREGANDO MAS FUENTES CON SUS FUNCIONES ESPECIFICAS ####
 
-  # Creamos columna temas y eliminamos las que almacenaban data frames
-  # Creamos la nueva columna "temas" como una lista combinada
-  all_data$temas <- lapply(seq_len(nrow(all_data)), function(i) {
-    # Extraer los slugs de post_categories
-    slugs_categorias <- all_data$post_categories[[i]]$slug
 
-    # Extraer los slugs de post_tags
-    slugs_tags <- all_data$post_tags[[i]]$slug
-
-    # Combinar ambos en un solo vector
-    temas_combinados <- c(slugs_categorias, slugs_tags)
-
-    # Devolver la lista combinada
-    temas_combinados
-  })
-
-  # Eliminar columnas originales
-  all_data$post_categories <- NULL
-  all_data$post_tags <- NULL
-
-  # Definir contenido de la columa medio
-  all_data$medio <- "bbcl"
-
-  ###############################
-
-  # Redefinir nombres de columnas
-
-  colnames(all_data) <- colnames(all_data) %>%
-    dplyr::recode(
-      post_title = "titulo",
-      post_content = "contenido",
-      post_URL = "url",
-      `author.display_name` = "autor",
-      raw_post_date = "fecha",
-      resumen_de_ia = "resumen",
-      post_content_clean = "contenido_limpio",
-      `post_image.URL` = "url_imagen"
-    )
-
-  ###############################
+  ##############################################################################
 
   # Subimos a la base de datos en caso de que el parametro subir_a_db es TRUE
   if (subir_a_bd) {

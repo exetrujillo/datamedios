@@ -13,13 +13,12 @@ agregar_datos_unicos(data)
 No retorna ningun valor.
 }
 \description{
-Esta funcion agrega datos a una tabla MySQL utilizando una API que espera datos en formato JSON.
+Esta funcion agrega datos a una tabla MySQL utilizando endpoints que esperan datos en formato JSON.
 }
 \examples{
 \donttest{
 # Agregar datos unicos
-noticias <- extraer_noticias_max_res("tesla", max_results=10, subir_a_bd = FALSE)
+noticias <- extraer_noticias_max_res("tesla", max_results=10, fuentes="bbcl", subir_a_bd = FALSE)
 agregar_datos_unicos(noticias)
 }
-
 }

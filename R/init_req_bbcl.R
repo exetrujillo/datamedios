@@ -4,9 +4,9 @@
 #'
 #' @param search_query Una frase de busqueda (obligatoria).
 #' @return Un dataframe con el primer caso de la busqueda.
+#' @export
 #' @examples
 #' primer_caso <- init_req_bbcl("inteligencia artificial")
-#' @export
 
 init_req_bbcl <- function(search_query) {
   # Validamos el parametro

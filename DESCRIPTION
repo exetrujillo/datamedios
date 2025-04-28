@@ -1,7 +1,7 @@
 Package: datamedios
 Type: Package
 Title: Scraping Chilean Media
-Version: 1.1.0
+Version: 1.2.0
 Authors@R: c(
   person(given = "Exequiel", family = "Trujillo", email = "exequiel.trujillo@ug.uchile.cl", role = c("aut", "cre", "cph", "fnd")),
   person(given = "Ismael", family = "Aguayo", email = "ismael.aguayo@ug.uchile.cl", role = c("aut", "fnd")),
@@ -27,7 +27,7 @@ Imports:
   magrittr,
   jsonlite,
   utils,
-  tidyverse,
+  rlang,
   wordcloud2,
   tidytext,
   lubridate,

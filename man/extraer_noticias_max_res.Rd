@@ -2,9 +2,14 @@
 % Please edit documentation in R/extraer_noticias_max_res.R
 \name{extraer_noticias_max_res}
 \alias{extraer_noticias_max_res}
-\title{Extraccion de noticias desde la API de BioBio.cl}
+\title{Extraccion de noticias de medios chilenos por cantidad maxima de resultados}
 \usage{
-extraer_noticias_max_res(search_query, max_results = NULL, subir_a_bd = TRUE)
+extraer_noticias_max_res(
+  search_query,
+  max_results = NULL,
+  subir_a_bd = TRUE,
+  fuentes = "todas"
+)
 }
 \arguments{
 \item{search_query}{Una frase de busqueda (obligatoria).}
@@ -12,14 +17,23 @@ extraer_noticias_max_res(search_query, max_results = NULL, subir_a_bd = TRUE)
 \item{max_results}{Numero maximo de resultados a extraer (opcional, por defecto todos).}
 
 \item{subir_a_bd}{por defecto TRUE, FALSE para test y cosas por el estilo (opcional).}
+
+\item{fuentes}{por defecto marca todas las fuentes, pero se puede elegir una o varias de las disponibles en el README. (opcional)}
 }
 \value{
 Un dataframe con las noticias extraidas.
 }
 \description{
-Esta funcion permite realizar una extraccion automatizada de noticias desde la API de BioBio.cl.
+Esta funcion permite realizar una extraccion automatizada de noticias
+de BioBio y fuentes de El Mercurio.
+}
+\details{
+Es importante mencionar que si tiene mas de una fuente seleccionada, la
+cantidad maxima de resultados se aplicara para cada una de las fuentes, es
+decir, si pones max_results = 10 y tienes fuentes = "emol,guioteca,bbcl"
+tendras como maximo 30 resultados.
 }
 \examples{
 noticias <- extraer_noticias_max_res("inteligencia artificial",
-max_results = 100, subir_a_bd = FALSE)
+max_results = 20, fuentes="bbcl", subir_a_bd = FALSE)
 }

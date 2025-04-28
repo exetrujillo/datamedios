@@ -2,7 +2,7 @@
 % Please edit documentation in R/init_req_bbcl.R
 \name{init_req_bbcl}
 \alias{init_req_bbcl}
-\title{Inicializa una solicitud a la API de BioBio.cl y retorna el primer caso de busqueda}
+\title{Inicializa una solicitud a BioBio.cl y retorna el primer caso de busqueda}
 \usage{
 init_req_bbcl(search_query)
 }
@@ -13,7 +13,7 @@ init_req_bbcl(search_query)
 Un dataframe con el primer caso de la busqueda.
 }
 \description{
-Esta funcion permite realizar una consulta inicial a la API de BioBio.cl utilizando una frase de busqueda.
+Esta funcion permite realizar una consulta inicial a BioBio.cl utilizando una frase de busqueda.
 }
 \examples{
 primer_caso <- init_req_bbcl("inteligencia artificial")

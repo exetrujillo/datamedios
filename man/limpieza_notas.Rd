@@ -21,7 +21,10 @@ Verifica que el input sea un data frame con una columna llamada `contenido`.
 \examples{
 
 \donttest{
-datos <- extraer_noticias_max_res("inteligencia artificial", max_results= 150, subir_a_bd = FALSE)
+datos <- extraer_noticias_max_res("inteligencia artificial",
+max_results= 20,
+fuentes="bbcl",
+subir_a_bd = FALSE)
 datos <- extraccion_parrafos(datos)
 datos_proc <- limpieza_notas(datos, sinonimos = c("IA", "AI"))
 }

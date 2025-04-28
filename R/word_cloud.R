@@ -8,7 +8,11 @@
 #' @return Una nube de palabras con las palabras mas frecuentes.
 #' @examples
 #' \donttest{
-#' datos <- extraer_noticias_fecha("Monsalve", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
+#' datos <- extraer_noticias_fecha("Boric",
+#' "2025-03-01",
+#' "2025-04-01",
+#' fuentes="bbcl",
+#' subir_a_bd = FALSE)
 #' datos_proc <- limpieza_notas(datos)
 #' word_cloud(datos_proc, max_words = 50, stop_words = c("es", "la"))
 #' }

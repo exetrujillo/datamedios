@@ -2,13 +2,14 @@
 % Please edit documentation in R/extraer_noticias_fecha.R
 \name{extraer_noticias_fecha}
 \alias{extraer_noticias_fecha}
-\title{Extraccion de noticias desde la API de BioBio.cl por rango de fechas}
+\title{Extraccion de noticias de medios chilenos por rango de fechas}
 \usage{
 extraer_noticias_fecha(
   search_query,
   fecha_inicio,
   fecha_fin,
-  subir_a_bd = TRUE
+  subir_a_bd = TRUE,
+  fuentes = "todas"
 )
 }
 \arguments{
@@ -19,14 +20,17 @@ extraer_noticias_fecha(
 \item{fecha_fin}{Fecha de fin del rango de busqueda en formato "YYYY-MM-DD" (obligatoria).}
 
 \item{subir_a_bd}{por defecto TRUE, FALSE para test y cosas por el estilo (opcional).}
+
+\item{fuentes}{es un string con las fuentes a extraer. Puede ser bbcl o las de emol.}
 }
 \value{
 Un dataframe con las noticias extraidas.
 }
 \description{
-Esta funcion permite realizar una extraccion automatizada de noticias desde la API de BioBio.cl utilizando un rango de fechas.
+Esta funcion permite realizar una extraccion automatizada de noticias de
+BioBio o Los medios de Emol, utilizando un rango de fechas.
 }
 \examples{
-noticias <- extraer_noticias_fecha("inteligencia artificial", "2025-01-01",
-"2025-02-24", subir_a_bd = FALSE)
+noticias <- extraer_noticias_fecha("inteligencia artificial", "2025-03-25",
+"2025-04-24", subir_a_bd = FALSE, fuentes="bbcl")
 }
