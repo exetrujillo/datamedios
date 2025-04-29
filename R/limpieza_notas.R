@@ -7,7 +7,7 @@
 #' @return Un dataframe con el contenido limpio en la columna contenido_limpio
 #' @examples
 #'
-#' \donttest{
+#' \dontrun{
 #' datos <- extraer_noticias_max_res("inteligencia artificial",
 #' max_results= 20,
 #' fuentes="bbcl",

@@ -10,8 +10,10 @@
 #' @param fuentes es un string con las fuentes a extraer. Puede ser bbcl o las de emol.
 #' @return Un dataframe con las noticias extraidas.
 #' @examples
-#' noticias <- extraer_noticias_fecha("inteligencia artificial", "2025-03-25",
-#' "2025-04-24", subir_a_bd = FALSE, fuentes="bbcl")
+#' \dontrun{
+#' noticias <- extraer_noticias_fecha("delincuencia", "2025-04-25",
+#' "2025-04-28", subir_a_bd = FALSE, fuentes="bbcl")
+#' }
 #' @export
 
 extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_a_bd = TRUE, fuentes="todas") {

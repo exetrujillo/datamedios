@@ -18,7 +18,7 @@ Un dataframe con el primer caso de la busqueda.
 Esta funcion permite realizar una consulta inicial a emol.com utilizando una frase de busqueda.
 }
 \examples{
-\donttest{
+\dontrun{
 primer_caso <- init_req_emol("Boric", fuentes="emol")
 }
 }

@@ -7,8 +7,10 @@
 #' @param fecha_fin Fecha de fin del rango de busqueda en formato "YYYY-MM-DD" (obligatoria).
 #' @return Un dataframe con las noticias extraidas.
 #' @examples
+#' \dontrun{
 #' noticias <- extraer_noticias_fecha_bbcl("inteligencia artificial", "2025-01-01",
 #' "2025-02-24")
+#' }
 #' @export
 
 extraer_noticias_fecha_bbcl <- function(search_query, fecha_inicio, fecha_fin) {

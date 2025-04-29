@@ -31,6 +31,8 @@ Esta funcion permite realizar una extraccion automatizada de noticias de
 BioBio o Los medios de Emol, utilizando un rango de fechas.
 }
 \examples{
-noticias <- extraer_noticias_fecha("inteligencia artificial", "2025-03-25",
-"2025-04-24", subir_a_bd = FALSE, fuentes="bbcl")
+\dontrun{
+noticias <- extraer_noticias_fecha("delincuencia", "2025-04-25",
+"2025-04-28", subir_a_bd = FALSE, fuentes="bbcl")
+}
 }

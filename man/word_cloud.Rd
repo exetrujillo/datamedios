@@ -20,7 +20,7 @@ Una nube de palabras con las palabras mas frecuentes.
 Esta funcion permite realizar una nube de palabras con las palabras más frecuentes del corpus de noticias.
 }
 \examples{
-\donttest{
+\dontrun{
 datos <- extraer_noticias_fecha("Boric",
 "2025-03-01",
 "2025-04-01",

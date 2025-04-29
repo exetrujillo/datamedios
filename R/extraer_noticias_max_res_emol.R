@@ -7,6 +7,11 @@
 #' @param max_results Numero maximo de resultados a extraer (opcional, por defecto todos).
 #' @param fuente Fuente de emol para iterar (obligatoria).
 #' @return Un dataframe con las noticias extraidas.
+#' @examples
+#' \dontrun{
+#' noticias <- extraer_noticias_max_res_emol("inteligencia artificial", "2025-01-01",
+#' "2025-02-24", fuente="mediosregionales")
+#' }
 #' @export
 extraer_noticias_max_res_emol <- function(search_query, max_results=NULL, fuente){
   # Validamos los parametros

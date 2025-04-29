@@ -16,5 +16,7 @@ Un dataframe con el primer caso de la busqueda.
 Esta funcion permite realizar una consulta inicial a BioBio.cl utilizando una frase de busqueda.
 }
 \examples{
+\dontrun{
 primer_caso <- init_req_bbcl("inteligencia artificial")
+}
 }

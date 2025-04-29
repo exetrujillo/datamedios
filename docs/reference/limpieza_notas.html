@@ -72,18 +72,14 @@ Verifica que el input sea un data frame con una columna llamada `contenido`.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="extraer_noticias_max_res.html">extraer_noticias_max_res</a></span><span class="op">(</span><span class="st">"inteligencia artificial"</span>,</span></span>
 <span class="r-in"><span>max_results<span class="op">=</span> <span class="fl">20</span>,</span></span>
 <span class="r-in"><span>fuentes<span class="op">=</span><span class="st">"bbcl"</span>,</span></span>
 <span class="r-in"><span>subir_a_bd <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Fuentes parseadas: bbcl</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Total de resultados disponibles en bbcl: 2525</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Noticia mas reciente disponible en bbcl es de la fecha: 2025-04-26 20:44:27</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Noticias hasta la fecha: 2025-04-20</span>
 <span class="r-in"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="extraccion_parrafos.html">extraccion_parrafos</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">datos_proc</span> <span class="op">&lt;-</span> <span class="fu">limpieza_notas</span><span class="op">(</span><span class="va">datos</span>, sinonimos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IA"</span>, <span class="st">"AI"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>

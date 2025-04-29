@@ -20,7 +20,7 @@ Verifica que el input sea un data frame con una columna llamada `contenido`.
 }
 \examples{
 
-\donttest{
+\dontrun{
 datos <- extraer_noticias_max_res("inteligencia artificial",
 max_results= 20,
 fuentes="bbcl",

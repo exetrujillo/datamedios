@@ -14,8 +14,10 @@
 #' @param fuentes por defecto marca todas las fuentes, pero se puede elegir una o varias de las disponibles en el README. (opcional)
 #' @return Un dataframe con las noticias extraidas.
 #' @examples
+#' \dontrun{
 #' noticias <- extraer_noticias_max_res("inteligencia artificial",
-#' max_results = 20, fuentes="bbcl", subir_a_bd = FALSE)
+#' max_results = 20, fuentes="bbcl, emol", subir_a_bd = FALSE)
+#' }
 #' @export
 extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_bd = TRUE, fuentes = "todas") {
   # Validamos los parametros

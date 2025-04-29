@@ -22,5 +22,7 @@ Entrega como maximo 10 resultados. Se debe llamar desde otras funciones solo
 con una fuente a la vez, es decir, sin llamar a emol-todas.
 }
 \examples{
+\dontrun{
 primer_caso <- iteracion_emol("Boric", fuentes="emol-todas")
+}
 }

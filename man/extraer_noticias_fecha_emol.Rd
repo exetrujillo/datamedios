@@ -22,6 +22,8 @@ Un dataframe con las noticias extraidas.
 Esta funcion permite realizar una extraccion automatizada de noticias de emol.com utilizando un rango de fechas.
 }
 \examples{
+\dontrun{
 noticias <- extraer_noticias_fecha_emol("inteligencia artificial", "2025-01-01",
 "2025-02-24", fuente="emol")
+}
 }

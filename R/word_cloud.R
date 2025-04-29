@@ -7,7 +7,7 @@
 #' @param stop_words Definir las palabras que seran ignoradas en la visualizacion. Debe ser un vector de carácteres.
 #' @return Una nube de palabras con las palabras mas frecuentes.
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' datos <- extraer_noticias_fecha("Boric",
 #' "2025-03-01",
 #' "2025-04-01",

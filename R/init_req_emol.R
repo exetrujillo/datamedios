@@ -7,7 +7,7 @@
 #' @return Un dataframe con el primer caso de la busqueda.
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' primer_caso <- init_req_emol("Boric", fuentes="emol")
 #' }
 

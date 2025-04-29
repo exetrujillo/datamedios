@@ -20,3 +20,9 @@ Un dataframe con las noticias extraidas.
 Esta funcion permite extraer noticias de las fuentes de Emol, tanto de las
 noticias no pagas de emol, como de guioteca y los medios regionales de El Mercurio
 }
+\examples{
+\dontrun{
+noticias <- extraer_noticias_max_res_emol("inteligencia artificial", "2025-01-01",
+"2025-02-24", fuente="mediosregionales")
+}
+}

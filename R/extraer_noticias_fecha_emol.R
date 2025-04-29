@@ -8,8 +8,10 @@
 #' @param fuente Fuente de emol para iterar (obligatoria).
 #' @return Un dataframe con las noticias extraidas.
 #' @examples
+#' \dontrun{
 #' noticias <- extraer_noticias_fecha_emol("inteligencia artificial", "2025-01-01",
 #' "2025-02-24", fuente="emol")
+#' }
 #' @export
 
 extraer_noticias_fecha_emol <- function(search_query, fecha_inicio, fecha_fin, fuente) {

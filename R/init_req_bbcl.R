@@ -6,7 +6,9 @@
 #' @return Un dataframe con el primer caso de la busqueda.
 #' @export
 #' @examples
+#' \dontrun{
 #' primer_caso <- init_req_bbcl("inteligencia artificial")
+#' }
 
 init_req_bbcl <- function(search_query) {
   # Validamos el parametro

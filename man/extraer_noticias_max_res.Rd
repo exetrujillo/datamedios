@@ -34,6 +34,8 @@ decir, si pones max_results = 10 y tienes fuentes = "emol,guioteca,bbcl"
 tendras como maximo 30 resultados.
 }
 \examples{
+\dontrun{
 noticias <- extraer_noticias_max_res("inteligencia artificial",
-max_results = 20, fuentes="bbcl", subir_a_bd = FALSE)
+max_results = 20, fuentes="bbcl, emol", subir_a_bd = FALSE)
+}
 }

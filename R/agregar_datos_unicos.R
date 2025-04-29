@@ -6,7 +6,7 @@
 #' @return No retorna ningun valor.
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Agregar datos unicos
 #' noticias <- extraer_noticias_max_res("tesla", max_results=10, fuentes="bbcl", subir_a_bd = FALSE)
 #' agregar_datos_unicos(noticias)

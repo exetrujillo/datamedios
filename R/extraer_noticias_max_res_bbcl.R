@@ -7,8 +7,10 @@
 #' @param max_results Cantidad maxima de resultados (opcional).
 #' @return Un dataframe con las noticias extraidas.
 #' @examples
+#' \dontrun{
 #' noticias <- extraer_noticias_fecha_bbcl("inteligencia artificial", "2025-01-01",
 #' "2025-02-24")
+#' }
 #' @export
 extraer_noticias_max_res_bbcl <- function(search_query, max_results = NULL) {
 

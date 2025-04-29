@@ -9,7 +9,9 @@
 #' @param fuentes Es un string que deberia tener solo fuentes de emol posibles separadas por comas.
 #' @return Un dataframe con el caso de la busqueda, incluyendo solo columnas especificas.
 #' @examples
+#' \dontrun{
 #' primer_caso <- iteracion_emol("Boric", fuentes="emol-todas")
+#' }
 #' @export
 
 iteracion_emol <- function(search_query, page=0, fuentes="emol-todas") {
