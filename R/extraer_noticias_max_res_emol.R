@@ -114,96 +114,152 @@ extraer_noticias_max_res_emol <- function(search_query, max_results=NULL, fuente
     # Sys.sleep(0.5)
   }
 
+  ##################################################################################
+
   #### PROCESAMIENTO DF FINAL ####
 
-  # Verificar si hay datos para procesar
+  # Verificamos si hay datos para procesar
   if (is.null(all_data) || nrow(all_data) == 0) {
     message(paste("No se encontraron datos para la fuente:", fuente, "en el rango de fechas especificado."))
     return(create_empty_df())
   }
 
-  # Verificar que el dataframe tenga todas las columnas necesarias
+  # Verificamos que el dataframe tenga todas las columnas necesarias para el nucleo
+  # Las columnas para helpers seran verificadas implicitamente por los helpers
   required_columns <- c("_id", "_source.titulo", "_source.texto", "_source.permalink")
   missing_columns <- required_columns[!required_columns %in% names(all_data)]
 
   if (length(missing_columns) > 0) {
-    message(paste("Faltan columnas necesarias en los datos:", paste(missing_columns, collapse=", ")))
+    message(paste("Faltan columnas base necesarias en los datos:", paste(missing_columns, collapse=", ")))
     return(create_empty_df())
   }
 
-  # Agregar columnas adicionales de metadatos
   all_data$search_query <- tolower(search_query)
   all_data$medio <- fuente
 
-  # Determinar la columna de fecha a utilizar
-  fecha_source <- if (fuente == "guioteca") {
+  fecha_source_col_name <- if (fuente == "guioteca") {
     "_source.fechaModificacion"
   } else if ("_source.fechaPublicacion" %in% names(all_data)) {
     "_source.fechaPublicacion"
-  } else {
+  } else if ("_source.fechaModificacion" %in% names(all_data)) { # Anadido chequeo de existencia
     "_source.fechaModificacion"
+  } else {
+    message(paste("Advertencia: No se encontro columna de fecha '_source.fechaPublicacion' ni '_source.fechaModificacion' para fuente:", fuente, ". Las fechas seran NA."))
+    NA_character_ # Para que rlang::sym no falle si no existe
   }
 
-  # SOLO PARA TESTING, COMENTAR EN PRODUCCION
-  # processed_data <- all_data
-
-  # Procesar los datos utilizando el enfoque rowwise
   processed_data <- tryCatch({
+    # Antes de procesar, anadimos columnas que podrian faltar para los helpers, con NAs
+    # Esto evita errores si una columna esperada por un helper no existe en all_data para alguna fuente
+    cols_for_helpers <- c(
+      "_source.tablas.tablaMedios" = NA, # Tipo de NA dependera, pero dplyr lo maneja
+      "_source.imagen" = NA_character_,
+      "_source.autor" = NA_character_,
+      "_source.bajada" = NA, # Puede ser lista o df, NA es generico
+      "_source.seccion" = NA_character_,
+      "_source.subSeccion" = NA_character_,
+      "_source.temas" = NA # Puede ser lista o df
+    )
+
+    for(col_name in names(cols_for_helpers)){
+      if(!col_name %in% names(all_data)){
+        all_data[[col_name]] <- cols_for_helpers[[col_name]]
+      }
+    }
+
+    # Asegurar que la columna de fecha exista, aunque sea con NAs
+    if (!is.na(fecha_source_col_name) && !fecha_source_col_name %in% names(all_data)) {
+      all_data[[fecha_source_col_name]] <- NA_character_
+    }
+
+
     all_data %>%
       dplyr::rowwise() %>%
       dplyr::mutate(
         ID = paste0(`_id`, "-e"),
-        titulo = `_source.titulo`,
-        contenido = `_source.texto`,
-        contenido_limpio = NA,
-        url = `_source.permalink`,
-        url_imagen = if (fuente %in% c("emol", "mediosregionales")) {
-          x <- `_source.tablas.tablaMedios`
-          if (is.data.frame(x) && "Url" %in% names(x)) as.character(x[1, "Url"]) else NA
+        titulo = dplyr::coalesce(as.character(`_source.titulo`), NA_character_), # Asegurar character y manejar NULL/NA
+        contenido = dplyr::coalesce(as.character(`_source.texto`), NA_character_),
+        contenido_limpio = NA_character_, # Se mantiene como NA, se llenara despues
+        url = dplyr::coalesce(as.character(`_source.permalink`), NA_character_),
+
+        url_imagen = helper_extraer_url_imagen(
+          `_source.tablas.tablaMedios`,
+          `_source.imagen`,
+          fuente # Pasamos la variable 'fuente' del entorno de la funcion principal
+        ),
+
+        autor = dplyr::coalesce(
+          if (fuente == "guioteca") "guioteca" else as.character(`_source.autor`),
+          NA_character_
+        ),
+
+        fecha = if (!is.na(fecha_source_col_name)) {
+          as.character(as.Date(dplyr::coalesce(!!rlang::sym(fecha_source_col_name), NA_character_)))
         } else {
-          `_source.imagen`
+          NA_character_
         },
-        autor = if (fuente == "guioteca") NA_character_ else `_source.autor`,
-        fecha = as.character(as.Date(dplyr::coalesce(!!rlang::sym(fecha_source)))),
-        # Extraer el resumen como un valor escalar
-        resumen = {
-          bajada <- `_source.bajada`
-          if (is.null(bajada)) {
-            NA_character_
-          } else if (is.data.frame(bajada)) {
-            as.character(bajada[1,1])
-          } else if (is.list(bajada)) {
-            if (length(bajada) > 0) as.character(bajada[[1]]) else NA_character_
-          } else {
-            as.character(bajada)
-          }
-        }
-      ) %>%
-      dplyr::mutate(
-        temas = list({
-          if (fuente == "mediosregionales") {
-            # Si la fuente es "mediosregionales", usar seccion y subSeccion
-            t <- c(`_source.seccion`, `_source.subSeccion`)
-          } else {
-            # Caso normal: usar seccion y temas
-            t <- `_source.seccion`
-            if ("_source.temas" %in% colnames(all_data)) {
-              aux <- `_source.temas`
-              if (!is.null(aux) && length(aux) > 0 && "nombre" %in% names(aux)) {
-                t <- c(t, as.character(aux$nombre))
-              }
-            }
-          }
-          t <- tolower(t)
-          t <- gsub("\\s+", "-", t)
-          t
-        })
+
+        resumen = helper_extraer_resumen(`_source.bajada`),
+
+        # Para temas, pasamos las columnas relevantes al helper
+        # El helper devolvera una lista, que es lo que se espera para una list-column
+        temas = helper_extraer_temas(
+          `_source.seccion`,
+          `_source.subSeccion`,
+          `_source.temas`,
+          fuente # Pasamos la variable 'fuente'
+        )
       ) %>%
       dplyr::ungroup() %>%
-      dplyr::select(ID, titulo, contenido, contenido_limpio, url, url_imagen, autor, fecha, temas, resumen, search_query, medio)
+      dplyr::select(
+        ID, titulo, contenido, contenido_limpio, url,
+        url_imagen, autor, fecha, temas, resumen,
+        search_query, medio
+      )
+
   }, error = function(e) {
-    message("Error al procesar los datos: ", e$message)
-    return(create_empty_df())
+    message(paste("--------------------------------------------------------------------"))
+    message(paste("ERROR CRITICO durante el procesamiento de datos para la fuente:", fuente))
+    message(paste("Mensaje de error:", e$message))
+
+    # Intentar obtener el indice de la fila que pudo causar el error si es un error de dplyr
+    # Esto es una heuristica y puede no funcionar siempre
+    error_msg_str <- as.character(e)
+    if (grepl("problem with `mutate()` input", error_msg_str, ignore.case = TRUE) || grepl("evaluation error", error_msg_str, ignore.case = TRUE)) {
+      message("El error parece haber ocurrido durante una operacion de mutate por fila.")
+      message("Es dificil identificar la fila exacta sin mas informacion del error de dplyr.")
+      message("Se recomienda inspeccionar 'all_data_problematic_sample.rds' (si se crea).")
+    }
+
+    message("Estructura de 'all_data' (primeras 5 filas y columnas relevantes):")
+    if (nrow(all_data) > 0) {
+      cols_to_print <- intersect(c("_id", "_source.titulo", "_source.permalink", "_source.bajada", "_source.tablas.tablaMedios", "_source.imagen", "_source.seccion", "_source.subSeccion", "_source.temas", fecha_source_col_name), names(all_data))
+      if (length(cols_to_print) > 0) {
+        try(print(utils::head(all_data[, cols_to_print, drop = FALSE], 5)), silent = TRUE)
+        message("Estructura detallada (str) de columnas potencialmente problematicas de la primera fila:")
+        if ("_source.bajada" %in% names(all_data)) try(print(utils::str(all_data$`_source.bajada`[[1]])), silent = TRUE)
+        if ("_source.tablas.tablaMedios" %in% names(all_data)) try(print(utils::str(all_data$`_source.tablas.tablaMedios`[[1]])), silent = TRUE)
+        if ("_source.temas" %in% names(all_data)) try(print(utils::str(all_data$`_source.temas`[[1]])), silent = TRUE)
+      } else {
+        message("No se pudieron encontrar columnas relevantes para imprimir de 'all_data'.")
+      }
+
+      # Guardar una muestra de all_data para depuracion externa
+      # Guardamos solo las primeras 100 filas o todas si son menos
+      sample_size <- min(nrow(all_data), 100)
+      all_data_sample <- all_data[1:sample_size, ]
+      # OJO: esto guarda en el directorio de trabajo actual. Considerar una ruta mas especifica si es necesario.
+      problem_file_path <- paste0("all_data_problematic_sample_FUENTE_",gsub("[^A-Za-z0-9]", "_", fuente),".rds")
+      try(saveRDS(all_data_sample, file = problem_file_path), silent = TRUE)
+      message(paste("Se ha guardado una muestra de datos problematicos en:", problem_file_path))
+      message(paste("Puedes cargarla con: readRDS('",problem_file_path,"')",sep=""))
+
+    } else {
+      message("'all_data' esta vacio en el momento del error.")
+    }
+    message(paste("--------------------------------------------------------------------"))
+
+    return(create_empty_df()) # Devuelve dataframe vacio como antes
   })
 
   return(processed_data)

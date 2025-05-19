@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">datamedios</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -42,22 +42,40 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.2.0" id="datamedios-120">datamedios 1.2.0<a class="anchor" aria-label="anchor" href="#datamedios-120"></a></h2>
+<h2 class="page-header" data-toc-text="1.2.1" id="datamedios-121">datamedios 1.2.1<a class="anchor" aria-label="anchor" href="#datamedios-121"></a></h2>
 <div class="section level4">
-<h4 id="agregado-1-2-0">Agregado<a class="anchor" aria-label="anchor" href="#agregado-1-2-0"></a></h4>
+<h4 id="corregido-fixed-1-2-1">Corregido (Fixed)<a class="anchor" aria-label="anchor" href="#corregido-fixed-1-2-1"></a></h4>
+<ul><li>Se mejoró significativamente la robustez de las funciones de extracción para Emol (<code>extraer_noticias_fecha_emol</code>, <code>extraer_noticias_max_res_emol</code>) al procesar la estructura de datos devuelta por la API, especialmente para campos como resumen (<code>_source.bajada</code>), URL de imagen (<code>_source.tablas.tablaMedios</code>, <code>_source.imagen</code>) y temas (<code>_source.temas</code>). Esto previene errores que causaban la pérdida de todos los datos extraídos de Emol.</li>
+<li>Las funciones de extracción de Emol ahora utilizan funciones auxiliares (helpers) internas para procesar campos complejos, mejorando la legibilidad y el manejo de errores específicos de cada campo.</li>
+<li>Se implementó un manejo de errores más informativo en las funciones de extracción de Emol: si ocurre un error crítico durante el procesamiento final de los datos, se guarda una muestra de los datos crudos problemáticos en un archivo <code>.rds</code> para facilitar la depuración.</li>
+<li>Se mejoró la robustez de la función <code>limpieza_notas</code> para manejar correctamente el contenido de noticias que puede ser HTML crudo, texto plano, o valores <code>NA</code>.</li>
+<li>Se solucionó un error en <code>limpieza_notas</code> que ocurría cuando el contenido de una noticia era <code>NA</code>, evitando la detención de la función.</li>
+<li>La función <code>limpieza_notas</code> ahora maneja de forma más predecible la inicialización de la columna <code>contenido_limpio</code>, usando siempre la columna <code>contenido</code> como base en cada ejecución.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="mejorado-improved-1-2-1">Mejorado (Improved)<a class="anchor" aria-label="anchor" href="#mejorado-improved-1-2-1"></a></h4>
+<ul><li>Se optimizó la función <code>limpieza_notas</code> para detectar si el contenido es HTML antes de intentar un parseo completo, mejorando la eficiencia para contenidos que ya son texto plano.</li>
+<li>Se refinó la lógica de filtrado por términos de búsqueda y sinónimos en <code>limpieza_notas</code> para ser más consistente con la presencia de valores <code>NA</code> en el contenido.</li>
+<li>Se estandarizó el uso de <code>NA_character_</code> en los helpers de extracción de Emol para asegurar consistencia en los datos procesados.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.2.0" id="datamedios-120">datamedios 1.2.0<small>2025-04-28</small><a class="anchor" aria-label="anchor" href="#datamedios-120"></a></h2>
+<div class="section level4">
+<h4 id="agregado-added-1-2-0">Agregado (Added)<a class="anchor" aria-label="anchor" href="#agregado-added-1-2-0"></a></h4>
 <ul><li>Nuevas fuentes para la extracción de noticias de medios chilenos.</li>
 <li>Funciones auxiliares para utilizar un enfoque iterativo controlado.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="mejorado-1-2-0">Mejorado<a class="anchor" aria-label="anchor" href="#mejorado-1-2-0"></a></h4>
-<ul><li><p>Modificación por modularización de las funciones de extracción de datos por fecha o por cantidad máxima de resultados.</p></li>
-<li><p>Se modifica la función de limpieza para que responda a los formatos de las noticias de las nuevas fuentes.</p></li>
+<h4 id="mejorado-improved-1-2-0">Mejorado (Improved)<a class="anchor" aria-label="anchor" href="#mejorado-improved-1-2-0"></a></h4>
+<ul><li>Modificación por modularización de las funciones de extracción de datos por fecha o por cantidad máxima de resultados.</li>
+<li>Se modifica la función de limpieza para que responda a los formatos de las noticias de las nuevas fuentes.</li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1.0" id="datamedios-110">datamedios 1.1.0<small>2025-02-18</small><a class="anchor" aria-label="anchor" href="#datamedios-110"></a></h2>
 <div class="section level4">
-<h4 id="mejorado-1-1-0">Mejorado<a class="anchor" aria-label="anchor" href="#mejorado-1-1-0"></a></h4>
+<h4 id="mejorado-improved-1-1-0">Mejorado (Improved)<a class="anchor" aria-label="anchor" href="#mejorado-improved-1-1-0"></a></h4>
 <ul><li>Mejor rendimiento de funciones.</li>
 </ul></div>
 </div>

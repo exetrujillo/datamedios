@@ -1,4 +1,4 @@
-# Paquete `datamedios` (Versión 1.2.0)
+# Paquete `datamedios` (Versión 1.2.1)
 
 `datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento haciendo web scraping de medios chilenos. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos de manera opcional.
 
@@ -8,7 +8,7 @@
 
 Para instalarlo desde CRAN:
 
-Instala `datamedios` desde la librería de CRAN:
+Instala `datamedios` desde CRAN:
 
 ``` r
 install.packages("datamedios")

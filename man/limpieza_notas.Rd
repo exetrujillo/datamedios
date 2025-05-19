@@ -7,9 +7,9 @@
 limpieza_notas(datos, sinonimos = c())
 }
 \arguments{
-\item{datos}{Data frame donde estan almacenadas las notas y con la funcion extraccion_parrafos ya operada.}
+\item{datos}{Data frame donde estan almacenadas las notas}
 
-\item{sinonimos}{Una lista de character}
+\item{sinonimos}{Un vector de character}
 }
 \value{
 Un dataframe con el contenido limpio en la columna contenido_limpio
@@ -20,12 +20,8 @@ Verifica que el input sea un data frame con una columna llamada `contenido`.
 }
 \examples{
 
-\dontrun{
-datos <- extraer_noticias_max_res("inteligencia artificial",
-max_results= 20,
-fuentes="bbcl",
-subir_a_bd = FALSE)
-datos <- extraccion_parrafos(datos)
+\donttest{
+datos <- extraer_noticias_max_res("inteligencia artificial", max_results= 150, subir_a_bd = FALSE)
 datos_proc <- limpieza_notas(datos, sinonimos = c("IA", "AI"))
 }
 }

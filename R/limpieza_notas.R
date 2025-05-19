@@ -2,90 +2,118 @@
 #'
 #' Esta funcion permite limpiar por completo las notas eliminando codigos y secciones irrelevantes.
 #' Verifica que el input sea un data frame con una columna llamada `contenido`.
-#' @param datos Data frame donde estan almacenadas las notas y con la funcion extraccion_parrafos ya operada.
-#' @param sinonimos Una lista de character
+#' @param datos Data frame donde estan almacenadas las notas
+#' @param sinonimos Un vector de character
 #' @return Un dataframe con el contenido limpio en la columna contenido_limpio
 #' @examples
 #'
-#' \dontrun{
-#' datos <- extraer_noticias_max_res("inteligencia artificial",
-#' max_results= 20,
-#' fuentes="bbcl",
-#' subir_a_bd = FALSE)
-#' datos <- extraccion_parrafos(datos)
+#' \donttest{
+#' datos <- extraer_noticias_max_res("inteligencia artificial", max_results= 150, subir_a_bd = FALSE)
 #' datos_proc <- limpieza_notas(datos, sinonimos = c("IA", "AI"))
 #' }
 #' @export
 
 limpieza_notas <- function(datos, sinonimos = c()) {
-  # Validacion inicial: verificar que el input sea un data frame con la columna requerida
+  # Validacion inicial
   if (!is.data.frame(datos)) {
     stop("El argumento 'datos' debe ser un data frame.")
   }
   if (!"contenido" %in% colnames(datos)) {
     stop("El data frame debe contener una columna llamada 'contenido'.")
   }
-  # Validar el argumento 'stop_words'
   if (!is.null(sinonimos) && !is.character(sinonimos)) {
     stop("'sinonimos' debe ser un vector de palabras.")
   }
 
-  # Definimos la nueva columna
+  # Sobrescribir/crear contenido_limpio a partir de contenido
   datos$contenido_limpio <- datos$contenido
 
   # Iteramos sobre cada fila del data frame
   for (i in seq_len(nrow(datos))) {
-    # Convertimos el contenido a un objeto HTML para usar rvest
-    contenido_html <- rvest::read_html(datos$contenido_limpio[[i]])
+    current_content <- datos$contenido_limpio[[i]]
 
-    # Eliminamos los divs con contenido irrelevante
-    contenido_html %>%
-      rvest::html_nodes("div.lee-tambien-bbcl") %>%
-      xml2::xml_remove()
+    is_html_like <- FALSE
 
-    contenido_html %>%
-      rvest::html_nodes("blockquote.instagram-media") %>%
-      xml2::xml_remove()
+    if (!is.na(current_content) && is.character(current_content) && nzchar(current_content)) {
+      is_html_like <- stringr::str_detect(current_content, "<\\s*(div|p|span|a|body|html|br|img|strong|em|h[1-6])[^>]*>")
+    }
 
-    contenido_html %>%
-      rvest::html_nodes("blockquote.twitter-tweet") %>%
-      xml2::xml_remove()
+    if (is_html_like) {
+      parsed_html <- tryCatch({
+        rvest::read_html(current_content)
+      }, error = function(e) {
+        return(NULL)
+      })
 
-    # Convertimos el HTML limpio a texto y eliminamos frases residuales
-    contenido_texto <- as.character(contenido_html)
-    contenido_texto <- stringr::str_replace_all(
-      contenido_texto,
-      stringr::regex("Lee tambi\u00e9n.*?<\\/div>", dotall = TRUE),
-      ""
-    )
+      if (!is.null(parsed_html)) {
+        parsed_html %>%
+          rvest::html_nodes("div.lee-tambien-bbcl") %>%
+          xml2::xml_remove()
+        parsed_html %>%
+          rvest::html_nodes("blockquote.instagram-media") %>%
+          xml2::xml_remove()
+        parsed_html %>%
+          rvest::html_nodes("blockquote.twitter-tweet") %>%
+          xml2::xml_remove()
 
-    # Guardamos el contenido limpio de vuelta en el data frame
-    datos$contenido_limpio[[i]] <- contenido_texto
+        processed_text <- rvest::html_text2(parsed_html)
+      } else {
+        processed_text <- current_content
+      }
+    } else {
+      processed_text <- current_content
+    }
+
+    if (!is.na(processed_text)) {
+      processed_text <- stringr::str_replace_all(
+        processed_text,
+        stringr::regex("Lee tambi\u00e9n.*?(<\\/div>)?", dotall = TRUE, ignore_case = TRUE),
+        ""
+      )
+      datos$contenido_limpio[[i]] <- stringr::str_squish(processed_text)
+    } else {
+      datos$contenido_limpio[[i]] <- NA
+    }
   }
-  #print(nrow(datos))
 
-  if (!is.null(sinonimos)){
-    pattern <- paste0("(?i)\\b(", datos$search_query[[1]], "|", paste(sinonimos, collapse = "|"), ")\\b")
-  } else {
-    pattern <- paste0("(?i)\\b(", datos$search_query[[1]], ")\\b")
+  main_query <- ""
+  if ("search_query" %in% colnames(datos) && nrow(datos) > 0 && !is.na(datos$search_query[[1]])) {
+    main_query <- datos$search_query[[1]]
   }
-  # Identificamos las filas que NO contienen el termino de busqueda
-  indices_no_match <- which(!stringr::str_detect(datos$contenido_limpio, pattern))
 
-  # Eliminamos las filas que no contienen el termino de busqueda
-  datos <- datos[-indices_no_match, ]
+  escape_regex <- function(string) {
+    if(is.na(string)) return(NA_character_)
+    stringr::str_replace_all(string, "([.\\\\+*?\\[\\^\\]$(){}=!<>|:])", "\\\\\\1")
+  }
 
-  #print(nrow(datos))
+  terms_to_match <- c()
+  if (main_query != "" && !is.na(main_query)) {
+    terms_to_match <- c(terms_to_match, escape_regex(main_query))
+  }
+  if (length(sinonimos) > 0) {
+    valid_sinonimos <- sinonimos[!is.na(sinonimos)]
+    if(length(valid_sinonimos) > 0) {
+      terms_to_match <- c(terms_to_match, sapply(valid_sinonimos, escape_regex))
+    }
+  }
 
-  # Calculamos el numero total de resultados
-  total_results <- nrow(datos)
-  #cat("El numero total de resultados obtenidos es:", total_results, "\n")
+  if (length(terms_to_match) > 0) {
+    pattern <- paste0("(?i)\\b(", paste(terms_to_match, collapse = "|"), ")\\b")
+    matches_pattern <- stringr::str_detect(datos$contenido_limpio, pattern)
+    indices_no_match <- which(matches_pattern == FALSE)
 
-  # Procesamos cada nota para extraer y limpiar el texto plano
-  for (contador in seq_len(total_results)) {
-    datos$contenido_limpio[[contador]] <- rvest::read_html(datos$contenido_limpio[[contador]]) %>%
-      rvest::html_text2() %>%
-      stringr::str_squish()
+
+    if(length(indices_no_match) > 0 && length(indices_no_match) < nrow(datos)) {
+      datos <- datos[-indices_no_match, , drop = FALSE]
+    } else if (length(indices_no_match) == nrow(datos) && nrow(datos) > 0) {
+      original_colnames <- colnames(datos)
+      datos <- datos[0, , drop = FALSE]
+      colnames(datos) <- original_colnames
+    }
+  }
+
+  if (nrow(datos) == 0) {
+    return(datos)
   }
 
   return(datos)

@@ -42,8 +42,7 @@ If there are any adjustments or additional requirements needed to meet CRAN stan
 
 Thank you for considering `datamedios` for CRAN. I look forward to your feedback.
 
-## R CMD check results
-
-Duration: 1m 57.5s
+── R CMD check results ──────────────────────────────────────────────────────────────────────────── datamedios 1.2.1 ────
+Duration: 1m 9.9s
 
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔

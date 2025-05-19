@@ -14,6 +14,9 @@
 <url><loc>/reference/extraer_noticias_max_res_bbcl.html</loc></url>
 <url><loc>/reference/extraer_noticias_max_res_emol.html</loc></url>
 <url><loc>/reference/grafico_notas_por_mes.html</loc></url>
+<url><loc>/reference/helper_extraer_resumen.html</loc></url>
+<url><loc>/reference/helper_extraer_temas.html</loc></url>
+<url><loc>/reference/helper_extraer_url_imagen.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
 <url><loc>/reference/init_req_bbcl.html</loc></url>
 <url><loc>/reference/init_req_emol.html</loc></url>
