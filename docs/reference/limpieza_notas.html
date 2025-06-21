@@ -66,10 +66,10 @@ Verifica que el input sea un data frame con una columna llamada `contenido`.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="extraer_noticias_max_res.html">extraer_noticias_max_res</a></span><span class="op">(</span><span class="st">"inteligencia artificial"</span>, max_results<span class="op">=</span> <span class="fl">150</span>, subir_a_bd <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Total de resultados posibles: 2634</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Noticia mas reciente disponible es de la fecha: 2025-06-19 16:11:11</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total de resultados posibles: 2635</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Noticia mas reciente disponible es de la fecha: 2025-06-20 11:07:02</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Se extraeran un maximo de 150 resultados.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Noticias hasta la fecha: 2025-04-09</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Noticias hasta la fecha: 2025-04-10</span>
 <span class="r-in"><span><span class="va">datos_proc</span> <span class="op">&lt;-</span> <span class="fu">limpieza_notas</span><span class="op">(</span><span class="va">datos</span>, sinonimos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IA"</span>, <span class="st">"AI"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

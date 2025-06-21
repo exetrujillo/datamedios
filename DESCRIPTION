@@ -36,5 +36,6 @@ Imports:
   xml2,
   purrr,
   DT,
-  ggplot2
+  ggplot2,
+  plotly
 RoxygenNote: 7.3.2

@@ -2,14 +2,15 @@
 % Please edit documentation in R/grafico_notas_fecha.R
 \name{grafico_notas_fecha}
 \alias{grafico_notas_fecha}
-\title{Grafico de notas por periodo}
+\title{Grafico de notas por periodo (interactivo)}
 \usage{
 grafico_notas_fecha(
   datos,
   titulo,
   fecha_inicio = NULL,
   fecha_fin = NULL,
-  agrupar_por = "day"
+  agrupar_por = "day",
+  tema = "light"
 )
 }
 \arguments{
@@ -23,26 +24,27 @@ grafico_notas_fecha(
 
 \item{agrupar_por}{Cadena de texto que especifica el periodo de agrupacion.
 Valores validos son `"day"` (por defecto) o `"month"`.}
+
+\item{tema}{Tema del grafico. Valores validos son `"light"` (por defecto) o `"dark"`.}
 }
 \value{
-Un grafico ggplot2 que muestra la cantidad de publicaciones por el periodo seleccionado.
+Un grafico plotly interactivo que muestra la cantidad de publicaciones por el periodo seleccionado.
 }
 \description{
-Esta funcion genera un grafico que muestra la cantidad de publicaciones
-agrupadas por dia o por mes.
+Esta funcion genera un grafico interactivo que muestra la cantidad de publicaciones
+agrupadas por dia o por mes, con opcion de tema dark o light.
 }
 \examples{
 \dontrun{
-# Ejemplo original, agrupando por mes
+# Ejemplo con tema dark, agrupando por mes
 datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
-grafico_notas_por_mes(datos, titulo = "Cambio Climatico (por mes)",
-                      agrupar_por = "month")
-# Devuelve un grafico de barras con la cantidad de notas por mes
+grafico_notas_fecha(datos, titulo = "Cambio Climatico (por mes)",
+                    agrupar_por = "month", tema = "dark")
 
-# Nuevo ejemplo, agrupando por dia para mayor granularidad
-grafico_notas_por_mes(datos, titulo = "Cambio Climatico (por dia)",
-                      fecha_inicio = "2024-01-01", fecha_fin = "2024-03-31")
-# Devuelve un grafico de barras con la cantidad de notas por dia
+# Ejemplo con tema light, agrupando por dia
+grafico_notas_fecha(datos, titulo = "Cambio Climatico (por dia)",
+                    fecha_inicio = "2024-01-01", fecha_fin = "2024-03-31",
+                    tema = "light")
 }
 
 }
