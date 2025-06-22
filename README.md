@@ -1,4 +1,4 @@
-# Paquete `datamedios` (Versión 1.2.1)
+# Paquete `datamedios` (Versión 1.2.2)
 
 `datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, por el momento haciendo web scraping de medios chilenos. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos de manera opcional.
 
@@ -137,6 +137,8 @@ Este paquete utiliza las siguientes dependencias de R para su correcto funcionam
 -   **`DT`**: Generación de tablas interactivas en HTML desde R.
 
 -   **`ggplot2`**: Creación de gráficos sofisticados y personalizados basados en la gramática de los gráficos.
+
+-   **`plotly`**: Creación de gráficos interactivos y visualizaciones dinámicas.
 
 ------------------------------------------------------------------------
 

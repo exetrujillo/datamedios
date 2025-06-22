@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">datamedios</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,6 +31,22 @@
 
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.2.2" id="datamedios-122">datamedios 1.2.2<a class="anchor" aria-label="anchor" href="#datamedios-122"></a></h2>
+<div class="section level4">
+<h4 id="agregrado-added-1-2-2">Agregrado (Added)<a class="anchor" aria-label="anchor" href="#agregrado-added-1-2-2"></a></h4>
+<ul><li>Se creó una nueva función <code>grafico_notas_fecha</code> que reemplaza la antigua <code>grafico_notas_por_mes</code>.</li>
+<li>Esta función permite especificar día o mes, y fue optimizada utilizando plotly y ggplotly para agregar interactividad.</li>
+<li>Tiene como parámetro <code>tema</code>, con opción <code>light</code> y <code>dark</code>.</li>
+<li>Con un funcionamiento similar, se agregó la función <code>grafico_comparacion_medios</code>.</li>
+<li>Sumado a las funciones de <code>grafico_notas_fecha</code>, recibe un vector de strings con los nombres de los medios a comparar.</li>
+<li>Incluye un parámetro <code>tipo_grafico</code> para elegir entre gráfico de barras o líneas.</li>
+</ul></div>
+<div class="section level4">
+<h4 id="modificado-changed-1-2-2">Modificado (Changed)<a class="anchor" aria-label="anchor" href="#modificado-changed-1-2-2"></a></h4>
+<ul><li>La función <code>grafico_notas_por_mes</code> será eliminada prontamente. Por mientras, se puede usar pero muestra un aviso para que los usuarios utilicen <code>grafico_notas_fecha</code>.</li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.1" id="datamedios-121">datamedios 1.2.1<a class="anchor" aria-label="anchor" href="#datamedios-121"></a></h2><p class="text-muted">CRAN release: 2025-05-19</p>
 <div class="section level4">

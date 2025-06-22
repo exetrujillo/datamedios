@@ -1,3 +1,18 @@
+# datamedios 1.2.2
+
+### Agregrado (Added)
+
+*   Se creó una nueva función `grafico_notas_fecha` que reemplaza la antigua `grafico_notas_por_mes`.
+*   Esta función permite especificar día o mes, y fue optimizada utilizando plotly y ggplotly para agregar interactividad.
+*   Tiene como parámetro `tema`, con opción `light` y `dark`.
+*   Con un funcionamiento similar, se agregó la función `grafico_comparacion_medios`.
+*   Sumado a las funciones de `grafico_notas_fecha`, recibe un vector de strings con los nombres de los medios a comparar.
+*   Incluye un parámetro `tipo_grafico` para elegir entre gráfico de barras o líneas.
+
+### Modificado (Changed)
+
+*   La función `grafico_notas_por_mes` será eliminada prontamente. Por mientras, se puede usar pero muestra un aviso para que los usuarios utilicen `grafico_notas_fecha`.
+
 # datamedios 1.2.1
 
 ### Corregido (Fixed)

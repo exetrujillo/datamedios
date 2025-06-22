@@ -16,7 +16,7 @@
 #' @examples
 #' \dontrun{
 #' # Comparar todas las medios por mes
-#' datos <- extraer_noticias_fecha("delincuencia", "2024-01-01", "2025-01-01", subir_a_bd = FALSe)
+#' datos <- extraer_noticias_fecha("delincuencia", "2024-01-01", "2025-01-01", subir_a_bd = FALSE)
 #' grafico_comparacion_medios(datos, titulo = "Cobertura de Delincuencia por Medio",
 #'                             agrupar_por = "month", tema = "dark")
 #'
@@ -33,13 +33,13 @@ grafico_comparacion_medios <- function(datos, titulo, fecha_inicio = NULL, fecha
                                         tipo_grafico = "lineas") {
 
   # Cargar librerias necesarias
-  if (!requireNamespace("plotly", quietly = TRUe)) {
+  if (!requireNamespace("plotly", quietly = TRUE)) {
     stop("el paquete 'plotly' es necesario para esta funcion. Instalalo con: install.packages('plotly')")
   }
-  if (!requireNamespace("dplyr", quietly = TRUe)) {
+  if (!requireNamespace("dplyr", quietly = TRUE)) {
     stop("el paquete 'dplyr' es necesario para esta funcion. Instalalo con: install.packages('dplyr')")
   }
-  if (!requireNamespace("lubridate", quietly = TRUe)) {
+  if (!requireNamespace("lubridate", quietly = TRUE)) {
     stop("el paquete 'lubridate' es necesario para esta funcion. Instalalo con: install.packages('lubridate')")
   }
 
@@ -108,12 +108,12 @@ grafico_comparacion_medios <- function(datos, titulo, fecha_inicio = NULL, fecha
     if (!is.null(fecha_inicio)) {
       fecha_inicio <- as.Date(fecha_inicio, format = "%Y-%m-%d")
     } else {
-      fecha_inicio <- min(datos_proc$fecha, na.rm = TRUe)
+      fecha_inicio <- min(datos_proc$fecha, na.rm = TRUE)
     }
     if (!is.null(fecha_fin)) {
       fecha_fin <- as.Date(fecha_fin, format = "%Y-%m-%d")
     } else {
-      fecha_fin <- max(datos_proc$fecha, na.rm = TRUe)
+      fecha_fin <- max(datos_proc$fecha, na.rm = TRUE)
     }
 
     # Validar que las fechas sean validas
@@ -189,7 +189,7 @@ grafico_comparacion_medios <- function(datos, titulo, fecha_inicio = NULL, fecha
 
   grid_completo <- expand.grid(fecha_grupo = fechas_completas,
                                medio = medios_unicas,
-                               stringsAsFactors = FALSe)
+                               stringsAsFactors = FALSE)
 
   publicaciones_agrupadas <- grid_completo %>%
     dplyr::left_join(publicaciones_agrupadas, by = c("fecha_grupo", "medio")) %>%
@@ -295,9 +295,9 @@ grafico_comparacion_medios <- function(datos, titulo, fecha_inicio = NULL, fecha
       barmode = if(tipo_grafico == "barras") "group" else NULL
     ) %>%
     plotly::config(
-      displayModeBar = TRUe,
+      displayModeBar = TRUE,
       modeBarButtonsToRemove = c("pan2d", "select2d", "lasso2d", "autoScale2d"),
-      displaylogo = FALSe,
+      displaylogo = FALSE,
       toImageButtonOptions = list(
         format = "png",
         filename = paste0("comparacion_medios_", gsub(" ", "_", tolower(titulo))),
