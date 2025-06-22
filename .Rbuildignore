@@ -11,3 +11,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^tutorial.qmd
+^_pkgdown\.yml$
+^pkgdown$

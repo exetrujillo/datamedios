@@ -18,10 +18,10 @@
 
 grafico_notas_por_mes <- function(datos, titulo, fecha_inicio = NULL, fecha_fin = NULL) {
   # Validar que 'datos' sea un data frame
+  warning("La funcion 'grafico_notas_por_mes()' esta desactualizada. Se recomienda usar 'grafico_notas_fecha()'.")
   if (!is.data.frame(datos)) {
     stop("'datos' debe ser un data frame.")
   }
-
   # Validar que 'fecha' exista en los datos
   if (!"fecha" %in% colnames(datos)) {
     stop("'datos' debe contener la columna 'fecha'.")

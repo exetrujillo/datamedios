@@ -1,7 +1,7 @@
 Package: datamedios
 Type: Package
 Title: Scraping Chilean Media
-Version: 1.2.1
+Version: 1.2.2
 Authors@R: c(
   person(given = "Exequiel", family = "Trujillo", email = "exequiel.trujillo@ug.uchile.cl", role = c("aut", "cre", "cph", "fnd")),
   person(given = "Ismael", family = "Aguayo", email = "ismael.aguayo@ug.uchile.cl", role = c("aut", "fnd")),
@@ -36,5 +36,6 @@ Imports:
   xml2,
   purrr,
   DT,
-  ggplot2
+  ggplot2,
+  plotly
 RoxygenNote: 7.3.2
