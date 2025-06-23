@@ -2,7 +2,7 @@ pandoc: '3.2'
 pkgdown: 2.1.3
 pkgdown_sha: ~
 articles: {}
-last_built: 2025-06-23T02:56Z
+last_built: 2025-06-23T02:58Z
 urls:
   reference: https://exetrujillo.github.io/datamedios/reference
   article: https://exetrujillo.github.io/datamedios/articles
