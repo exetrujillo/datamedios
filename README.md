@@ -29,7 +29,7 @@ Alternativamente, para instalar el paquete desde GitHub, sigue los siguientes pa
     devtools::install_github("exetrujillo/datamedios")
     ```
 
-------------------------------------------------------------------------
+-----------------------------------------------------------------------
 
 ## 🔄 Uso
 
