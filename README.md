@@ -156,4 +156,8 @@ Este paquete fue desarrollado por:
 -   **Ismael Aguayo** (contacto: [ismael.aguayo\@ug.uchile.cl](mailto:ismael.aguayo@ug.uchile.cl))
 -   **Klaus Lehmann** (contacto: [klehmann\@fen.uchile.cl](mailto:klehmann@fen.uchile.cl))
 
+Contribuciones adicionales de:
+
+-   **Matias Gallardo** (contacto: [matias.gallardo.v\@ug.uchile.cl](mailto:matias.gallardo.v@ug.uchile.cl))
+
 ------------------------------------------------------------------------

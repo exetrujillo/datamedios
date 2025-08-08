@@ -1,3 +1,14 @@
+# datamedios 1.2.3
+
+### Agregado (Added)
+
+*   Se agregó la extracción de noticias de Ciper Chile, con distintos parámetros, como límite de resultados y fechas. Es capaz de extraer todos los artículos de Ciper desde su inicio hasta la fecha actual. Fue integrado a `extraer_noticias_fecha` y `extraer_noticias_max_res` y las funciones auxiliares asociadas.
+*   Se agregó una barra de progreso para la extracción de noticias de Ciper.
+
+### Modificado (Changed)
+
+*   Correcciones menores
+
 # datamedios 1.2.2
 
 ### Agregrado (Added)

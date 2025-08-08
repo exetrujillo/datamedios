@@ -13,3 +13,5 @@
 ^tutorial.qmd
 ^_pkgdown\.yml$
 ^pkgdown$
+^\.lintr$
+^\.Rhistory$
