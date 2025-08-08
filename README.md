@@ -1,4 +1,4 @@
-# Paquete `datamedios` (Versión 1.2.2)
+# Paquete `datamedios` (Versión 1.2.3)
 
 `datamedios` es un paquete de R diseñado para facilitar la extracción automatizada de noticias desde medios de comunicación chilenos, haciendo web scraping de medios chilenos. Este paquete permite realizar búsquedas de noticias y filtrarlas por rangos de fechas, entregando los resultados en un formato estructurado y listo para su análisis. Además, incluye funcionalidades para almacenar los datos extraídos en una base de datos de manera opcional ([documentación completa](https://exetrujillo.github.io/datamedios/)).
 
@@ -39,7 +39,7 @@ Esta función permite filtrar noticias por un rango de fechas específico, adem�
 
 #### **Parámetros:**
 
--   **`search_query`**: Frase de búsqueda (obligatorio).
+-   **`search_query`**: Frase de búsqueda (obligatorio excepto para Ciper).
 -   **`fecha_inicio`**: Fecha de inicio en formato `"YYYY-MM-DD"` (obligatorio).
 -   **`fecha_fin`**: Fecha de fin en formato `"YYYY-MM-DD"` (obligatorio).
 -   **`subir_a_bd`**: Por defecto está seteado en TRUE, para los tests lo dejamos en FALSE (opcional).
@@ -50,6 +50,7 @@ Esta función permite filtrar noticias por un rango de fechas específico, adem�
     -   `"emol"`: Noticias no pagas de El Mercurio.
     -   `"mediosregionales"`: Noticias de los diarios regionales propiedad de El Mercurio.
     -   `"guioteca"`: Guías especializadas de Emol.
+    -   `"ciper"`: Publicaciones de Ciper Chile.
     -   **O una combinación,** solo separando medios por comas, por ejemplo: `fuentes = "mediosregionales, bbcl"`.
 
 #### **Valor devuelto:**
@@ -84,7 +85,7 @@ Esta función permite obtener noticias desde medios chilenos utilizando una fras
 
 #### **Parámetros:**
 
--   **`search_query`**: Frase de búsqueda (obligatorio).
+-   **`search_query`**: Frase de búsqueda (obligatorio excepto para Ciper).
 -   **`max_results`**: Máximo número de resultados a extraer (opcional).
 -   **`subir_a_bd`**: Por defecto está seteado en TRUE, pero para los tests lo dejamos en FALSE (opcional).
 -   **`fuentes`**:Es un string con las fuentes a extraer. Funciona de la misma forma que en extraer_noticias_fecha. Por defecto extrae de todas las fuentes (opcional).
@@ -139,6 +140,10 @@ Este paquete utiliza las siguientes dependencias de R para su correcto funcionam
 -   **`ggplot2`**: Creación de gráficos sofisticados y personalizados basados en la gramática de los gráficos.
 
 -   **`plotly`**: Creación de gráficos interactivos y visualizaciones dinámicas.
+
+-   **`parallel`**: Ejecución paralela multinucleo.
+
+-   **`pbapply`**: Barra de progreso.
 
 ------------------------------------------------------------------------
 
