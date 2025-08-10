@@ -69,12 +69,16 @@ extraer_noticias_max_res_ciper <- function(search_query = NULL, max_results = NU
       if (max_results == Inf || max_results > total_posts) {
         max_results <- total_posts
       }
+    }
+
+    if (current_page == 1 && total_posts > 0) {
       pb <- utils::txtProgressBar(min = 0, max = max_results, style = 3)
     }
 
     posts_data <- jsonlite::fromJSON(httr::content(response, "text", encoding = "UTF-8"), flatten = TRUE)
 
     if (length(posts_data) == 0 || NROW(posts_data) == 0) {
+      message(paste("No se encontraron noticias relacionadas a", search_query))
       break
     }
 
@@ -123,6 +127,10 @@ extraer_noticias_max_res_ciper <- function(search_query = NULL, max_results = NU
   output_df <- scrape_body_ciper(output_df)
 
   output_df$contenido <- output_df$contenido_limpio
+
+  output_df <- output_df %>% 
+    dplyr::mutate(ID = paste0(ID, "-c"))
+    
 
   return(output_df)
 }

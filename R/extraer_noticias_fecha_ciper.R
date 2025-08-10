@@ -57,12 +57,16 @@ extraer_noticias_fecha_ciper <- function(search_query = NULL, fecha_inicio, fech
       total_posts <- as.integer(headers$`x-wp-total`)
       total_pages <- as.integer(headers$`x-wp-totalpages`)
       message(paste("Total de resultados encontrados en Ciper:", total_posts))
+    }
+    
+    if (current_page == 1 && total_pages > 0) {
       pb <- utils::txtProgressBar(min = 0, max = total_pages, style = 3)
     }
 
     posts_data <- jsonlite::fromJSON(httr::content(response, "text", encoding = "UTF-8"), flatten = TRUE)
 
     if (length(posts_data) == 0 || NROW(posts_data) == 0) {
+      message("No hay noticias en el rango de fechas seleccionado.")
       break
     }
 
@@ -104,6 +108,9 @@ extraer_noticias_fecha_ciper <- function(search_query = NULL, fecha_inicio, fech
   output_df <- scrape_body_ciper(output_df)
 
   output_df$contenido <- output_df$contenido_limpio
+
+  output_df <- output_df %>% 
+    dplyr::mutate(ID = paste0(ID, "-c"))
 
   return(output_df)
 }
