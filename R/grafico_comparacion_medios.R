@@ -27,6 +27,8 @@
 #'                             agrupar_por = "day", tipo_grafico = "barras")
 #' }
 #'
+#'
+#' @importFrom stats setNames
 #' @export
 grafico_comparacion_medios <- function(datos, titulo, fecha_inicio = NULL, fecha_fin = NULL,
                                         medios = NULL, agrupar_por = "day", tema = "light",

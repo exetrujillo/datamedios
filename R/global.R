@@ -7,5 +7,5 @@ utils::globalVariables(c(
   "_source.bajada", "_source.imagen", "_source.permalink",
   "_source.seccion", "_source.subSeccion", "_source.tablas.tablaMedios",
   "_source.temas", "_source.texto", "_source.titulo", "autor", "medio",
-  "resumen", "temas", "titulo", "url_imagen"
+  "resumen", "temas", "titulo", "url_imagen", "fecha_grupo", "fecha_texto"
 ))

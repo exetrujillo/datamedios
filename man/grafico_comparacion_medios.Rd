@@ -54,4 +54,5 @@ grafico_comparacion_medios(datos, titulo = "Comparacion BBCl vs emol",
                             agrupar_por = "day", tipo_grafico = "barras")
 }
 
+
 }
