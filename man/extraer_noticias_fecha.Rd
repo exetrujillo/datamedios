@@ -5,7 +5,7 @@
 \title{Extraccion de noticias de medios chilenos por rango de fechas}
 \usage{
 extraer_noticias_fecha(
-  search_query,
+  search_query = NULL,
   fecha_inicio,
   fecha_fin,
   subir_a_bd = TRUE,
@@ -13,7 +13,7 @@ extraer_noticias_fecha(
 )
 }
 \arguments{
-\item{search_query}{Una frase de busqueda (obligatoria).}
+\item{search_query}{Una frase de busqueda (opcional). Si la fuente es 'ciper', puede ser NULL.}
 
 \item{fecha_inicio}{Fecha de inicio del rango de busqueda en formato "YYYY-MM-DD" (obligatoria).}
 

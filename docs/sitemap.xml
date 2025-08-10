@@ -9,9 +9,11 @@
 <url><loc>https://exetrujillo.github.io/datamedios/reference/extraccion_parrafos.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/extraer_noticias_fecha.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/extraer_noticias_fecha_bbcl.html</loc></url>
+<url><loc>https://exetrujillo.github.io/datamedios/reference/extraer_noticias_fecha_ciper.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/extraer_noticias_fecha_emol.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/extraer_noticias_max_res.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/extraer_noticias_max_res_bbcl.html</loc></url>
+<url><loc>https://exetrujillo.github.io/datamedios/reference/extraer_noticias_max_res_ciper.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/extraer_noticias_max_res_emol.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/grafico_comparacion_medios.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/grafico_notas_fecha.html</loc></url>
@@ -26,6 +28,7 @@
 <url><loc>https://exetrujillo.github.io/datamedios/reference/limpieza_notas.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/parserFuentes.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/pipe.html</loc></url>
+<url><loc>https://exetrujillo.github.io/datamedios/reference/scrape_body_ciper.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/tabla_frecuencia_palabras.html</loc></url>
 <url><loc>https://exetrujillo.github.io/datamedios/reference/word_cloud.html</loc></url>
 </urlset>

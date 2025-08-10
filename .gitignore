@@ -5,3 +5,5 @@
 *.pper
 cran-comments.md
 tutorial.qmd
+.lintr
+dev/

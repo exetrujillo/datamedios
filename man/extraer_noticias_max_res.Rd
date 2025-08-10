@@ -5,7 +5,7 @@
 \title{Extraccion de noticias de medios chilenos por cantidad maxima de resultados}
 \usage{
 extraer_noticias_max_res(
-  search_query,
+  search_query = NULL,
   max_results = NULL,
   subir_a_bd = TRUE,
   fuentes = "todas"

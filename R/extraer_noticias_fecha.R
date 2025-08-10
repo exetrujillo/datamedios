@@ -3,7 +3,7 @@
 #' Esta funcion permite realizar una extraccion automatizada de noticias de
 #' BioBio o Los medios de Emol, utilizando un rango de fechas.
 #'
-#' @param search_query Una frase de busqueda (obligatoria).
+#' @param search_query Una frase de busqueda (opcional). Si la fuente es 'ciper', puede ser NULL.
 #' @param fecha_inicio Fecha de inicio del rango de busqueda en formato "YYYY-MM-DD" (obligatoria).
 #' @param fecha_fin Fecha de fin del rango de busqueda en formato "YYYY-MM-DD" (obligatoria).
 #' @param subir_a_bd por defecto TRUE, FALSE para test y cosas por el estilo (opcional).
@@ -16,10 +16,13 @@
 #' }
 #' @export
 
-extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_a_bd = TRUE, fuentes="todas") {
+extraer_noticias_fecha <- function(search_query = NULL, fecha_inicio, fecha_fin, subir_a_bd = TRUE, fuentes="todas") {
   # Validamos los parametros
-  if (missing(search_query) || !is.character(search_query)) {
-    stop("Debe proporcionar una frase de busqueda como texto.")
+  if (is.null(search_query) && fuentes != "ciper") {
+    stop("Debe proporcionar una frase de busqueda si la fuente no es exclusivamente 'ciper'.")
+  }
+  if (!is.null(search_query) && !is.character(search_query)) {
+    stop("La frase de busqueda debe ser texto.")
   }
   if (missing(fecha_inicio) || missing(fecha_fin) || !lubridate::is.Date(lubridate::ymd(fecha_inicio)) || !lubridate::is.Date(lubridate::ymd(fecha_fin))) {
     stop("Debe proporcionar fechas de inicio y fin validas en formato 'YYYY-MM-DD'.")
@@ -49,14 +52,14 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
 
   # Indice de fuentes
   if(fuentes=="todas"){
-    patronFuentes <- "bbcl, emol-todas"
+    patronFuentes <- "bbcl, emol-todas, ciper"
   } else {
     patronFuentes <- fuentes
   }
 
   fuentesParseadas <- parserFuentes(patronFuentes)
-  message(paste0("Fuentes parseadas: ", fuentesParseadas))
 
+  message(paste0("\nFuentes parseadas: ", fuentesParseadas))
   ##############################################################################
   # CONJUNTOS DE FUENTES
 
@@ -95,6 +98,15 @@ extraer_noticias_fecha <- function(search_query, fecha_inicio, fecha_fin, subir_
           all_data <- rbind(all_data, data_emol)
         }
       }
+    }
+  }
+
+  #### Ciper ####
+  if ("ciper" %in% fuentesParseadas) {
+    # Ejecutar la funcion para ciper
+    data_ciper <- extraer_noticias_fecha_ciper(search_query, fecha_inicio = fecha_inicio, fecha_fin = fecha_fin)
+    if (!is.null(data_ciper) && nrow(data_ciper) > 0) {
+      all_data <- rbind(all_data, data_ciper)
     }
   }
 

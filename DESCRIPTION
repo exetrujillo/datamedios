@@ -1,11 +1,12 @@
 Package: datamedios
 Type: Package
 Title: Scraping Chilean Media
-Version: 1.2.2
+Version: 1.2.3
 Authors@R: c(
   person(given = "Exequiel", family = "Trujillo", email = "exequiel.trujillo@ug.uchile.cl", role = c("aut", "cre", "cph", "fnd")),
   person(given = "Ismael", family = "Aguayo", email = "ismael.aguayo@ug.uchile.cl", role = c("aut", "fnd")),
-  person(given = "Klaus", family = "Lehmann", email = "klehmann@fen.uchile.cl", role = c("aut", "fnd"))
+  person(given = "Klaus", family = "Lehmann", email = "klehmann@fen.uchile.cl", role = c("aut", "fnd")),
+  person(given = "Matias", family = "Gallardo", email = "matias.gallardo.v@ug.uchile.cl", role = c("ctb"))
   )
 Maintainer: Exequiel Trujillo <exequiel.trujillo@ug.uchile.cl>
 Description: A system for extracting news from Chilean media,
@@ -37,5 +38,7 @@ Imports:
   purrr,
   DT,
   ggplot2,
-  plotly
+  plotly,
+  parallel,
+  pbapply
 RoxygenNote: 7.3.2
