@@ -6,12 +6,10 @@
 ^docs$
 ^\.github/
 ^docs/
-^cran-comments\.md$
-^LICENSE\.md$
-^.*\.Rproj$
-^\.Rproj\.user$
 ^tutorial.qmd
 ^_pkgdown\.yml$
 ^pkgdown$
 ^\.lintr$
 ^\.Rhistory$
+^CITATION\.cff$
+^\.github$

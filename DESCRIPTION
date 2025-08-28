@@ -41,4 +41,6 @@ Imports:
   plotly,
   parallel,
   pbapply
+URL: https://github.com/exetrujillo/datamedios
+BugReports: https://github.com/exetrujillo/datamedios/issues
 RoxygenNote: 7.3.2
