@@ -9,7 +9,14 @@ type: software
 license: MIT
 title: 'datamedios: Scraping Chilean Media'
 version: 1.2.3
-doi: 10.32614/CRAN.package.datamedios
+doi: 10.5281/zenodo.16990420
+identifiers:
+  - description: "Zenodo DOI."
+    type: doi
+    value: 10.5281/zenodo.16990420
+  - description: "CRAN DOI."
+    type: doi
+    value: 10.32614/CRAN.package.datamedios
 abstract: A system for extracting news from Chilean media, specifically through Web
   Scapping from Chilean media. The package allows for news searches using search phrases
   and date filters, and returns the results in a structured format, ready for analysis.
