@@ -24,6 +24,8 @@ Esta funcion permite realizar una extraccion automatizada de noticias de emol.co
 \examples{
 \dontrun{
 noticias <- extraer_noticias_fecha_emol("inteligencia artificial", "2025-01-01",
-"2025-02-24", fuente="emol")
+  "2025-02-24",
+  fuente = "emol"
+)
 }
 }

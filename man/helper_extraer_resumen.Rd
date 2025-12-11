@@ -10,7 +10,7 @@ helper_extraer_resumen(bajada_val)
 \item{bajada_val}{El contenido de la columna `_source.bajada` de la fila actual.}
 }
 \value{
-Un string (character) con el texto del resumen, o `NA_character_`
+Un string con el texto del resumen, o `NA_character_`
   si no se puede extraer o si ocurre un error.
 }
 \description{

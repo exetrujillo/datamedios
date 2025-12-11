@@ -18,7 +18,7 @@ init_req_bbcl <- function(search_query) {
 
   # Encabezados para la solicitud
   headers <- c(
-    `User-Agent` = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0",
+    `User-Agent` = get_random_user_agent(),
     `Accept` = "application/json, text/plain, */*",
     `Referer` = paste0("https://www.biobiochile.cl/buscador.shtml?s=", URLencode(search_query)),
     `Content-Type` = "application/json; charset=UTF-8"

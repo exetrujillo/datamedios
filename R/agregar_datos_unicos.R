@@ -49,11 +49,6 @@ agregar_datos_unicos <- function(data) {
     return(response)
   }
 
-  # Enviamos datos a write_news
-  enviar_datos(url1, data_list)
-
-  # Enviamos datos a write_search_queries
+  invisible(enviar_datos(url1, data_list))
   invisible(enviar_datos(url2, data_list))
-
-  #message("Datos agregados exitosamente.")
 }

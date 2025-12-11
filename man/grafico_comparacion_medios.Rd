@@ -12,7 +12,9 @@ grafico_comparacion_medios(
   medios = NULL,
   agrupar_por = "day",
   tema = "light",
-  tipo_grafico = "lineas"
+  tipo_grafico = "lineas",
+  grosor_linea = 0.8,
+  tamano_punto = 1.5
 )
 }
 \arguments{
@@ -32,9 +34,13 @@ Valores validos son `"day"` (por defecto) o `"month"`.}
 \item{tema}{Tema del grafico. Valores validos son `"light"` (por defecto) o `"dark"`.}
 
 \item{tipo_grafico}{Tipo de visualizacion. Valores validos son `"lineas"` (por defecto) o `"barras"`.}
+
+\item{grosor_linea}{Ancho de la linea del grafico (por defecto 0.8).}
+
+\item{tamano_punto}{Tamano de los puntos del grafico (por defecto 1.5).}
 }
 \value{
-Un grafico plotly interactivo que muestra la comparacion de publicaciones por medio y periodo.
+Un grafico ggiraph interactivo que muestra la comparacion de publicaciones por medio y periodo.
 }
 \description{
 Esta funcion genera un grafico interactivo que compara la cantidad de publicaciones
@@ -44,14 +50,18 @@ entre diferentes medios de medios, agrupadas por dia o por mes, con opcion de te
 \dontrun{
 # Comparar todas las medios por mes
 datos <- extraer_noticias_fecha("delincuencia", "2024-01-01", "2025-01-01", subir_a_bd = FALSE)
-grafico_comparacion_medios(datos, titulo = "Cobertura de Delincuencia por Medio",
-                            agrupar_por = "month", tema = "dark")
+grafico_comparacion_medios(datos,
+  titulo = "Cobertura de Delincuencia por Medio",
+  agrupar_por = "month", tema = "dark"
+)
 
 # Comparar medios especificas por dia
-grafico_comparacion_medios(datos, titulo = "Comparacion BBCl vs emol",
-                            medios = c("bbcl", "emol"),
-                            fecha_inicio = "2024-06-01", fecha_fin = "2024-06-30",
-                            agrupar_por = "day", tipo_grafico = "barras")
+grafico_comparacion_medios(datos,
+  titulo = "Comparacion BBCl vs emol",
+  medios = c("bbcl", "emol"),
+  fecha_inicio = "2024-06-01", fecha_fin = "2024-06-30",
+  agrupar_por = "day", tipo_grafico = "barras"
+)
 }
 
 }

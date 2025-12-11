@@ -13,7 +13,6 @@
 #' @export
 
 extraccion_parrafos <- function(datos, sinonimos = c()) {
-  # Verificar que los datos sean un data frame y que contengan la columna 'contenido'
   if (!is.data.frame(datos)) stop("'datos' debe ser un data frame.")
   if (!"contenido" %in% colnames(datos)) stop("El data frame debe contener la columna 'contenido'.")
 
@@ -23,21 +22,31 @@ extraccion_parrafos <- function(datos, sinonimos = c()) {
     pattern <- paste0("(?i)\\b(", datos$search_query[[1]], ")\\b")
   }
 
-  # Procesar cada contenido de 'contenido' para extraer parrafos filtrados
   datos <- datos %>%
     dplyr::mutate(
       parrafos_filtrados = purrr::map(contenido, ~ {
-        # Manejo de errores para lectura HTML
-        nodo_html <- tryCatch(rvest::read_html(.x), error = function(e) return(NA))
+        # Validar si el contenido es NA o vacio
+        if (is.na(.x) || !nzchar(.x)) return(NA)
 
-        if (!is.na(nodo_html)) {
-          # Extraer parrafos del HTML
-          parrafos <- nodo_html %>% rvest::html_elements("p") %>% rvest::html_text2()
-
-          # Filtrar parrafos que coincidan con los sinonimos
-          parrafos[grepl(pattern, parrafos)]
+        # Detectar si es HTML o Texto Plano
+        is_html <- grepl("<[^>]+>", .x)
+        
+        texto_a_filtrar <- character()
+        
+        if (is_html) {
+           nodo_html <- tryCatch(rvest::read_html(.x), error = function(e) return(NA))
+           if (!is.na(nodo_html) && length(nodo_html) > 0) {
+              texto_a_filtrar <- nodo_html %>% rvest::html_elements("p") %>% rvest::html_text2()
+           }
         } else {
-          return(NA) # En caso de error
+           # Es texto plano, quizas separado por saltos de linea
+           texto_a_filtrar <- unlist(strsplit(.x, "\n"))
+        }
+
+        if (length(texto_a_filtrar) > 0) {
+           texto_a_filtrar[grepl(pattern, texto_a_filtrar)]
+        } else {
+           return(NA)
         }
       })
     )

@@ -32,27 +32,23 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
 
   # Inicializamos variables y objetos
   patronFuentes = ""
-  all_data <- data.frame(
-    ID = character(),
-    titulo = character(),
-    contenido = character(),
-    contenido_limpio = character(),
-    url = character(),
-    url_imagen = character(),
-    autor = character(),
-    fecha = character(),
-    temas = list(),
-    resumen = character(),
-    search_query = character(),
-    medio = character(),
-    stringsAsFactors = FALSE
-  )
+  
+  # Estructura vacia por defecto
+  # Estructura vacia por defecto
+  empty_df <- crear_df_vacio()
+  
+  lista_resultados <- list()
 
-  # Indice de fuentes
-  if(fuentes=="todas"){
-    patronFuentes <- "bbcl, emol-todas"
+  # Unificar input de fuentes si viene como vector
+  if (length(fuentes) > 1) {
+    patronFuentes <- paste(fuentes, collapse = ", ")
   } else {
     patronFuentes <- fuentes
+  }
+
+  # Indice de fuentes (expansion de macro "todas")
+  if(patronFuentes == "todas"){
+    patronFuentes <- "bbcl, emol-todas, ciper"
   }
 
   fuentesParseadas <- parserFuentes(patronFuentes)
@@ -62,28 +58,36 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
   # CONJUNTOS DE FUENTES
 
   # emol
-  fuentes_emol <- c("emol", "mediosregionales", "guioteca")
+  fuentes_emol <- get_fuentes_emol()
 
   ##############################################################################
   # SELECTOR DE EJECUCIONES
 
   #### BBCL ####
   if ("bbcl" %in% fuentesParseadas) {
-    # Ejecutar la funcion para bbcl
-    data_bbcl <- extraer_noticias_max_res_bbcl(search_query, max_results = max_results)
-    if (!is.null(data_bbcl) && nrow(data_bbcl) > 0) {
-      all_data <- rbind(all_data, data_bbcl)
-    }
+    tryCatch({
+      # Ejecutar la funcion para bbcl
+      data_bbcl <- extraer_noticias_max_res_bbcl(search_query, max_results = max_results)
+      if (!is.null(data_bbcl) && nrow(data_bbcl) > 0) {
+        lista_resultados[[length(lista_resultados) + 1]] <- data_bbcl
+      }
+    }, error = function(e) {
+      message("Error extrayendo noticias de BioBio: ", e$message)
+    })
   }
 
   #### EMOL ####
   if ("emol-todas" %in% fuentesParseadas) {
     # Ejecutar la funcion para cada fuente de emol por separado
     for (fuente in fuentes_emol) {
-      data_emol <- extraer_noticias_max_res_emol(search_query, max_results = max_results, fuente = fuente)
-      if (!is.null(data_emol) && nrow(data_emol) > 0) {
-        all_data <- rbind(all_data, data_emol)
-      }
+      tryCatch({
+        data_emol <- extraer_noticias_max_res_emol(search_query, max_results = max_results, fuente = fuente)
+        if (!is.null(data_emol) && nrow(data_emol) > 0) {
+          lista_resultados[[length(lista_resultados) + 1]] <- data_emol
+        }
+      }, error = function(e) {
+        message(paste0("Error extrayendo noticias de ", fuente, ": ", e$message))
+      })
     }
   } else {
     # Filtrar las fuentes de emol seleccionadas
@@ -91,18 +95,42 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
     if (length(fuentes_emol_seleccionadas) > 0) {
       # Ejecutar la funcion para cada fuente seleccionada individualmente
       for (fuente in fuentes_emol_seleccionadas) {
-        data_emol <- extraer_noticias_max_res_emol(search_query, max_results = max_results, fuente = fuente)
-        if (!is.null(data_emol) && nrow(data_emol) > 0) {
-          all_data <- rbind(all_data, data_emol)
-        }
+        tryCatch({
+          data_emol <- extraer_noticias_max_res_emol(search_query, max_results = max_results, fuente = fuente)
+          if (!is.null(data_emol) && nrow(data_emol) > 0) {
+            lista_resultados[[length(lista_resultados) + 1]] <- data_emol
+          }
+        }, error = function(e) {
+           message(paste0("Error extrayendo noticias de ", fuente, ": ", e$message))
+        })
       }
     }
   }
 
-  #### ACA IREMOS AGREGANDO MAS FUENTES CON SUS FUNCIONES ESPECIFICAS ####
+  #### Ciper ####
+  if ("ciper" %in% fuentesParseadas) {
+    tryCatch({
+      # Ejecutar la funcion para ciper
+      data_ciper <- extraer_noticias_max_res_ciper(search_query, max_results = max_results)
+      if (!is.null(data_ciper) && nrow(data_ciper) > 0) {
+        lista_resultados[[length(lista_resultados) + 1]] <- data_ciper
+      }
+    }, error = function(e) {
+      message("Error extrayendo noticias de Ciper: ", e$message)
+    })
+  }
+
+  ##############################################################################
 
 
   ##############################################################################
+  
+  # Unir todos los resultados
+  if (length(lista_resultados) > 0) {
+    all_data <- dplyr::bind_rows(lista_resultados)
+  } else {
+    all_data <- empty_df
+  }
 
   # Subimos a la base de datos en caso de que el parametro subir_a_db es TRUE
   if (subir_a_bd) {

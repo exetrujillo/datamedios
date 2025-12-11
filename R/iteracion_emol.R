@@ -43,7 +43,8 @@ iteracion_emol <- function(search_query, page=0, fuentes="emol-todas") {
     "https://newsapi.ecn.cl/NewsApi/emol/buscador/",
     patronBusqueda,
     "?q=",URLencode(search_query),
-    "&size=10&from=", (page*batch_size)
+    "&size=10&from=", (page*batch_size),
+    "&sortBy=date"
   )
 
   # Solicitud iteracion

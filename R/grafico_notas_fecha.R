@@ -9,28 +9,32 @@
 #' @param fecha_fin Fecha de finalizacion para la construccion del grafico en formato YYYY-MM-DD (opcional).
 #' @param agrupar_por Cadena de texto que especifica el periodo de agrupacion.
 #'   Valores validos son `"day"` (por defecto) o `"month"`.
-#' @param tema Tema del grafico. Valores validos son `"light"` (por defecto) o `"dark"`.
-#' @return Un grafico plotly interactivo que muestra la cantidad de publicaciones por el periodo seleccionado.
+#' @param grosor_linea Ancho de la linea del grafico (por defecto 0.8).
+#' @param tamano_punto Tamano de los puntos del grafico (por defecto 1.5).
+#' @return Un grafico ggiraph interactivo que muestra la cantidad de publicaciones por el periodo seleccionado.
 #' @examples
 #' \dontrun{
 #' # Ejemplo con tema dark, agrupando por mes
-#' datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
-#' grafico_notas_fecha(datos, titulo = "Cambio Climatico (por mes)",
-#'                     agrupar_por = "month", tema = "dark")
+#' datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01", "2025-01-01", subir_a_bd = FALSE)
+#' grafico_notas_fecha(datos,
+#'   titulo = "Cambio Climatico (por mes)",
+#'   agrupar_por = "month", tema = "dark"
+#' )
 #'
 #' # Ejemplo con tema light, agrupando por dia
-#' grafico_notas_fecha(datos, titulo = "Cambio Climatico (por dia)",
-#'                     fecha_inicio = "2024-01-01", fecha_fin = "2024-03-31",
-#'                     tema = "light")
+#' grafico_notas_fecha(datos,
+#'   titulo = "Cambio Climatico (por dia)",
+#'   fecha_inicio = "2024-01-01", fecha_fin = "2024-03-31",
+#'   tema = "light"
+#' )
 #' }
 #'
 #' @export
 grafico_notas_fecha <- function(datos, titulo, fecha_inicio = NULL, fecha_fin = NULL,
-                                agrupar_por = "day", tema = "light") {
-
+                                agrupar_por = "day", tema = "light", grosor_linea = 0.8, tamano_punto = 1.5) {
   # Cargar librerias necesarias
-  if (!requireNamespace("plotly", quietly = TRUE)) {
-    stop("El paquete 'plotly' es necesario para esta funcion. instalalo con: install.packages('plotly')")
+  if (!requireNamespace("ggiraph", quietly = TRUE)) {
+    stop("El paquete 'ggiraph' es necesario para esta funcion. instalalo con: install.packages('ggiraph')")
   }
 
   # --- 1. Validacion de Entradas ---
@@ -129,7 +133,6 @@ grafico_notas_fecha <- function(datos, titulo, fecha_inicio = NULL, fecha_fin = 
       dplyr::group_by(fecha_grupo) %>%
       dplyr::summarise(cantidad = dplyr::n(), .groups = "drop") %>%
       dplyr::arrange(fecha_grupo)
-
   } else { # agrupar_por == "day"
     # Agrupar datos por dia y contar las publicaciones
     publicaciones_agrupadas <- datos_filtrados %>%
@@ -156,96 +159,45 @@ grafico_notas_fecha <- function(datos, titulo, fecha_inicio = NULL, fecha_fin = 
       axis.text = ggplot2::element_text(color = colores$texto),
       axis.title = ggplot2::element_text(color = colores$texto),
       plot.title = ggplot2::element_text(color = colores$texto, hjust = 0.5, size = 14, face = "bold"),
-      panel.grid.major = ggplot2::element_line(color = colores$grilla, size = 0.3),
-      panel.grid.minor = ggplot2::element_line(color = colores$grilla, size = 0.1),
+      panel.grid.major = ggplot2::element_line(color = colores$grilla, linewidth = 0.3),
+      panel.grid.minor = ggplot2::element_line(color = colores$grilla, linewidth = 0.1),
       axis.text.x = ggplot2::element_text(angle = 45, hjust = 1)
     )
 
-  # Añadir las capas (geoms) segun el tipo de agrupacion
+  # --- 6. Conversion a ggiraph interactivo ---
+
+  # Añadir las capas (geoms) segun el tipo de agrupacion usando ggiraph
   if (agrupar_por == "month") {
     grafico_ggplot <- grafico_base +
-      ggplot2::geom_line(color = colores$linea_principal, linewidth = 1.2) +
-      ggplot2::geom_point(color = colores$puntos, size = 2.5) +
+      ggiraph::geom_line_interactive(color = colores$linea_principal, linewidth = grosor_linea) +
+      ggiraph::geom_point_interactive(
+        ggplot2::aes(tooltip = paste0("Fecha: ", format(fecha_grupo, "%Y-%m"), "\nCantidad: ", cantidad)),
+        color = colores$puntos, size = tamano_punto
+      ) +
       ggplot2::geom_smooth(method = "loess", color = colores$suavizado, se = FALSE, linewidth = 1)
   } else { # agrupar_por == "day"
     grafico_ggplot <- grafico_base +
-      ggplot2::geom_col(fill = colores$barras, color = colores$barras, width = 1, alpha = 0.8)
+      ggiraph::geom_col_interactive(
+        ggplot2::aes(tooltip = paste0("Fecha: ", format(fecha_grupo, "%Y-%m-%d"), "\nCantidad: ", cantidad)),
+        fill = colores$barras, color = colores$barras, width = 1, alpha = 0.8
+      )
   }
 
-  # --- 6. Conversion a Plotly interactivo ---
-
-  # Convertir a plotly
-  grafico_plotly <- plotly::ggplotly(grafico_ggplot, tooltip = c("x", "y")) %>%
-    plotly::layout(
-      plot_bgcolor = colores$fondo,
-      paper_bgcolor = colores$fondo,
-      font = list(color = colores$texto, family = "Arial", size = 12),
-      title = list(
-        text = titulo,
-        font = list(color = colores$texto, size = 16, family = "Arial"),
-        x = 0.5
-      ),
-      xaxis = list(
-        title = list(text = "Fecha", font = list(color = colores$texto)),
-        tickfont = list(color = colores$texto),
-        gridcolor = colores$grilla,
-        zerolinecolor = colores$grilla
-      ),
-      yaxis = list(
-        title = list(text = "Cantidad de Notas", font = list(color = colores$texto)),
-        tickfont = list(color = colores$texto),
-        gridcolor = colores$grilla,
-        zerolinecolor = colores$grilla
-      ),
-      hovermode = "x unified",
-      showlegend = FALSE
-    ) %>%
-    plotly::config(
-      displayModeBar = TRUE,
-      modeBarButtonsToRemove = c("pan2d", "select2d", "lasso2d", "autoScale2d"),
-      displaylogo = FALSE,
-      toimageButtonOptions = list(
-        format = "png",
-        filename = paste0("grafico_", gsub(" ", "_", tolower(titulo))),
-        height = 500,
-        width = 800,
-        scale = 2
+  # Convertir a ggiraph
+  grafico_interactivo <- ggiraph::girafe(
+    ggobj = grafico_ggplot,
+    width_svg = 9,
+    height_svg = 6,
+    options = list(
+      ggiraph::opts_hover(css = "stroke-width:1px; stroke:black;"),
+      ggiraph::opts_hover_inv(css = "opacity:0.3;"),
+      ggiraph::opts_tooltip(
+        css = paste0("background-color:", colores$fondo, "; color:", colores$texto, "; padding:5px; border-radius:3px; border: 1px solid ", colores$texto),
+        opacity = 0.9
       )
     )
+  )
 
-  # --- 7. Personalizar Tooltips ---
-
-  # Crear etiquetas personalizadas para el hover
-  if (agrupar_por == "month") {
-    publicaciones_agrupadas <- publicaciones_agrupadas %>%
-      dplyr::mutate(
-        fecha_texto = format(fecha_grupo, "%Y-%m"),
-        hover_text = paste0("Fecha: ", fecha_texto, "<br>Cantidad: ", cantidad)
-      )
-
-    # Actualizar las trazas de plotly con texto personalizado
-    for (i in 1:length(grafico_plotly$x$data)) {
-      if (!is.null(grafico_plotly$x$data[[i]]$x)) {
-        grafico_plotly$x$data[[i]]$text <- publicaciones_agrupadas$hover_text
-        grafico_plotly$x$data[[i]]$hovertemplate <- "%{text}<extra></extra>"
-      }
-    }
-  } else {
-    publicaciones_agrupadas <- publicaciones_agrupadas %>%
-      dplyr::mutate(
-        fecha_texto = format(fecha_grupo, "%Y-%m-%d"),
-        hover_text = paste0("Fecha: ", fecha_texto, "<br>Cantidad: ", cantidad)
-      )
-
-    # Actualizar las trazas de plotly con texto personalizado
-    for (i in 1:length(grafico_plotly$x$data)) {
-      if (!is.null(grafico_plotly$x$data[[i]]$x)) {
-        grafico_plotly$x$data[[i]]$text <- publicaciones_agrupadas$hover_text
-        grafico_plotly$x$data[[i]]$hovertemplate <- "%{text}<extra></extra>"
-      }
-    }
-  }
-
-  # --- 8. Devolver el Grafico interactivo ---
-  return(grafico_plotly)
+  # --- 7. Devolver el Grafico interactivo ---
+  return(grafico_interactivo)
 }

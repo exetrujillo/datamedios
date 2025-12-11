@@ -10,7 +10,9 @@ grafico_notas_fecha(
   fecha_inicio = NULL,
   fecha_fin = NULL,
   agrupar_por = "day",
-  tema = "light"
+  tema = "light",
+  grosor_linea = 0.8,
+  tamano_punto = 1.5
 )
 }
 \arguments{
@@ -25,10 +27,12 @@ grafico_notas_fecha(
 \item{agrupar_por}{Cadena de texto que especifica el periodo de agrupacion.
 Valores validos son `"day"` (por defecto) o `"month"`.}
 
-\item{tema}{Tema del grafico. Valores validos son `"light"` (por defecto) o `"dark"`.}
+\item{grosor_linea}{Ancho de la linea del grafico (por defecto 0.8).}
+
+\item{tamano_punto}{Tamano de los puntos del grafico (por defecto 1.5).}
 }
 \value{
-Un grafico plotly interactivo que muestra la cantidad de publicaciones por el periodo seleccionado.
+Un grafico ggiraph interactivo que muestra la cantidad de publicaciones por el periodo seleccionado.
 }
 \description{
 Esta funcion genera un grafico interactivo que muestra la cantidad de publicaciones
@@ -37,14 +41,18 @@ agrupadas por dia o por mes, con opcion de tema dark o light.
 \examples{
 \dontrun{
 # Ejemplo con tema dark, agrupando por mes
-datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01","2025-01-01", subir_a_bd = FALSE)
-grafico_notas_fecha(datos, titulo = "Cambio Climatico (por mes)",
-                    agrupar_por = "month", tema = "dark")
+datos <- extraer_noticias_fecha("cambio climatico", "2024-01-01", "2025-01-01", subir_a_bd = FALSE)
+grafico_notas_fecha(datos,
+  titulo = "Cambio Climatico (por mes)",
+  agrupar_por = "month", tema = "dark"
+)
 
 # Ejemplo con tema light, agrupando por dia
-grafico_notas_fecha(datos, titulo = "Cambio Climatico (por dia)",
-                    fecha_inicio = "2024-01-01", fecha_fin = "2024-03-31",
-                    tema = "light")
+grafico_notas_fecha(datos,
+  titulo = "Cambio Climatico (por dia)",
+  fecha_inicio = "2024-01-01", fecha_fin = "2024-03-31",
+  tema = "light"
+)
 }
 
 }

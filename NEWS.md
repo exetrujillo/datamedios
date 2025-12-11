@@ -1,3 +1,22 @@
+# datamedios 1.2.4
+
+### Optimizado (Optimized)
+
+*   **Búsqueda Binaria**: Se implementó un algoritmo de búsqueda binaria para los scrapers de fechas (`extraer_noticias_fecha_bbcl`, `extraer_noticias_fecha_emol`). Esto reduce drásticamente el tiempo de búsqueda de noticias antiguas (complejidad logarítmica) comparado con la iteración lineal anterior.
+*   **Gestor de User-Agents**: Se creó una función auxiliar para rotar User-Agents aleatorios en cada petición inicial, mejorando la resistencia a bloqueos simples.
+*   **Optimización de Bucles**: Se refactorizaron las funciones de extracción para evitar la copia excesiva de memoria que ocurre al usar rbind dentro de un bucle.
+*   **Optimización de Procesamiento**: Se optimizó el procesamiento final de los datos extraídos de Emol, eliminando la necesidad de iterar sobre cada fila del dataframe para procesar los datos con rowwise.
+
+### Corregido (Fixed)
+
+*   **Dependencias**: Se reemplazó `plotly` por `ggiraph` en las funciones de visualización para mejorar la integración con `ggplot2` y evitar uso de paquete con conflictos.
+
+
+### Estructural (Structural)
+
+*   **Standard Helpers**: Centralización de la creación de dataframes vacíos (`crear_df_vacio`) en `utils_general.R` para asegurar consistencia transversal en todo el paquete.
+*   **Robustez**: Mejora general en el manejo de errores y validaciones de tipos de datos antes del retorno.
+
 # datamedios 1.2.2
 
 ### Agregrado (Added)

@@ -41,11 +41,19 @@ init_req_emol <- function(search_query, fuentes="emol-todas") {
     "https://newsapi.ecn.cl/NewsApi/emol/buscador/",
     patronBusqueda,
     "?q=",URLencode(search_query),
-    "&size=10&from=0"
+    "&size=10&from=0",
+    "&sortBy=date"
+  )
+
+  # Encabezados para la solicitud (Rotacion de UA)
+  headers <- c(
+    `User-Agent` = get_random_user_agent(),
+    `Accept` = "application/json, text/plain, */*",
+    `Content-Type` = "application/json; charset=UTF-8"
   )
 
   # Solicitud inicial
-  response_initial <- httr::GET(url_initial)
+  response_initial <- httr::GET(url_initial, httr::add_headers(.headers = headers))
   if (response_initial$status_code == 200) {
     data_initial <- httr::content(response_initial, "text", encoding = "UTF-8") %>%
       jsonlite::fromJSON(flatten = TRUE)

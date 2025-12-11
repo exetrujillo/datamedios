@@ -21,10 +21,9 @@
 helper_extraer_url_imagen <- function(source_tablas_medios, source_imagen, fuente_actual) {
   url_img <- NA_character_
   tryCatch({
-    if (fuente_actual %in% c("emol", "mediosregionales")) {
-      if (is.data.frame(source_tablas_medios) && nrow(source_tablas_medios) > 0 && "Url" %in% names(source_tablas_medios)) {
-        url_img <- as.character(source_tablas_medios[1, "Url"])
-      }
+    # Intentar extraer de tablaMedios (Comun en Emol y MediosRegionales)
+    if (is.data.frame(source_tablas_medios) && nrow(source_tablas_medios) > 0 && "Url" %in% names(source_tablas_medios)) {
+      url_img <- as.character(source_tablas_medios[1, "Url"])
     }
 
     # Fallback o para otras fuentes como guioteca
@@ -40,13 +39,12 @@ helper_extraer_url_imagen <- function(source_tablas_medios, source_imagen, fuent
       }
     }
 
-    # Limpieza final: asegurar que no sea una lista, dataframe, o vector multiple
     if (is.list(url_img) || is.data.frame(url_img) || length(url_img) == 0) {
       url_img <- NA_character_
     } else if (length(url_img) > 1) {
-      url_img <- url_img[1] # Tomar solo el primero si es un vector
+      url_img <- url_img[1]
     }
-    if (is.character(url_img) && nzchar(url_img) == FALSE) url_img <- NA_character_ # Convertir "" a NA
+    if (is.character(url_img) && nzchar(url_img) == FALSE) url_img <- NA_character_
 
   }, error = function(e) {
     url_img <- NA_character_
@@ -64,7 +62,7 @@ helper_extraer_url_imagen <- function(source_tablas_medios, source_imagen, fuent
 #'
 #' @param bajada_val El contenido de la columna `_source.bajada` de la fila actual.
 #'
-#' @return Un string (character) con el texto del resumen, o `NA_character_`
+#' @return Un string con el texto del resumen, o `NA_character_`
 #'   si no se puede extraer o si ocurre un error.
 #' @keywords internal
 helper_extraer_resumen <- function(bajada_val) {
@@ -167,11 +165,8 @@ helper_extraer_temas <- function(source_seccion, source_subseccion, source_temas
           }
         }))
         t_vector <- c(t_vector, elementos_temas_procesados)
-      } else if (!is.list(source_temas) && !is.data.frame(source_temas)) { # Si es un vector atomico
-        t_vector <- anadir_termino(t_vector, source_temas) # Esto podria anadir multiples si source_temas es un vector
-        # Si source_temas es un vector, y anadir_termino solo toma el primer elemento implicitamente,
-        # se podria necesitar iterar: for(st in source_temas) { t_vector <- anadir_termino(t_vector, st) }
-        # Pero anadir_termino ya hace c(vec, as.character(termino)), lo cual maneja vectores.
+      } else if (!is.list(source_temas) && !is.data.frame(source_temas)) {
+        t_vector <- anadir_termino(t_vector, source_temas)
       }
     }
 
@@ -187,4 +182,176 @@ helper_extraer_temas <- function(source_seccion, source_subseccion, source_temas
     temas_lista_final <- list(character(0))
   })
   return(temas_lista_final)
+}
+
+#' Procesar y estandarizar datos crudos de Emol
+#'
+#' Funcion auxiliar centralizada para limpiar, rellenar y estandarizar los datos
+#' provenientes de las iteraciones de Emol (API). Realiza la conversion de listas
+#' a dataframes planos con las 12 columnas estandar.
+#' Utiliza `mapply` para optimizar el rendimiento.
+#'
+#' @param all_data Dataframe crudo acumulado de la extraccion.
+#' @param fuente String con el nombre de la fuente (e.g. "emol", "guioteca").
+#' @param search_query String con la consulta de busqueda realizada.
+#'
+#' @return Dataframe final estandarizado.
+#' @keywords internal
+procesar_data_emol <- function(all_data, fuente, search_query) {
+  # Validacion inicial
+  if (is.null(all_data) || nrow(all_data) == 0) {
+    message(paste("No se encontraron datos para la fuente:", fuente, "en el rango especificado."))
+    return(crear_df_vacio())
+  }
+
+  # Validacion de columnas base requeridas
+  required_columns <- c("_id", "_source.titulo", "_source.texto", "_source.permalink")
+  missing_columns <- required_columns[!required_columns %in% names(all_data)]
+
+  if (length(missing_columns) > 0) {
+    message(paste("Faltan columnas base necesarias en los datos:", paste(missing_columns, collapse = ", ")))
+    return(crear_df_vacio())
+  }
+
+  all_data$search_query <- tolower(search_query)
+
+  # Determinacion de columna de fecha
+  fecha_source_col_name <- if (fuente == "guioteca") {
+    "_source.fechaModificacion"
+  } else if ("_source.fechaPublicacion" %in% names(all_data)) {
+    "_source.fechaPublicacion"
+  } else if ("_source.fechaModificacion" %in% names(all_data)) {
+    "_source.fechaModificacion"
+  } else {
+    message(paste("Advertencia: No se encontro columna de fecha '_source.fechaPublicacion' ni '_source.fechaModificacion' para fuente:", fuente, ". Las fechas seran NA."))
+    NA_character_
+  }
+
+  processed_data <- tryCatch({
+    # Rellenar columnas faltantes para helpers
+    cols_for_helpers <- c(
+      "_source.tablas.tablaMedios" = NA,
+      "_source.imagen" = NA_character_,
+      "_source.autor" = NA_character_,
+      "_source.bajada" = NA,
+      "_source.seccion" = NA_character_,
+      "_source.subSeccion" = NA_character_,
+      "_source.temas" = NA
+    )
+
+    for (col_name in names(cols_for_helpers)) {
+      if (!col_name %in% names(all_data)) {
+        all_data[[col_name]] <- cols_for_helpers[[col_name]]
+      }
+    }
+
+    # Asegurar columna fecha
+    if (!is.na(fecha_source_col_name) && !fecha_source_col_name %in% names(all_data)) {
+      all_data[[fecha_source_col_name]] <- NA_character_
+    }
+    
+    # Pre-calculo de vectores optimizados con mapply
+    
+    # 1. URL Imagen
+    vec_url_imagen <- mapply(
+      helper_extraer_url_imagen,
+      all_data[["_source.tablas.tablaMedios"]],
+      all_data[["_source.imagen"]],
+      MoreArgs = list(fuente_actual = fuente),
+      SIMPLIFY = TRUE, USE.NAMES = FALSE
+    )
+    
+    # 2. Resumen
+    vec_resumen <- mapply(
+      helper_extraer_resumen,
+      all_data[["_source.bajada"]],
+      SIMPLIFY = TRUE, USE.NAMES = FALSE
+    )
+    
+    # 3. Temas (Devuelve list of lists, queremos list of vectors)
+    list_temas_raw <- mapply(
+      helper_extraer_temas,
+      all_data[["_source.seccion"]],
+      all_data[["_source.subSeccion"]],
+      all_data[["_source.temas"]],
+      MoreArgs = list(fuente_actual = fuente),
+      SIMPLIFY = FALSE, USE.NAMES = FALSE
+    )
+    list_temas <- lapply(list_temas_raw, function(x) if(is.list(x)) x[[1]] else character(0))
+
+    # Mutate vectorizado
+    all_data %>%
+      dplyr::mutate(
+        ID = paste0(`_id`, "-e"),
+        titulo = dplyr::coalesce(as.character(`_source.titulo`), NA_character_),
+        contenido = dplyr::coalesce(as.character(`_source.texto`), NA_character_),
+        contenido_limpio = NA_character_,
+        url = dplyr::coalesce(as.character(`_source.permalink`), NA_character_),
+        
+        # Asignamos los vectores pre-calculados
+        url_imagen = vec_url_imagen,
+        
+        autor = dplyr::coalesce(
+          if (fuente == "guioteca") "guioteca" else as.character(`_source.autor`),
+          NA_character_
+        ),
+        
+        fecha = if (!is.na(fecha_source_col_name)) {
+          as.character(as.Date(dplyr::coalesce(!!rlang::sym(fecha_source_col_name), NA_character_)))
+        } else {
+          NA_character_
+        },
+        
+        resumen = vec_resumen,
+        temas = list_temas,
+        
+        search_query = search_query,
+        medio = fuente
+      ) %>%
+      dplyr::select(
+        ID, titulo, contenido, contenido_limpio, url,
+        url_imagen, autor, fecha, temas, resumen,
+        search_query, medio
+      )
+
+  }, error = function(e) {
+    message(paste("--------------------------------------------------------------------"))
+    message(paste("ERROR CRITICO durante el procesamiento de datos (centralizado) para:", fuente))
+    message(paste("Mensaje:", e$message))
+    
+    # Log simple de error
+    error_msg_str <- as.character(e)
+    if (grepl("problem", error_msg_str, ignore.case = TRUE)) {
+      message("Posible error en transformacion de columnas.")
+    }
+
+    # Guardado de muestra debug
+    if (nrow(all_data) > 0) {
+      sample_size <- min(nrow(all_data), 100)
+      all_data_sample <- all_data[1:sample_size, ]
+      problem_file_path <- paste0("debug_data_FAIL_", gsub("[^A-Za-z0-9]", "_", fuente), ".rds")
+      try(saveRDS(all_data_sample, file = problem_file_path), silent = TRUE)
+      message(paste("Muestra guardada en:", problem_file_path))
+    }
+    
+    message(paste("--------------------------------------------------------------------"))
+    return(crear_df_vacio())
+  })
+  
+  # Final sanity check de columnas
+  cols_standard <- names(crear_df_vacio())
+  process_cols <- names(processed_data)
+  
+  # Rellenar con NAs si falta algo (aunque el select deberia manejarlo o fallar)
+  for (col in cols_standard) {
+    if (!col %in% process_cols) {
+       if (col == "temas") {
+        processed_data[[col]] <- vector("list", nrow(processed_data))
+      } else {
+        processed_data[[col]] <- NA_character_
+      }
+    }
+  }
+  
+  return(processed_data[, cols_standard, drop = FALSE])
 }

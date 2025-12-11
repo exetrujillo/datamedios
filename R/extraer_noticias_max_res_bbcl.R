@@ -8,142 +8,138 @@
 #' @return Un dataframe con las noticias extraidas.
 #' @examples
 #' \dontrun{
-#' noticias <- extraer_noticias_fecha_bbcl("inteligencia artificial", "2025-01-01",
-#' "2025-02-24")
+#' noticias <- extraer_noticias_fecha_bbcl(
+#'   "inteligencia artificial", "2025-01-01",
+#'   "2025-02-24"
+#' )
 #' }
 #' @export
 extraer_noticias_max_res_bbcl <- function(search_query, max_results = NULL) {
+  # Inicializamos variables
+  encoded_query <- URLencode(search_query)
 
-# Inicializamos variables
-encoded_query <- URLencode(search_query)
-all_data <- data.frame(
-  ID = character(),
-  post_title = character(),
-  post_content = character(),
-  post_content_clean = character(),
-  post_URL = character(),
-  post_categories = character(), # este
-  post_tags = character(),       # y este los tenemos que unificar posteriormente
-  post_image.URL = character(),
-  author.display_name = character(),
-  raw_post_date = as.Date(character()),
-  resumen_de_ia = character(),
-  search_query = character(),
-  medio = character(), # en esta version solo es posible bbcl
-  stringsAsFactors = FALSE
-)
+  # Estructura vacia
+  all_data <- crear_df_vacio()
+  lista_resultados <- list()
+  count_results <- 0
 
-# Obtenemos la respuesta inicial
-respuesta_inicial <- init_req_bbcl(search_query)
-fecha_mas_reciente <- lubridate::ymd_hms(respuesta_inicial$raw_post_date[1])
-total_results <- as.integer(respuesta_inicial$total)
-if(total_results > 0){
-  message(paste0("Total de resultados disponibles en bbcl: ", total_results))
-  message(paste0("Noticia mas reciente disponible en bbcl es de la fecha: ", fecha_mas_reciente))
-}else{
-  stop("No se encontraron noticias con la search query especificada.")
-}
-
-# Determinamos el numero de resultados a extraer
-if (is.null(max_results) || max_results > total_results) {
-  max_results <- total_results
-}
-
-# Iteramos para obtener todas las noticias necesarias
-offset <- 0
-while (nrow(all_data) < max_results) {
-  url <- paste0(
-    "https://www.biobiochile.cl/lista/api/buscador?offset=", offset,
-    "&search=", encoded_query,
-    "&intervalo=&orden=ultimas"
-  )
-
-  response <- httr::GET(url, httr::add_headers(.headers = c(
-    `User-Agent` = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0",
+  # Encabezados para la solicitud
+  headers <- c(
+    `User-Agent` = get_random_user_agent(),
     `Accept` = "application/json, text/plain, */*",
+    `Referer` = paste0("https://www.biobiochile.cl/buscador.shtml?s=", URLencode(search_query)),
     `Content-Type` = "application/json; charset=UTF-8"
-  )))
-
-  if (response$status_code != 200) {
-    warning("Error al realizar la solicitud. Codigo de estado: ", response$status_code)
-    break
-  }
-
-  data <- httr::content(response, "text", encoding = "UTF-8") %>%
-    jsonlite::fromJSON(flatten = TRUE)
-
-  if (is.null(data$notas) || length(data$notas) == 0) {
-    warning("No se encontraron mas notas para extraer.")
-    break
-  }
-
-  noticias <- as.data.frame(data$notas)
-  # Verificar las columnas de noticias
-  missing_columns <- setdiff(colnames(all_data), colnames(noticias))
-
-  # Si faltan columnas, anadirlas con valores NA
-  for (col in missing_columns) {
-    noticias[[col]] <- NA
-  }
-
-  # Asegurarse de que las columnas esten en el orden correcto
-  noticias <- noticias[, colnames(all_data), drop = FALSE]
-  # Anadir las noticias a all_data
-  all_data <- rbind(all_data, noticias)
-
-  # Controlar el numero de resultados
-  if (nrow(all_data) >= max_results) {
-    all_data <- all_data[1:max_results, ]
-    break
-  }
-
-  offset <- offset + 20
-}
-
-all_data$search_query <- tolower(search_query)
-all_data$raw_post_date <- as.Date(all_data$raw_post_date)
-all_data$post_image.URL <- paste0("https://media.biobiochile.cl/wp-content/uploads/", as.character(all_data$post_image.URL))
-
-# Creamos columna temas y eliminamos las que almacenaban data frames
-# Creamos la nueva columna "temas" como una lista combinada
-all_data$temas <- lapply(seq_len(nrow(all_data)), function(i) {
-  # Extraer los slugs de post_categories
-  slugs_categorias <- all_data$post_categories[[i]]$slug
-
-  # Extraer los slugs de post_tags
-  slugs_tags <- all_data$post_tags[[i]]$slug
-
-  # Combinar ambos en un solo vector
-  temas_combinados <- c(slugs_categorias, slugs_tags)
-
-  # Devolver la lista combinada
-  temas_combinados
-})
-
-# Eliminar columnas originales
-all_data$post_categories <- NULL
-all_data$post_tags <- NULL
-
-# Definir contenido de la columa medio
-all_data$medio <- "bbcl"
-
-###############################
-
-# Redefinir nombres de columnas
-
-colnames(all_data) <- colnames(all_data) %>%
-  dplyr::recode(
-    post_title = "titulo",
-    post_content = "contenido",
-    post_URL = "url",
-    `author.display_name` = "autor",
-    raw_post_date = "fecha",
-    resumen_de_ia = "resumen",
-    post_content_clean = "contenido_limpio",
-    `post_image.URL` = "url_imagen"
   )
 
-###############################
+  # Obtenemos la respuesta inicial
+  tryCatch(
+    {
+      respuesta_inicial <- init_req_bbcl(search_query)
+      fecha_mas_reciente <- lubridate::ymd_hms(respuesta_inicial$raw_post_date[1])
+      total_results <- as.integer(respuesta_inicial$total)
+      if (total_results > 0) {
+        message(paste0("Total de resultados disponibles en bbcl: ", total_results))
+        message(paste0("Noticia mas reciente disponible en bbcl es de la fecha: ", fecha_mas_reciente))
+      } else {
+        warning("No se encontraron noticias con la search query especificada.")
+        return(all_data)
+      }
+    },
+    error = function(e) {
+      stop("Error inicializando busqueda en BioBio: ", e$message)
+    }
+  )
 
-return(all_data)
+  # Determinamos el numero de resultados a extraer
+  if (is.null(max_results) || max_results > total_results) {
+    max_results <- total_results
+  }
+
+  # Iteramos para obtener todas las noticias necesarias
+  offset <- 0
+
+  while (count_results < max_results) {
+    url <- paste0(
+      "https://www.biobiochile.cl/lista/api/buscador?offset=", offset,
+      "&search=", encoded_query,
+      "&intervalo=&orden=ultimas"
+    )
+
+    skip_iteration <- FALSE
+    tryCatch(
+      {
+        response <- httr::GET(url, httr::add_headers(.headers = c(
+          `User-Agent` = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0",
+          `Accept` = "application/json, text/plain, */*",
+          `Content-Type` = "application/json; charset=UTF-8"
+        )))
+
+        if (response$status_code != 200) {
+          warning("Error al realizar la solicitud. Codigo de estado: ", response$status_code)
+          skip_iteration <- TRUE
+        }
+      },
+      error = function(e) {
+        warning("Error de conexion en BioBio: ", e$message)
+        skip_iteration <- TRUE
+      }
+    )
+
+    if (skip_iteration) {
+      offset <- offset + 20
+      if (offset >= total_results) break
+      next
+    }
+
+    data <- tryCatch(
+      {
+        httr::content(response, "text", encoding = "UTF-8") %>%
+          jsonlite::fromJSON(flatten = TRUE)
+      },
+      error = function(e) {
+        warning("Error parseando JSON: ", e$message)
+        NULL
+      }
+    )
+
+    if (is.null(data)) {
+      offset <- offset + 20
+      if (offset >= total_results) break
+      next
+    }
+
+    if (is.null(data$notas) || length(data$notas) == 0) {
+      if (count_results == 0) warning("No se encontraron mas notas para extraer.")
+      break
+    }
+
+    noticias <- as.data.frame(data$notas)
+
+    # Asegurar tipos
+    if ("ID" %in% names(noticias)) {
+      noticias$ID <- as.character(noticias$ID)
+    }
+
+    # Anadir las noticias a la lista
+    lista_resultados[[length(lista_resultados) + 1]] <- noticias
+    count_results <- count_results + nrow(noticias)
+
+    offset <- offset + 20
+  }
+
+  # Unir resultados
+  if (length(lista_resultados) > 0) {
+    all_data <- dplyr::bind_rows(lista_resultados)
+
+    # Controlar max_results exacto
+    if (nrow(all_data) > max_results) {
+      all_data <- all_data[1:max_results, ]
+    }
+  }
+
+  all_data <- procesar_data_bbcl(all_data, search_query)
+
+  ###############################
+
+  return(all_data)
 }

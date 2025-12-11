@@ -12,29 +12,35 @@
 #'   Valores validos son `"day"` (por defecto) o `"month"`.
 #' @param tema Tema del grafico. Valores validos son `"light"` (por defecto) o `"dark"`.
 #' @param tipo_grafico Tipo de visualizacion. Valores validos son `"lineas"` (por defecto) o `"barras"`.
-#' @return Un grafico plotly interactivo que muestra la comparacion de publicaciones por medio y periodo.
+#' @param grosor_linea Ancho de la linea del grafico (por defecto 0.8).
+#' @param tamano_punto Tamano de los puntos del grafico (por defecto 1.5).
+#' @return Un grafico ggiraph interactivo que muestra la comparacion de publicaciones por medio y periodo.
 #' @examples
 #' \dontrun{
 #' # Comparar todas las medios por mes
 #' datos <- extraer_noticias_fecha("delincuencia", "2024-01-01", "2025-01-01", subir_a_bd = FALSE)
-#' grafico_comparacion_medios(datos, titulo = "Cobertura de Delincuencia por Medio",
-#'                             agrupar_por = "month", tema = "dark")
+#' grafico_comparacion_medios(datos,
+#'   titulo = "Cobertura de Delincuencia por Medio",
+#'   agrupar_por = "month", tema = "dark"
+#' )
 #'
 #' # Comparar medios especificas por dia
-#' grafico_comparacion_medios(datos, titulo = "Comparacion BBCl vs emol",
-#'                             medios = c("bbcl", "emol"),
-#'                             fecha_inicio = "2024-06-01", fecha_fin = "2024-06-30",
-#'                             agrupar_por = "day", tipo_grafico = "barras")
+#' grafico_comparacion_medios(datos,
+#'   titulo = "Comparacion BBCl vs emol",
+#'   medios = c("bbcl", "emol"),
+#'   fecha_inicio = "2024-06-01", fecha_fin = "2024-06-30",
+#'   agrupar_por = "day", tipo_grafico = "barras"
+#' )
 #' }
 #'
+#' @importFrom stats setNames
 #' @export
 grafico_comparacion_medios <- function(datos, titulo, fecha_inicio = NULL, fecha_fin = NULL,
-                                        medios = NULL, agrupar_por = "day", tema = "light",
-                                        tipo_grafico = "lineas") {
-
+                                       medios = NULL, agrupar_por = "day", tema = "light",
+                                       tipo_grafico = "lineas", grosor_linea = 0.8, tamano_punto = 1.5) {
   # Cargar librerias necesarias
-  if (!requireNamespace("plotly", quietly = TRUE)) {
-    stop("el paquete 'plotly' es necesario para esta funcion. Instalalo con: install.packages('plotly')")
+  if (!requireNamespace("ggiraph", quietly = TRUE)) {
+    stop("el paquete 'ggiraph' es necesario para esta funcion. Instalalo con: install.packages('ggiraph')")
   }
   if (!requireNamespace("dplyr", quietly = TRUE)) {
     stop("el paquete 'dplyr' es necesario para esta funcion. Instalalo con: install.packages('dplyr')")
@@ -90,8 +96,10 @@ grafico_comparacion_medios <- function(datos, titulo, fecha_inicio = NULL, fecha
     medios_no_encontradas <- setdiff(medios, medios_disponibles)
 
     if (length(medios_no_encontradas) > 0) {
-      warning(paste("Las siguientes medios no se encontraron en los datos:",
-                    paste(medios_no_encontradas, collapse = ", ")))
+      warning(paste(
+        "Los siguientes medios no se encontraron en los datos:",
+        paste(medios_no_encontradas, collapse = ", ")
+      ))
     }
 
     medios_validas <- intersect(medios, medios_disponibles)
@@ -148,8 +156,10 @@ grafico_comparacion_medios <- function(datos, titulo, fecha_inicio = NULL, fecha
       grilla = "#404040"
     )
     # Paleta de colores vibrantes para tema dark
-    paleta_medios <- c("#00d4ff", "#ff6b35", "#39ff14", "#ff1493", "#ffd700",
-                        "#9370db", "#00fa9a", "#ff4500", "#1e90ff", "#ff69b4")
+    paleta_medios <- c(
+      "#00d4ff", "#ff6b35", "#39ff14", "#ff1493", "#ffd700",
+      "#9370db", "#00fa9a", "#ff4500", "#1e90ff", "#ff69b4"
+    )
   } else {
     colores_tema <- list(
       fondo = "#ffffff",
@@ -157,8 +167,10 @@ grafico_comparacion_medios <- function(datos, titulo, fecha_inicio = NULL, fecha
       grilla = "#e0e0e0"
     )
     # Paleta de colores contrastantes para tema light
-    paleta_medios <- c("#1f77b4", "#d62728", "#2ca02c", "#ff7f0e", "#9467bd",
-                        "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf")
+    paleta_medios <- c(
+      "#1f77b4", "#d62728", "#2ca02c", "#ff7f0e", "#9467bd",
+      "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
+    )
   }
 
   # Asignar colores a cada medio
@@ -184,12 +196,15 @@ grafico_comparacion_medios <- function(datos, titulo, fecha_inicio = NULL, fecha
 
   # Completar fechas faltantes con 0 para cada medio
   fechas_completas <- seq(min(publicaciones_agrupadas$fecha_grupo),
-                          max(publicaciones_agrupadas$fecha_grupo),
-                          by = if(agrupar_por == "month") "month" else "day")
+    max(publicaciones_agrupadas$fecha_grupo),
+    by = if (agrupar_por == "month") "month" else "day"
+  )
 
-  grid_completo <- expand.grid(fecha_grupo = fechas_completas,
-                               medio = medios_unicas,
-                               stringsAsFactors = FALSE)
+  grid_completo <- expand.grid(
+    fecha_grupo = fechas_completas,
+    medio = medios_unicas,
+    stringsAsFactors = FALSE
+  )
 
   publicaciones_agrupadas <- grid_completo %>%
     dplyr::left_join(publicaciones_agrupadas, by = c("fecha_grupo", "medio")) %>%
@@ -202,111 +217,84 @@ grafico_comparacion_medios <- function(datos, titulo, fecha_inicio = NULL, fecha
     publicaciones_agrupadas <- publicaciones_agrupadas %>%
       dplyr::mutate(
         fecha_texto = format(fecha_grupo, "%Y-%m"),
-        hover_text = paste0("medio: ", medio, "<br>",
-                            "Fecha: ", fecha_texto, "<br>",
-                            "Cantidad: ", cantidad)
+        hover_text = paste0(
+          "medio: ", medio, "<br>",
+          "Fecha: ", fecha_texto, "<br>",
+          "Cantidad: ", cantidad
+        )
       )
   } else {
     publicaciones_agrupadas <- publicaciones_agrupadas %>%
       dplyr::mutate(
         fecha_texto = format(fecha_grupo, "%Y-%m-%d"),
-        hover_text = paste0("medio: ", medio, "<br>",
-                            "Fecha: ", fecha_texto, "<br>",
-                            "Cantidad: ", cantidad)
+        hover_text = paste0(
+          "medio: ", medio, "<br>",
+          "Fecha: ", fecha_texto, "<br>",
+          "Cantidad: ", cantidad
+        )
       )
   }
 
-  # --- 6. Creacion del Grafico con Plotly Nativo ---
+  # --- 6. Creacion del Grafico con ggiraph ---
 
-  # Crear grafico base
-  grafico_plotly <- plotly::plot_ly()
-
-  if (tipo_grafico == "lineas") {
-    # Agregar lineas para cada medio
-    for (medio_actual in medios_unicas) {
-      datos_medio <- publicaciones_agrupadas %>%
-        dplyr::filter(medio == medio_actual)
-
-      grafico_plotly <- grafico_plotly %>%
-        plotly::add_trace(
-          data = datos_medio,
-          x = ~fecha_grupo,
-          y = ~cantidad,
-          type = "scatter",
-          mode = "lines+markers",
-          name = medio_actual,
-          line = list(color = colores_medios[medio_actual], width = 2.5),
-          marker = list(color = colores_medios[medio_actual], size = 6),
-          text = ~hover_text,
-          hovertemplate = "%{text}<extra></extra>"
-        )
-    }
-  } else { # tipo_grafico == "barras"
-    # Crear grafico de barras agrupadas
-    for (medio_actual in medios_unicas) {
-      datos_medio <- publicaciones_agrupadas %>%
-        dplyr::filter(medio == medio_actual)
-
-      grafico_plotly <- grafico_plotly %>%
-        plotly::add_trace(
-          data = datos_medio,
-          x = ~fecha_grupo,
-          y = ~cantidad,
-          type = "bar",
-          name = medio_actual,
-          marker = list(color = colores_medios[medio_actual], opacity = 0.8),
-          text = ~hover_text,
-          hovertemplate = "%{text}<extra></extra>"
-        )
-    }
-  }
-
-  # --- 7. Configuracion del Layout ---
-
-  grafico_plotly <- grafico_plotly %>%
-    plotly::layout(
-      title = list(
-        text = titulo,
-        font = list(color = colores_tema$texto, size = 16, family = "Arial"),
-        x = 0.5
-      ),
-      xaxis = list(
-        title = list(text = "Fecha", font = list(color = colores_tema$texto)),
-        tickfont = list(color = colores_tema$texto),
-        gridcolor = colores_tema$grilla,
-        zerolinecolor = colores_tema$grilla
-      ),
-      yaxis = list(
-        title = list(text = "Cantidad de Noticias", font = list(color = colores_tema$texto)),
-        tickfont = list(color = colores_tema$texto),
-        gridcolor = colores_tema$grilla,
-        zerolinecolor = colores_tema$grilla
-      ),
-      plot_bgcolor = colores_tema$fondo,
-      paper_bgcolor = colores_tema$fondo,
-      font = list(color = colores_tema$texto, family = "Arial", size = 12),
-      hovermode = "x unified",
-      legend = list(
-        font = list(color = colores_tema$texto),
-        bgcolor = "rgba(0,0,0,0)",
-        bordercolor = colores_tema$texto,
-        borderwidth = 1
-      ),
-      barmode = if(tipo_grafico == "barras") "group" else NULL
-    ) %>%
-    plotly::config(
-      displayModeBar = TRUE,
-      modeBarButtonsToRemove = c("pan2d", "select2d", "lasso2d", "autoScale2d"),
-      displaylogo = FALSE,
-      toImageButtonOptions = list(
-        format = "png",
-        filename = paste0("comparacion_medios_", gsub(" ", "_", tolower(titulo))),
-        height = 500,
-        width = 900,
-        scale = 2
-      )
+  # Crear grafico base con ggplot2
+  grafico_base <- ggplot2::ggplot(publicaciones_agrupadas, ggplot2::aes(x = fecha_grupo, y = cantidad, group = medio, color = medio)) +
+    ggplot2::labs(
+      title = titulo,
+      x = "Fecha",
+      y = "Cantidad de Noticias",
+      color = "Medio"
+    ) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      plot.background = ggplot2::element_rect(fill = colores_tema$fondo, color = NA),
+      panel.background = ggplot2::element_rect(fill = colores_tema$fondo, color = NA),
+      text = ggplot2::element_text(color = colores_tema$texto),
+      axis.text = ggplot2::element_text(color = colores_tema$texto),
+      axis.title = ggplot2::element_text(color = colores_tema$texto),
+      plot.title = ggplot2::element_text(color = colores_tema$texto, hjust = 0.5, size = 16, face = "bold"),
+      legend.text = ggplot2::element_text(color = colores_tema$texto),
+      legend.title = ggplot2::element_text(color = colores_tema$texto),
+      panel.grid.major = ggplot2::element_line(color = colores_tema$grilla, linewidth = 0.3),
+      panel.grid.minor = ggplot2::element_line(color = colores_tema$grilla, linewidth = 0.1)
     )
 
+  if (tipo_grafico == "lineas") {
+    grafico_ggplot <- grafico_base +
+      ggiraph::geom_line_interactive(ggplot2::aes(data_id = medio), linewidth = grosor_linea) +
+      ggiraph::geom_point_interactive(
+        ggplot2::aes(tooltip = hover_text, data_id = medio),
+        size = tamano_punto
+      )
+  } else { # tipo_grafico == "barras"
+    grafico_ggplot <- grafico_base +
+      ggiraph::geom_bar_interactive(
+        ggplot2::aes(fill = medio, tooltip = hover_text, data_id = medio),
+        stat = "identity", position = "dodge", width = 0.7, alpha = 0.8
+      ) +
+      ggplot2::scale_fill_manual(values = colores_medios)
+  }
+
+  # Asignar colores manualmente si es linea (si es barra ya lo hicimos)
+  if (tipo_grafico == "lineas") {
+    grafico_ggplot <- grafico_ggplot + ggplot2::scale_color_manual(values = colores_medios)
+  }
+
+  # --- 7. Generar Grafico Interactivo ---
+  grafico_interactivo <- ggiraph::girafe(
+    ggobj = grafico_ggplot,
+    width_svg = 9,
+    height_svg = 6,
+    options = list(
+      ggiraph::opts_hover(css = "stroke-width:2px; stroke:black;"),
+      ggiraph::opts_hover_inv(css = "opacity:0.3;"),
+      ggiraph::opts_tooltip(
+        css = paste0("background-color:", colores_tema$fondo, "; color:", colores_tema$texto, "; padding:5px; border-radius:3px; border: 1px solid ", colores_tema$texto),
+        opacity = 0.9
+      )
+    )
+  )
+
   # --- 8. Devolver el Grafico Interactivo ---
-  return(grafico_plotly)
+  return(grafico_interactivo)
 }

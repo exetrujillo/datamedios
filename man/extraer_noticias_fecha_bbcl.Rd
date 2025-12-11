@@ -21,7 +21,9 @@ Esta funcion permite realizar una extraccion automatizada de noticias de BioBio.
 }
 \examples{
 \dontrun{
-noticias <- extraer_noticias_fecha_bbcl("inteligencia artificial", "2025-01-01",
-"2025-02-24")
+noticias <- extraer_noticias_fecha_bbcl(
+  "inteligencia artificial", "2025-01-01",
+  "2025-02-24"
+)
 }
 }
