@@ -127,6 +127,5 @@ extraer_noticias_fecha_ciper <- function(search_query = NULL, fecha_inicio, fech
   }
   
   output_df <- output_df[, cols_standard, drop = FALSE]
-
   return(output_df)
 }

@@ -19,10 +19,13 @@
 #' max_results = 20, fuentes="bbcl, emol", subir_a_bd = FALSE)
 #' }
 #' @export
-extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_bd = TRUE, fuentes = "todas") {
+extraer_noticias_max_res <- function(search_query = NULL, max_results = NULL, subir_a_bd = TRUE, fuentes = "todas") {
   # Validamos los parametros
-  if (missing(search_query) || !is.character(search_query)) {
-    stop("Debe proporcionar una frase de busqueda valida como texto.")
+  if (is.null(search_query) && fuentes != "ciper") {
+    stop("Debe proporcionar una frase de busqueda si la fuente no es exclusivamente 'ciper'.")
+  }
+  if (!is.null(search_query) && !is.character(search_query)) {
+    stop("La frase de busqueda debe ser texto.")
   }
   if (!is.null(max_results) && (!is.numeric(max_results) || max_results <= 0)) {
     stop("max_results debe ser un numero entero positivo o NULL.")
@@ -142,7 +145,7 @@ extraer_noticias_max_res <- function(search_query, max_results = NULL, subir_a_b
     })
   }
 
-  message(paste0("Noticias hasta la fecha: ", all_data$fecha[nrow(all_data)]))
+  message(paste0("Noticias hasta la fecha: ", nrow(all_data)))
 
   return(all_data)
 }

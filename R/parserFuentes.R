@@ -36,7 +36,7 @@ parserFuentes <- function(cadena) {
   elementos_no_vacios <- elementos_limpios[elementos_limpios != ""]
 
   # Definir los valores permitidos
-  valores_permitidos <- c("bbcl", "emol", "guioteca", "mediosregionales", "emol-todas")
+  valores_permitidos <- c("bbcl", "emol", "guioteca", "mediosregionales", "emol-todas", "ciper")
 
   # Filtrar elementos que no estan en los valores permitidos
   elementos_validos <- elementos_no_vacios[elementos_no_vacios %in% valores_permitidos]

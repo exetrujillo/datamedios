@@ -1,5 +1,5 @@
-testthat::test_that("Se recibe un objeto de clase data frame, con 201 resultados y las columans esperadas", {
-
+testthat::test_that("Se recibe un objeto de clase data frame, con 201 resultados y las columnas esperadas", {
+  #NOTA: no todos los medios tienen 201 resultados, además de que la función extrae 201 por medio
   resultado <- extraer_noticias_max_res("boric", max_results = 201, subir_a_bd = FALSE)
 
   #Verificamos que es data frame

@@ -9,7 +9,7 @@ BioBio o Los medios de Emol, utilizando un rango de fechas."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">datamedios</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@ BioBio o Los medios de Emol, utilizando un rango de fechas.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">extraer_noticias_fecha</span><span class="op">(</span></span>
-<span>  <span class="va">search_query</span>,</span>
+<span>  search_query <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">fecha_inicio</span>,</span>
 <span>  <span class="va">fecha_fin</span>,</span>
 <span>  subir_a_bd <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -55,7 +55,7 @@ BioBio o Los medios de Emol, utilizando un rango de fechas.</p>
 
 
 <dl><dt id="arg-search-query">search_query<a class="anchor" aria-label="anchor" href="#arg-search-query"></a></dt>
-<dd><p>Una frase de busqueda (obligatoria).</p></dd>
+<dd><p>Una frase de busqueda (opcional). Si la fuente es 'ciper', puede ser NULL.</p></dd>
 
 
 <dt id="arg-fecha-inicio">fecha_inicio<a class="anchor" aria-label="anchor" href="#arg-fecha-inicio"></a></dt>
